@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[test1]]></title>
+    <url>%2F2019%2F05%2F01%2Ftest1%2F</url>
+    <content type="text"><![CDATA[百度是啥吗？ 这是条测试文章。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>category1</category>
+      </categories>
+      <tags>
+        <tag>tag1</tag>
+        <tag>tag2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World2]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-worldd%20%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>category1</category>
+      </categories>
+      <tags>
+        <tag>tag1</tag>
+        <tag>tag2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World2]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-worlddd%2F</url>
+    <content type="text"><![CDATA[Welcome /** * Definition for a binary tree node. * public class TreeNode { * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) { val = x; } * } */ public class Solution { // 全局变量，记录最大直径 int diameter = 0; public int diameterOfBinaryTree(TreeNode root) { getDepth(root); return diameter; } // 此函数是返回树的最大深度 private int getDepth(TreeNode root) { if (root == null) return 0; int l = getDepth(root.left); int r = getDepth(root.right); diameter = Math.max(diameter, l + r); return Math.max(l, r) + 1; } }]]></content>
+      <categories>
+        <category>category1</category>
+      </categories>
+      <tags>
+        <tag>tag1</tag>
+        <tag>tag2</tag>
+      </tags>
+  </entry>
+</search>
