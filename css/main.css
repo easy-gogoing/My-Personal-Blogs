@@ -1981,7 +1981,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff4744;
+  background: #9ed632;
 }
 .feed-link,
 .chat {
@@ -2978,6 +2978,19 @@ hr {
     text-align: center;
   }
 }
+body {
+  background: url("/images/bg7.png");
+  background-size: contain;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: bottom;
+}
+@media (max-width: 767px) {
+  body {
+    background-image: url("https://ziyuan.lruihao.cn/images/bg_cell.png");
+    background-size: cover;
+  }
+}
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
@@ -3171,6 +3184,23 @@ h2.about-title {
   padding: 25px;
   -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+}
+.page-post-detail .post-title {
+  font-size: 26px;
+  text-align: center;
+  word-break: break-word;
+  font-weight: 400;
+  background-color: #b9d3ee;
+  border-radius: 0.3em;
+  line-height: 1em;
+  padding-bottom: 0.12em;
+  padding-top: 0.12em;
+  box-shadow: 2px 2px 7px #9fb6cd;
+}
+@media (max-width: 767px) {
+  .page-post-detail .post-title {
+    font-size: 22px;
+  }
 }
 @-moz-keyframes pace-spinner {
   0% {
