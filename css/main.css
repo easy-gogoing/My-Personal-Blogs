@@ -1981,7 +1981,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3c8bff;
+  background: #66f696;
 }
 .feed-link,
 .chat {
@@ -3102,13 +3102,13 @@ hr {
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
   margin: 80px 0px 40px 0px;
 }
-a {
-  color: #5073b8;
-  border-bottom-color: #5073b8;
+.post-body a {
+  color: #fc6423;
+  text-decoration: none;
+  border-bottom: 1;
 }
-a:hover {
-  color: #a166ab;
-  border-bottom-color: #a166ab;
+.post-body a:hover {
+  color: #0684bd;
 }
 hr {
   margin: 10px 0px 30px 0px;
