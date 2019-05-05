@@ -61,11 +61,12 @@
     <content type="text"><![CDATA[百度是啥吗？ 这是条测试文章。]]></content>
   </entry>
   <entry>
-    <title><![CDATA[Hello Worl13]]></title>
-    <url>%2F2019%2F04%2F30%2Fhello-world13%2F</url>
+    <title><![CDATA[Hello Worl7]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-world7%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
       <categories>
         <category>category1</category>
+        <category>category2</category>
       </categories>
       <tags>
         <tag>tag1</tag>
@@ -151,12 +152,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello Worl7]]></title>
-    <url>%2F2019%2F04%2F30%2Fhello-world7%2F</url>
+    <title><![CDATA[Hello Worl12]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-world12%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
       <categories>
         <category>category1</category>
-        <category>category2</category>
       </categories>
       <tags>
         <tag>tag1</tag>
@@ -182,8 +182,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello Worl12]]></title>
-    <url>%2F2019%2F04%2F30%2Fhello-world12%2F</url>
+    <title><![CDATA[Hello Worl13]]></title>
+    <url>%2F2019%2F04%2F30%2Fhello-world13%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
       <categories>
         <category>category1</category>
