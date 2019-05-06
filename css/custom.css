@@ -84,8 +84,9 @@ code {
     padding: 0;
     position: absolute;
     bottom: 0;
+	overflow: hidden;
 }
-/* 具有类navbar-nav的父元素下的li子元素的子元素a */
+/* 爷元素具有类.navbar-nav, 以li为父元素的所有a元素 */
 .navbar-nav>li>a {
 	display: inline-block;
 	padding: 3px 20px;
@@ -154,7 +155,10 @@ code {
   font-size: 20px;
   color: #999;
 }
-
+/* 评论符号链接靠右 */
+.article-meta > a.article-comment-link {
+	float: right;
+}
 
 /*
  * Main column and sidebar layout
@@ -179,6 +183,7 @@ code {
   padding-right: 50px;
   padding-left: 0;
 }
+/* 类.blog-main元素内部的所有类.article-title元素 */
 .blog-main .article-title {
 	font-size: 26px;
 }
@@ -203,6 +208,10 @@ code {
     margin-top: 40px;
     padding-bottom: 20px;
     word-wrap: break-word;
+	+mobile(){
+		display: none;
+		visibility: hidden;
+	}
 }
 .sidebar-module {
 	margin-bottom: 30px;
@@ -345,7 +354,7 @@ p.tagcloud {
   padding: 25px 0 15px;
 }
 
-/* 具有类.article-header的h1元素 */
+/* 具有类.article-header元素内部所有的h1元素 */
 .article-header h1 {
 	border-bottom: 2px solid #ddd;
 	padding-bottom: 10px;
@@ -354,7 +363,7 @@ p.tagcloud {
 	text-align: left;
 	font: 700 25px/1.1 ff-tisa-web-pro,Cambria,"Times New Roman",Georgia,Times,sans-serif;
 }
-/* 具有类.article-header、元素h1、a属性的元素 */
+/* 具有类.article-header元素内部所有的h1元素内部的所有a元素 */
 .article-header h1 a {
   color: #333;
 }
@@ -363,7 +372,7 @@ p.tagcloud {
   text-decoration: none;
 }
 /* 文章元数据：发表时期和分类 */
-/* 同时具有两个class才会有效果 */
+/* 类.article元素内部的所有类.article-meta元素 */
 .article .article-meta {
   padding: 0;
   margin: 15px 0 0;	
@@ -371,6 +380,7 @@ p.tagcloud {
   color: #999;
   font-size: 0.9em;
 }
+/* 类.article-meta元素的所有子元素（不含孙元素） */
 .article-meta > * {
   display: inline-block;
   margin-right: 15px;
@@ -483,9 +493,33 @@ h2.archive-year-wrap {
   border-bottom-right-radius: 30px;
 }
 /* 每篇文章底部的上一篇、下一篇 */
-//#article-nav role[presentation] {
-//	
-//}
+#article-nav {
+	overflow: hidden; /* 当文本内容过长溢出则隐藏 */
+    margin-top: 30px;
+    
+    padding: 10px;
+    white-space: nowrap; /* 规定段落中的文本不进行换行 */
+    border-top: 1px solid #eee;
+}
+#article-nav > a {
+	border: 0;
+	color: #337ab7;
+}
+
+#article-nav-older {
+	margin: 0;
+	padding: 0;
+	float: left;
+	border: 0;
+}
+
+#article-nav-newer {
+	margin: 0;
+	padding: 0;
+	float: right;
+	border: 0;
+}
+
 
 /*
  * Footer
@@ -503,30 +537,95 @@ h2.archive-year-wrap {
   margin-bottom: 0;
 }
 
-#toc .toc li,.original ul{
-	list-style-type:none
-}
 
-/* 回到顶部 */
+
+/* 右下角'回到顶部'图标 */
 #rocket.show {
     visibility: visible;
-    opacity: 1;
+    opacity: 1; /* 透明度0~1 设为0全透明 */
 }
 #rocket {
-    right: 50px;
+    right: 50px; /* 把图像的右边缘设置在其包含元素右边缘向左50像素的位置： */
     bottom: 50px;
     display: block;
-    visibility: hidden;
+    visibility: hidden; /* 规定元素是否可见 */
     width: 26px;
     height: 48px;
     background: url(data:image/png;base64,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) 50% 0 no-repeat;
     opacity: 0;
-    -webkit-transition: visibility .6s cubic-bezier(.6,.04,.98,.335),opacity .6s cubic-bezier(.6,.04,.98,.335),-webkit-transform .6s cubic-bezier(.6,.04,.98,.335);
-    -moz-transition: visibility .6s cubic-bezier(.6,.04,.98,.335),opacity .6s cubic-bezier(.6,.04,.98,.335),-moz-transform .6s cubic-bezier(.6,.04,.98,.335);
-    transition: visibility .6s cubic-bezier(.6,.04,.98,.335),opacity .6s cubic-bezier(.6,.04,.98,.335),transform .6s cubic-bezier(.6,.04,.98,.335);
+    -webkit-transition: 
+		visibility .6s cubic-bezier(.6,.04,.98,.335),
+		opacity .6s cubic-bezier(.6,.04,.98,.335),
+		-webkit-transform .6s cubic-bezier(.6,.04,.98,.335);
+    -moz-transition: 
+		visibility .6s cubic-bezier(.6,.04,.98,.335),
+		opacity .6s cubic-bezier(.6,.04,.98,.335),
+		-moz-transform .6s cubic-bezier(.6,.04,.98,.335);
+    transition: 
+		visibility .6s cubic-bezier(.6,.04,.98,.335),
+		opacity .6s cubic-bezier(.6,.04,.98,.335),
+		transform .6s cubic-bezier(.6,.04,.98,.335);
 }
-#rocket, #toc {
+/* right：定位元素右外边距边界与其包含块右边界之间的偏移;
+	如果 "position" 属性的值为 "static"则"right" 属性不会产生任何效果。
+	*/
+#rocket {
     position: fixed;
+}
+/* position: fixed;
+	生成绝对定位的元素，相对于浏览器窗口进行定位。
+	元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。 
+	*/
+#toc .toc li,.original ul{
+	list-style-type:none
+}
+	
+/* 左上角文章目录列表： */
+
+/*--------------------样式1------------------------*/
+#article-toc-inner:after, #article-toc-inner:before,
+.inner:after, .inner:before {
+	content: "";
+	display: table;
+}
+#article-toc-inner:after, .inner:after {
+	clear: both
+}
+
+@media screen {
+	#article-toc-inner, .inner {
+		padding: 0 20px
+	}
+}
+#article-toc {
+	display: none;
+	float: left;
+	width: 25%;
+	margin-left: -220px;
+	opacity: .8;
+}
+@media screen and (min-width:769px) {
+	#article-toc {
+		display: block
+	}
+}
+#article-toc .fixed {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 220px;
+	padding-top: 55px;
+}
+.fixed #article-toc-inner {
+	position: fixed;
+	width: 220;
+	top: 0;
+	bottom: 0;
+	padding-top: 55px;
+}
+#article-toc-inner ol {
+	margin-left: -16px;
+	overflow: sroll;
 }
 
 
@@ -553,18 +652,22 @@ h2.archive-year-wrap {
 }
 .pace .pace-progress-inner {
 	display: block;
-	position: absolute;
+	position: absolute; 
 	right: 0px;
 	width: 100px;
 	height: 100%;
 	box-shadow: 0 0 10px #e90f92, 0 0 5px #e90f92;
 	opacity: 1.0;
-	-webkit-transform: rotate(3deg) translate(0px, -4px);
-	-moz-transform: rotate(3deg) translate(0px, -4px);
+	-webkit-transform: rotate(3deg) translate(0px, -4px); /* rotate(3deg)：顺时针旋转3度 */
+	-moz-transform: rotate(3deg) translate(0px, -4px); /* translate(0px, -4px)：向上平移4像素 */
 	-ms-transform: rotate(3deg) translate(0px, -4px);
 	-o-transform: rotate(3deg) translate(0px, -4px);
 	transform: rotate(3deg) translate(0px, -4px);
 }
+/* position: absolute; 
+	生成绝对定位的元素，相对于static定位（默认，无定位，忽略 top, bottom, left, right 或者 z-index 声明）
+	以外的第一个父元素进行定位。元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。
+	*/
 .pace .pace-activity {
 	display: block;
 	position: fixed;
@@ -573,17 +676,39 @@ h2.archive-year-wrap {
 	right: 15px;
 	width: 14px;
 	height: 14px;
-	border: solid 2px transparent;
+	border: solid 2px transparent; /* 'transparent'代表颜色透明 */
 	border-top-color: #e90f92;
 	border-left-color: #e90f92;
-	border-radius: 10px;
-	-webkit-animation: pace-spinner 400ms linear infinite;
-	-moz-animation: pace-spinner 400ms linear infinite;
-	-ms-animation: pace-spinner 400ms linear infinite;
-	-o-animation: pace-spinner 400ms linear infinite;
-	animation: pace-spinner 400ms linear infinite;
+	border-radius: 10px; /* 一个简写属性，用于设置四个border-*-radius属性：定义圆角的形状。 */
+	-webkit-animation: pace-spinner 400ms linear infinite; /* pace-spinner：需要绑定的 */
+	-moz-animation: pace-spinner 400ms linear infinite; /* 400ms：完成动画所花费的时间，以秒或毫秒计 */
+	-ms-animation: pace-spinner 400ms linear infinite; /* liner：动画的速度曲线 */
+	-o-animation: pace-spinner 400ms linear infinite; /* infinite：动画应该播放的次数（无限次） */
+	animation: pace-spinner 400ms linear infinite; /* name duration timing-function iteration-count */
 }
+/* z-index 属性设置元素的堆叠顺序。拥有更高堆叠顺序的元素总是会处于堆叠顺序较低的元素的前面。
+	注释：元素可拥有负的 z-index 属性值。
+	注释：Z-index 仅能在定位元素上奏效（例如 position:absolute;）！
+	说明：该属性设置一个定位元素沿 z 轴的位置，z 轴定义为垂直延伸到显示区的轴。
+		  如果为正数，则离用户更近，为负数则表示离用户更远。
+	JavaScript语法：object.style.zIndex="1" 
+	*/
 
+/* animation 属性是一个简写属性，用于设置六个动画属性：
+	animation: name duration timing-function delay iteration-count direction;
+	*/
+	
+/* transform 属性向元素应用2D或3D转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。
+	rotate()定义 2D 旋转，在参数中规定角度。
+   旋转div元素：（自上而下匹配，向右旋转7度）
+	div {
+		-ms-transform:rotate(7deg); 	/* IE 9 
+		-moz-transform:rotate(7deg); 	/* Firefox 
+		-webkit-transform:rotate(7deg); /* Safari 和 Chrome
+		-o-transform:rotate(7deg); 	/* Opera 
+		transform:rotate(7deg);	 /* Others
+	}
+ */
 @-webkit-keyframes pace-spinner {
 	0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
 	100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }

@@ -36,6 +36,7 @@
 <!-- 网页加载条 -->
 <script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
 <body>
+<div>
   <div class="container">
     <div id="header">
 		
@@ -69,6 +70,7 @@
 
 	</div>
     <div class="row">
+		<!-- 文章主题 -->
         <div class="col-sm-8 blog-main">
           
   
@@ -89,14 +91,13 @@
 	&nbsp;&nbsp;&nbsp;
     
   
-      <a class="archive-article-title" href="/2018/04/30/hello-world8/">Hello Worl8</a>
+      <a class="archive-article-title" href="/2018/04/30/hello-world6/">Hello Worl6</a>
   
 
 
   </li>
 </article>
 
-	
 	
   
     
@@ -119,7 +120,6 @@
 </article>
 
 	
-	
   
     
      
@@ -133,14 +133,13 @@
 	&nbsp;&nbsp;&nbsp;
     
   
-      <a class="archive-article-title" href="/2018/04/30/hello-world6/">Hello Worl6</a>
+      <a class="archive-article-title" href="/2018/04/30/hello-world8/">Hello Worl8</a>
   
 
 
   </li>
 </article>
 
-	
 	
   
   
@@ -154,8 +153,9 @@
 
 
         </div>
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
   <div class="sidebar-module sidebar-module-inset">
   <!--<h4>About</h4>
    <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
@@ -216,11 +216,11 @@
     <ul class="sidebar-module-list">
       
         <li class="recent-post">
-          <a href="/2019/05/01/hello-world/">Hello World</a>
+          <a href="/2019/05/01/hello-world3/">Hello Worl3</a>
         </li>
       
         <li class="recent-post">
-          <a href="/2019/05/01/hello-world3/">Hello Worl3</a>
+          <a href="/2019/05/01/hello-world/">Hello World</a>
         </li>
       
         <li class="recent-post">
@@ -232,7 +232,7 @@
         </li>
       
         <li class="recent-post">
-          <a href="/2019/04/30/hello-world7/">Hello Worl7</a>
+          <a href="/2019/04/30/hello-world13/">Hello Worl13</a>
         </li>
       
     </ul>
@@ -249,31 +249,56 @@
 </div>
 
 
-        </div>
+
+
+		</div>
     </div>
-	<!-- 回到顶部 -->
-    <a class="show" id="rocket" href="#top"></a>
+	
   </div>
   <footer class="blog-footer">
   <div class="container">
     <div id="footer-info" class="inner">
-      &copy; 2018 - 2019
+      &copy; 2018-2019
 	  | Easygo_Space
       | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
 
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
   
+</div>
+		
+
+<script>
+
+  var disqus_shortname = 'mlone-top';
   
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
 
 <script src="/js/script.js"></script>
+
+
+
 
 </body>
 </html>

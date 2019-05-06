@@ -84,4 +84,15 @@
     $('.image-link').fancybox();
   }
 
+  // 目录点击展开效果 
+  $('ol.toc').hide();
+  $('article').click(function() {
+	$('ol.toc').hide();
+  });
+  $('strong.sidebar-title').click(function() {
+	$('ol.toc').toggle();
+  });
+	
+  
+
 })(jQuery);
