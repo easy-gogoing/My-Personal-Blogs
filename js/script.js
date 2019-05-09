@@ -92,7 +92,6 @@
   $('strong.sidebar-title').click(function() {
 	$('ol.toc').toggle();
   });
-	
   
 
 })(jQuery);

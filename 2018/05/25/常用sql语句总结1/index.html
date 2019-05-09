@@ -1,0 +1,421 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>常用sql语句总结1 | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="来源于：牛客网">
+<meta name="keywords" content="sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用sql语句总结1">
+<meta property="og:url" content="https://mlone.top/2018/05/25/常用sql语句总结1/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="来源于：牛客网">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-09T09:10:04.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用sql语句总结1">
+<meta name="twitter:description" content="来源于：牛客网">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-常用sql语句总结1" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      常用sql语句总结1
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2018/05/25/常用sql语句总结1/" class="article-date"><time datetime="2018-05-25T08:12:10.000Z" itemprop="datePublished">2018-05-25</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>来源于：<a href="https://www.nowcoder.com/ta/sql" target="_blank" rel="noopener">牛客网</a><br><a id="more"></a>
+　　</p>
+<h4 id="1-sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断"><a href="#1-sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断" class="headerlink" title="1.sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断:"></a>1.sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断:</h4><p><strong>答：</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> tb_Item</span><br><span class="line"><span class="keyword">where</span> itemId <span class="keyword">in</span> (<span class="keyword">select</span> itemId <span class="keyword">from</span> tb_Item </span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> itemId <span class="keyword">having</span> <span class="keyword">count</span>(itemId) &gt; <span class="number">1</span> )</span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="2-1-查找最晚入职员工的所有信息"><a href="#2-1-查找最晚入职员工的所有信息" class="headerlink" title="2.1 查找最晚入职员工的所有信息:"></a>2.1 查找最晚入职员工的所有信息:</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`employees`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`birth_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`first_name`</span> <span class="built_in">varchar</span>(<span class="number">14</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`last_name`</span> <span class="built_in">varchar</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`gender`</span> <span class="built_in">char</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`hire_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> employees</span><br><span class="line"><span class="keyword">where</span> hire_date =</span><br><span class="line">(<span class="keyword">select</span> <span class="keyword">max</span>(hire_date) <span class="keyword">from</span> employees)</span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="2-2-查找入职员工时间排名倒数第三的员工所有信息（接上题）"><a href="#2-2-查找入职员工时间排名倒数第三的员工所有信息（接上题）" class="headerlink" title="2.2 查找入职员工时间排名倒数第三的员工所有信息（接上题）"></a>2.2 查找入职员工时间排名倒数第三的员工所有信息（接上题）</h4><p><strong>答：</strong>对入职时间进行降序排列，从第2条记录开始，选取1条记录信息。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> employees <span class="keyword">ORDER</span> <span class="keyword">BY</span> hire_date <span class="keyword">DESC</span> <span class="keyword">LIMIT</span> <span class="number">2</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="3-查找各个部门当前-to-date-’9999-01-01’-领导当前薪水详情以及其对应部门编号dept-no"><a href="#3-查找各个部门当前-to-date-’9999-01-01’-领导当前薪水详情以及其对应部门编号dept-no" class="headerlink" title="3.查找各个部门当前(to_date=’9999-01-01’)领导当前薪水详情以及其对应部门编号dept_no"></a>3.查找各个部门当前(to_date=’9999-01-01’)领导当前薪水详情以及其对应部门编号dept_no</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_manager`</span> (</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`salaries`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`salary`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`from_date`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong>（注意这里两个表的日期要同步）<br>解1：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> s.*, d.dept_no</span><br><span class="line"><span class="keyword">from</span> salaries s, dept_manager d</span><br><span class="line"><span class="keyword">where</span> s.emp_no = d.emp_no </span><br><span class="line"><span class="keyword">and</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> d.to_date = <span class="string">'9999-01-01'</span></span><br></pre></td></tr></table></figure></p>
+<p>解2：（使用关联查询）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> s.*, d.dept_no</span><br><span class="line"><span class="keyword">from</span> salaries <span class="keyword">as</span> s</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> dept_manager <span class="keyword">as</span> d</span><br><span class="line"><span class="keyword">on</span> s.emp_no = d.emp_no </span><br><span class="line"><span class="keyword">and</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> d.to_date = <span class="string">'9999-01-01'</span></span><br></pre></td></tr></table></figure></p>
+<p>解3：（只是加了一个where）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> s.*, d.dept_no</span><br><span class="line"><span class="keyword">from</span> salaries s</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> dept_manager d</span><br><span class="line"><span class="keyword">on</span> s.emp_no = d.emp_no </span><br><span class="line"><span class="keyword">where</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> d.to_date = <span class="string">'9999-01-01'</span></span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="4-1-查找所有已经分配部门的员工的last-name和first-name"><a href="#4-1-查找所有已经分配部门的员工的last-name和first-name" class="headerlink" title="4.1 查找所有已经分配部门的员工的last_name和first_name"></a>4.1 查找所有已经分配部门的员工的last_name和first_name</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_emp`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`employees`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`birth_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`first_name`</span> <span class="built_in">varchar</span>(<span class="number">14</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`last_name`</span> <span class="built_in">varchar</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`gender`</span> <span class="built_in">char</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`hire_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br>解1：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.last_name, e.first_name, d.dept_no</span><br><span class="line"><span class="keyword">from</span> employees e </span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> dept_emp d</span><br><span class="line"><span class="keyword">on</span> e.emp_no = d.emp_no</span><br></pre></td></tr></table></figure></p>
+<p>解2：（//只有一列是公有的，用自然连接）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.last_name, e.first_name, d.dept_no</span><br><span class="line"><span class="keyword">from</span> employees e </span><br><span class="line"><span class="keyword">natural</span> <span class="keyword">join</span> dept_emp d</span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="4-2-查找所有员工的last-name和first-name以及对应部门编号dept-no，也包括展示没有分配具体部门的员工（接上题）"><a href="#4-2-查找所有员工的last-name和first-name以及对应部门编号dept-no，也包括展示没有分配具体部门的员工（接上题）" class="headerlink" title="4.2 查找所有员工的last_name和first_name以及对应部门编号dept_no，也包括展示没有分配具体部门的员工（接上题）"></a>4.2 查找所有员工的last_name和first_name以及对应部门编号dept_no，也包括展示没有分配具体部门的员工（接上题）</h4><p><strong>答：</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> e.last_name, e.first_name, d.dept_no </span><br><span class="line"><span class="keyword">FROM</span> employees e </span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> dept_emp d</span><br><span class="line"><span class="keyword">ON</span> e.emp_no = d.emp_no</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><p><code>INNER JOIN 两边表同时有对应的数据，即任何一边缺失数据就不显示。</code></p>
+</li>
+<li><p><code>LEFT JOIN 会读取左边数据表的全部数据，即便右边表无对应数据。</code></p>
+</li>
+<li><p><code>RIGHT JOIN 会读取右边数据表的全部数据，即便左边表无对应数据。</code></p>
+</li>
+</ul>
+<h4 id="4-3查找所有员工入职时候的薪水情况，给出emp-no以及salary，-并按照emp-no进行逆序（接上题）"><a href="#4-3查找所有员工入职时候的薪水情况，给出emp-no以及salary，-并按照emp-no进行逆序（接上题）" class="headerlink" title="4.3查找所有员工入职时候的薪水情况，给出emp_no以及salary， 并按照emp_no进行逆序（接上题）"></a>4.3查找所有员工入职时候的薪水情况，给出emp_no以及salary， 并按照emp_no进行逆序（接上题）</h4><p><strong>答：</strong><br>此题应注意以下四个知识点：</p>
+<blockquote>
+<p><code>1.由于测试数据中，salaries.emp_no 不唯一（因为号码为 emp_no 的员工会有多次涨薪的可能，所以在 salaries 中对应的记录不止一条），employees.emp_no 唯一，即 salaries 的数据会多于 employees，因此需先找到 employees.emp_no 在 salaries 表中对应的记录salaries.emp_no，则有限制条件 e.emp_no = s.emp_no</code></p>
+</blockquote>
+<blockquote>
+<p><code>2.根据题意注意到 salaries.from_date 和 employees.hire_date 的值应该要相等，因此有限制条件 e.hire_date = s.from_date</code></p>
+</blockquote>
+<blockquote>
+<p><code>3.根据题意要按照 emp_no 值逆序排列，因此最后要加上 ORDER BY e.emp_no DESC</code></p>
+</blockquote>
+<blockquote>
+<p><code>4.为了代码良好的可读性，运用了 Alias 别名语句，将 employees 简化为 e，salaries 简化为s，即 employees AS e 与 salaries AS s，其中 AS 可以省略</code></p>
+</blockquote>
+<p>方法一：利用 INNER JOIN 连接两张表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> e.emp_no, s.salary <span class="keyword">FROM</span> employees <span class="keyword">AS</span> e <span class="keyword">INNER</span> <span class="keyword">JOIN</span> salaries <span class="keyword">AS</span> s</span><br><span class="line"><span class="keyword">ON</span> e.emp_no = s.emp_no <span class="keyword">AND</span> e.hire_date = s.from_date</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> e.emp_no <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure></p>
+<p>方法二：直接用逗号并列查询两张表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> e.emp_no, s.salary <span class="keyword">FROM</span> employees <span class="keyword">AS</span> e, salaries <span class="keyword">AS</span> s</span><br><span class="line"><span class="keyword">WHERE</span> e.emp_no = s.emp_no <span class="keyword">AND</span> e.hire_date = s.from_date</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> e.emp_no <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="5-查找薪水涨幅超过15次的员工号emp-no以及其对应的涨幅次数t："><a href="#5-查找薪水涨幅超过15次的员工号emp-no以及其对应的涨幅次数t：" class="headerlink" title="5.查找薪水涨幅超过15次的员工号emp_no以及其对应的涨幅次数t："></a>5.查找薪水涨幅超过15次的员工号emp_no以及其对应的涨幅次数t：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`salaries`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`salary`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`from_date`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp_no, <span class="keyword">COUNT</span>(emp_no) <span class="keyword">AS</span> t </span><br><span class="line"><span class="keyword">FROM</span> salaries </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> emp_no <span class="keyword">HAVING</span> t &gt; <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
+<p>解析：<br>此题应注意以下四点：<br><code>1. 用COUNT()函数和GROUP BY语句可以统计同一emp_no值的记录条数</code><br><code>2. 根据题意，输出的涨幅次数为t，故用AS语句将COUNT(emp_no)的值转换为t</code><br><code>3. 由于COUNT()函数不可用于WHERE语句中，故使用HAVING语句来限定t&gt;15的条件</code><br><code>4. 最后存在一个理解误区，涨幅超过15次，salaries中相应的记录数应该超过16（从第2条记录开始算作第1次涨幅），不过题目为了简单起见，将第1条记录当作第1次涨幅，所以令t&gt;15即可</code></p>
+<blockquote>
+<p><strong><em>注意：严格来说，下一条salary高于本条才算涨幅，但本题只要出现了一条记录就算一次涨幅，salary相同可以理解为涨幅为0，salary变少理解为涨幅为负</em></strong>
+　　</p>
+</blockquote>
+<h4 id="6-找出所有员工当前-to-date-’9999-01-01’-具体的薪水salary情况，对于相同的薪水只显示一次-并按照逆序显示："><a href="#6-找出所有员工当前-to-date-’9999-01-01’-具体的薪水salary情况，对于相同的薪水只显示一次-并按照逆序显示：" class="headerlink" title="6.找出所有员工当前(to_date=’9999-01-01’)具体的薪水salary情况，对于相同的薪水只显示一次,并按照逆序显示："></a>6.找出所有员工当前(to_date=’9999-01-01’)具体的薪水salary情况，对于相同的薪水只显示一次,并按照逆序显示：</h4><p><strong>答：</strong><br>方式一：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary <span class="keyword">FROM</span> salaries </span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">to_date</span>=<span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure></p>
+<p>方式二：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> salary <span class="keyword">FROM</span> salaries </span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">to_date</span>=<span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> salary </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> salary <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure></p>
+<p><strong>解析：</strong><br>对于distinct,groupby的性能：<br><code>1.数据量非常巨大时候，比如1000万中有300W重复数据，这时候的distinct的效率略好于group by；</code><br><code>2.对于相对重复量较小的数据量比如1000万中1万的重复量，用groupby的性能会远优于distnct；</code><br><code>3.简书上的一篇博客说的不错，大家可以穿送过去看一看</code><a href="http://www.jianshu.com/p/34800d06f63d" target="_blank" rel="noopener">传送门</a></p>
+<p>　　</p>
+<h4 id="7-获取所有部门当前manager的当前薪水情况，给出dept-no-emp-no以及salary，当前表示to-date-’9999-01-01’："><a href="#7-获取所有部门当前manager的当前薪水情况，给出dept-no-emp-no以及salary，当前表示to-date-’9999-01-01’：" class="headerlink" title="7.获取所有部门当前manager的当前薪水情况，给出dept_no, emp_no以及salary，当前表示to_date=’9999-01-01’："></a>7.获取所有部门当前manager的当前薪水情况，给出dept_no, emp_no以及salary，当前表示to_date=’9999-01-01’：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_manager`</span> (</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`salaries`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`salary`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`from_date`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br>方式一：（where关联查询语句）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> d.dept_no, d.emp_no, s.salary </span><br><span class="line"><span class="keyword">FROM</span> salaries <span class="keyword">AS</span> s, dept_manager <span class="keyword">AS</span> d</span><br><span class="line"><span class="keyword">WHERE</span> d.emp_no = s.emp_no </span><br><span class="line"><span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">AND</span> d.to_date = <span class="string">'9999-01-01'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>方式二：（内连接）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> d.dept_no, d.emp_no, s.salary </span><br><span class="line"><span class="keyword">FROM</span> salaries <span class="keyword">AS</span> s </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> dept_manager <span class="keyword">AS</span> d </span><br><span class="line"><span class="keyword">ON</span> d.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">WHERE</span> d.to_date = <span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span></span><br></pre></td></tr></table></figure></p>
+<p>或：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> d.dept_no, d.emp_no, s.salary </span><br><span class="line"><span class="keyword">FROM</span> salaries <span class="keyword">AS</span> s </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> dept_manager <span class="keyword">AS</span> d </span><br><span class="line"><span class="keyword">ON</span> d.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">AND</span> d.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span></span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="8-获取所有非manager的员工emp-no："><a href="#8-获取所有非manager的员工emp-no：" class="headerlink" title="8.获取所有非manager的员工emp_no："></a>8.获取所有非manager的员工emp_no：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_manager`</span> (</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`employees`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`birth_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`first_name`</span> <span class="built_in">varchar</span>(<span class="number">14</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`last_name`</span> <span class="built_in">varchar</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`gender`</span> <span class="built_in">char</span>(<span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`hire_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br>方式一：（使用NOT IN选出在employees但不在dept_manager中的emp_no记录）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp_no <span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> emp_no <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> emp_no <span class="keyword">FROM</span> dept_manager)</span><br></pre></td></tr></table></figure></p>
+<p>方式二：（先使用LEFT JOIN连接两张表，再从此表中选出dept_no值为NULL对应的emp_no记录）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> e.emp_no <span class="keyword">FROM</span> employees e </span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> dept_manager d </span><br><span class="line"><span class="keyword">ON</span> e.emp_no = d.emp_no </span><br><span class="line"><span class="keyword">WHERE</span> dept_no <span class="keyword">IS</span> <span class="literal">NULL</span></span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="9-获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to-date-’9999-01-01’。结果第一列给出当前员工的emp-no-第二列给出其manager对应的manager-no。"><a href="#9-获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to-date-’9999-01-01’。结果第一列给出当前员工的emp-no-第二列给出其manager对应的manager-no。" class="headerlink" title="9.获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to_date=’9999-01-01’。结果第一列给出当前员工的emp_no,第二列给出其manager对应的manager_no。"></a>9.获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to_date=’9999-01-01’。结果第一列给出当前员工的emp_no,第二列给出其manager对应的manager_no。</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_emp`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_manager`</span> (</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br>方式一：（使用where条件语句）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> de.emp_no, dm.emp_no <span class="keyword">AS</span> manager_no</span><br><span class="line"><span class="keyword">FROM</span> dept_manager <span class="keyword">AS</span> dm, dept_emp <span class="keyword">AS</span> de</span><br><span class="line"><span class="keyword">WHERE</span> de.dept_no = dm.dept_no </span><br><span class="line"><span class="keyword">AND</span> de.to_date=<span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">AND</span> dm.to_date=<span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">AND</span> de.emp_no &lt;&gt; dm.emp_no</span><br></pre></td></tr></table></figure></p>
+<p>方式二：（使用inner join内连接）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> de.emp_no, dm.emp_no <span class="keyword">AS</span> manager_no </span><br><span class="line"><span class="keyword">FROM</span> dept_emp <span class="keyword">AS</span> de <span class="keyword">INNER</span> <span class="keyword">JOIN</span> dept_manager <span class="keyword">AS</span> dm</span><br><span class="line"><span class="keyword">ON</span> de.dept_no = dm.dept_no </span><br><span class="line"><span class="keyword">WHERE</span> dm.to_date = <span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">AND</span> de.to_date = <span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">AND</span> de.emp_no &lt;&gt; dm.emp_no</span><br></pre></td></tr></table></figure></p>
+<p><strong>解析：</strong><br>本题应注意以下三点：</p>
+<blockquote>
+<p><code>1.用 INNER JOIN 连接两张表，因为要输出自己的经理，得知自己与经理的部门要相同，故有限制条件 de.dept_no = dm.dept_no</code></p>
+<p><code>2.再用 WHERE 限制当前员工与当前经理的条件，即 dm.to_date 等于 ‘9999-01-01’ 、de.to_date 等于 ‘9999-01-01’ 、 de.emp_no 不等于 dm.emp_no</code></p>
+<p><code>3.为了增强代码可读性，将 dept_emp 用别名 de 代替，dept_manager 用 dm 代替，最后根据题意将 de.emp_no 用别名 manager_no 代替后输出</code>
+　　</p>
+</blockquote>
+<h4 id="10-获取所有部门中当前员工薪水最高的相关信息，给出dept-no-emp-no以及其对应的salary："><a href="#10-获取所有部门中当前员工薪水最高的相关信息，给出dept-no-emp-no以及其对应的salary：" class="headerlink" title="10.获取所有部门中当前员工薪水最高的相关信息，给出dept_no, emp_no以及其对应的salary："></a>10.获取所有部门中当前员工薪水最高的相关信息，给出dept_no, emp_no以及其对应的salary：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`dept_emp`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`dept_no`</span> <span class="built_in">char</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`dept_no`</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`salaries`</span> (</span><br><span class="line"><span class="string">`emp_no`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`salary`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`from_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">`to_date`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`emp_no`</span>,<span class="string">`from_date`</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>答：</strong><br>方式一：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> de.dept_no, de.emp_no, <span class="keyword">max</span>(s.salary) salary </span><br><span class="line"><span class="keyword">FROM</span> dept_emp de,salaries s </span><br><span class="line"><span class="keyword">WHERE</span> de.emp_no = s.emp_no </span><br><span class="line"><span class="keyword">AND</span> de.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> de.dept_no;</span><br></pre></td></tr></table></figure></p>
+<p>方式二：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> d.dept_no, s.emp_no, <span class="keyword">MAX</span>(s.salary) <span class="keyword">AS</span> salary</span><br><span class="line"><span class="keyword">FROM</span> salaries <span class="keyword">AS</span> s </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> dept_emp <span class="keyword">As</span> d </span><br><span class="line"><span class="keyword">ON</span> d.emp_no = s.emp_no </span><br><span class="line"><span class="keyword">WHERE</span> d.to_date = <span class="string">'9999-01-01'</span> </span><br><span class="line"><span class="keyword">AND</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> d.dept_no</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2018/05/25/常用sql语句总结1/" data-id="cjvgrbh3m0099aovrxz6cilsf" title="常用sql语句总结1" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
+
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2018/05/21/索引的作用/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;索引的作用</span>
+    </a>
+  
+  
+  
+    <a href="/2018/05/25/常用sql语句总结2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">常用sql语句总结2&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断"><span class="toc-text">1.sql查找表中多余的重复记录，重复记录是根据单个字段（itemId）来判断:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-查找最晚入职员工的所有信息"><span class="toc-text">2.1 查找最晚入职员工的所有信息:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-查找入职员工时间排名倒数第三的员工所有信息（接上题）"><span class="toc-text">2.2 查找入职员工时间排名倒数第三的员工所有信息（接上题）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-查找各个部门当前-to-date-’9999-01-01’-领导当前薪水详情以及其对应部门编号dept-no"><span class="toc-text">3.查找各个部门当前(to_date=’9999-01-01’)领导当前薪水详情以及其对应部门编号dept_no</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-查找所有已经分配部门的员工的last-name和first-name"><span class="toc-text">4.1 查找所有已经分配部门的员工的last_name和first_name</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-查找所有员工的last-name和first-name以及对应部门编号dept-no，也包括展示没有分配具体部门的员工（接上题）"><span class="toc-text">4.2 查找所有员工的last_name和first_name以及对应部门编号dept_no，也包括展示没有分配具体部门的员工（接上题）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3查找所有员工入职时候的薪水情况，给出emp-no以及salary，-并按照emp-no进行逆序（接上题）"><span class="toc-text">4.3查找所有员工入职时候的薪水情况，给出emp_no以及salary， 并按照emp_no进行逆序（接上题）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-查找薪水涨幅超过15次的员工号emp-no以及其对应的涨幅次数t："><span class="toc-text">5.查找薪水涨幅超过15次的员工号emp_no以及其对应的涨幅次数t：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-找出所有员工当前-to-date-’9999-01-01’-具体的薪水salary情况，对于相同的薪水只显示一次-并按照逆序显示："><span class="toc-text">6.找出所有员工当前(to_date=’9999-01-01’)具体的薪水salary情况，对于相同的薪水只显示一次,并按照逆序显示：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-获取所有部门当前manager的当前薪水情况，给出dept-no-emp-no以及salary，当前表示to-date-’9999-01-01’："><span class="toc-text">7.获取所有部门当前manager的当前薪水情况，给出dept_no, emp_no以及salary，当前表示to_date=’9999-01-01’：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-获取所有非manager的员工emp-no："><span class="toc-text">8.获取所有非manager的员工emp_no：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to-date-’9999-01-01’。结果第一列给出当前员工的emp-no-第二列给出其manager对应的manager-no。"><span class="toc-text">9.获取所有员工当前的manager，如果当前的manager是自己的话结果不显示，当前表示to_date=’9999-01-01’。结果第一列给出当前员工的emp_no,第二列给出其manager对应的manager_no。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-获取所有部门中当前员工薪水最高的相关信息，给出dept-no-emp-no以及其对应的salary："><span class="toc-text">10.获取所有部门中当前员工薪水最高的相关信息，给出dept_no, emp_no以及其对应的salary：</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">107</p><p class="title">文章</p></a></li>
+    <li><p class="num">99.5k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">34</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JavaWeb/">JavaWeb</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">5</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">十一月 2017</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">十月 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">九月 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">八月 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">七月 2017</a><span class="sidebar-module-list-count">2</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2018/09/11/《心迷宫》简单解读/">《心迷宫》简单解读</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2018/09/10/《爆裂无声》深度解析/">《爆裂无声》深度解析</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2018/08/10/nginx的作用/">nginx的作用</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2018/08/07/spring与springmvc/">spring与springmvc</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2018/08/06/MyBatis与Hibernate的区别/">MyBatis与Hibernate的区别</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2017-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
