@@ -138,6 +138,12 @@ pre {
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
+/* 当屏幕宽度<768px(手机)则隐藏：标题和副标题 */
+@media screen and (max-width:768px){ 
+	.blog-header {
+		visibility: hidden;
+	}
+}
 .blog-title {
   margin: .2em 0 0; /* padding：0.2em的意思就是这个元素的内边距 上下左右都为 当前字体大小乘以0.2 */
   font-style: normal;
@@ -216,6 +222,12 @@ pre {
 	margin-left: 5%;
     padding-bottom: 20px;
     word-wrap: break-word;
+}
+/* 当屏幕宽度<768px(手机)则不显示：侧边栏 */
+@media (max-width: 768px){
+	.blog-sidebar {
+		display: none;
+	}
 }
 .sidebar-module {
 	margin-bottom: 30px;
@@ -648,6 +660,13 @@ h2.archive-year-wrap {
     border: 1px solid #bbb;
     border-radius: 5px;
 }
+/*当屏幕宽度小于768px(手机)则不显示：该视图改变按钮*/
+@media screen and (max-width:768px){
+	#enlarge-shrink-view {
+		display: none;
+	}
+}
+
 #article-toc .article-toc-inner strong > a {
 	display: inline-block;
 }
