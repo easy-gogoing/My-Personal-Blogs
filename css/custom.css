@@ -194,6 +194,7 @@ pre {
   font-size: 18px;
   line-height: 1.5;
   padding-top: 20px;
+  width: 75%;
 }
 
 /* 类.blog-main元素内部的所有类.article-title元素 */
@@ -219,7 +220,7 @@ pre {
 	border-left: 1px solid #ddd;
     padding-left: 35px;
     margin-top: 40px;
-	margin-left: 5%;
+	margin-left: 0%;
     padding-bottom: 20px;
     word-wrap: break-word;
 }
