@@ -191,7 +191,6 @@ pre {
 
 /* 首页文章列表主体 */
 .blog-main {
-  font-size: 18px;
   line-height: 1.5;
   padding-top: 20px;
   width: 75%;
@@ -405,14 +404,14 @@ p.tagcloud {
 .article-meta a {
   color: inherit;
 }
-/* 文章内容摘录 */
+/* 文章内容及摘录 */
 .article-entry p {
 	clear: left;
-    font-size: 15px;
-    line-height: 1.77;
+    font-size: 17px;
+    line-height: 1.5;
     color: #222;
     padding-top: 0;
-	margin-top: 0;
+	margin-top: 5px;
 	margin-bottom: 5px;
     word-break: normal;
 }
@@ -434,7 +433,7 @@ p.tagcloud {
 	background: #999;
 }
 .article-entry .thumbnail .caption {
-  padding: 0;
+	padding: 0;
 }
 
 
@@ -485,7 +484,7 @@ h2.archive-year-wrap {
  * Pagination 首页的页码
  */
 #page-nav {
-  text-align: center;
+	text-align: center;
 }
 #page-nav .pagination {
 	margin-top: 0;
@@ -625,7 +624,7 @@ h2.archive-year-wrap {
 	padding-top: 55px;
 }
 .sidebar-title a.toggleToc {
-	font-size: .8em; /* 相对原先自身大小：100% */
+	font-size: 14px;
 	margin-left: -30px;
 	border: 1px solid #bbb;
 }
