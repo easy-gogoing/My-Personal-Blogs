@@ -4,22 +4,20 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>内部类 | Easygo_Space</title>
+  <title>早绑定与晚绑定 | Easygo_Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内容来自：牛客网">
-<meta name="keywords" content="java">
+  <meta name="description" content="静态绑定（早绑定）：　　程序在编译阶段根据参数个数确定调用哪个函数（重载）。">
+<meta name="keywords" content="java,c++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内部类">
-<meta property="og:url" content="https://mlone.top/2017/09/07/内部类/index.html">
+<meta property="og:title" content="早绑定与晚绑定">
+<meta property="og:url" content="https://mlone.top/2018/02/13/早绑定与晚绑定/index.html">
 <meta property="og:site_name" content="Easygo_Space">
-<meta property="og:description" content="内容来自：牛客网">
+<meta property="og:description" content="静态绑定（早绑定）：　　程序在编译阶段根据参数个数确定调用哪个函数（重载）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://mlone.top/blogImg/4/1.png">
-<meta property="og:updated_time" content="2019-05-08T06:21:00.459Z">
+<meta property="og:updated_time" content="2019-09-04T17:11:13.784Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内部类">
-<meta name="twitter:description" content="内容来自：牛客网">
-<meta name="twitter:image" content="https://mlone.top/blogImg/4/1.png">
+<meta name="twitter:title" content="早绑定与晚绑定">
+<meta name="twitter:description" content="静态绑定（早绑定）：　　程序在编译阶段根据参数个数确定调用哪个函数（重载）。">
 <meta name="twitter:creator" content="@yangdongliu2016">
   
   
@@ -79,7 +77,7 @@
 		<!-- 文章主题 -->
         <div class="col-sm-8 blog-main">
 		  <div class="post-body">
-            <article id="post-内部类" class="article article-type-post" itemscope itemprop="blogPost">
+            <article id="post-早绑定与晚绑定" class="article article-type-post" itemscope itemprop="blogPost">
   <!-- 文章加密 -->
   	
   
@@ -88,7 +86,7 @@
     
   
     <h1 class="article-title" itemprop="name">
-      内部类
+      早绑定与晚绑定
     </h1>
   
 
@@ -97,7 +95,7 @@
   <!-- 文章头部元数据 -->
   <div class="article-meta">
     <div class="article-datetime">
-  <a href="/2017/09/07/内部类/" class="article-date"><time datetime="2017-09-07T08:03:09.000Z" itemprop="datePublished">2017-09-07</time></a>
+  <a href="/2018/02/13/早绑定与晚绑定/" class="article-date"><time datetime="2018-02-13T09:05:28.000Z" itemprop="datePublished">2018-02-13</time></a>
 </div>
 
     | 
@@ -124,22 +122,22 @@
 
 		
 		
-        <p>内容来自：<a href="https://www.nowcoder.com/" target="_blank" rel="noopener">牛客网</a><br><a id="more"></a></p>
-<h5 id="成员内部类："><a href="#成员内部类：" class="headerlink" title="成员内部类："></a>成员内部类：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以访问外部所有资源，但是本身内部不可以有静态属性（因为自己本身就需要依靠外部类的实例化）。</span><br></pre></td></tr></table></figure>
-<h5 id="局部内部类："><a href="#局部内部类：" class="headerlink" title="局部内部类："></a>局部内部类：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不可被访问修饰符和static修饰，且只能访问外部类的final变量和所在函数的形参。</span><br></pre></td></tr></table></figure>
-<h5 id="匿名内部类："><a href="#匿名内部类：" class="headerlink" title="匿名内部类："></a>匿名内部类：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不可被访问修饰符和static修饰，且只能访问外部类的final变量和所在函数的形参；</span><br><span class="line">没有构造器，没有静态资源；</span><br><span class="line">只能创建一个实例；</span><br><span class="line">不能是抽象的，它必须要实现继承的类或者实现的接口的所有抽象方法</span><br></pre></td></tr></table></figure>
-<p><img src="/blogImg/4/1.png" alt></p>
+        <p>静态绑定（早绑定）：<br>　　程序在编译阶段根据参数个数确定调用哪个函数（重载）。<br><a id="more"></a><br>动态绑定（晚绑定）：<br>　　以封装和继承为基础，将成员函数和析构函数声明为虚函数（virtual）。<br>构造函数不能声明为virtual：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Shape *shape1 = <span class="keyword">new</span> Circle(<span class="number">3.5</span>, <span class="number">4.0</span>);</span><br><span class="line">shape -&gt; calcArea(); <span class="comment">//父类指针调用子类面积函数delete Shape1；//先调用子类析构函数，再调用父类析构函数</span></span><br><span class="line">shape1 = <span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">cost</span><span class="params">()</span></span>=<span class="number">0</span>; <span class="comment">//纯虚函数</span></span><br></pre></td></tr></table></figure>
+<p>纯虚函数在类内声明，在类内或类外定义函数，而纯虚函数无函数体。</p>
+<p>含有纯虚函数的类称为<strong>抽象类</strong>；<br>只含有纯虚函数的类称为<strong>接口类</strong>（没有任何数据成员）。</p>
+<p>Java： 通过”abstract”关键字实现多态。</p>
 
       
     </div>
 	
 	<!-- 分享按钮和标签显示 -->
     <footer class="article-footer">
-      <a data-url="https://mlone.top/2017/09/07/内部类/" data-id="cjzskmvek003fasvrrt3a8v0e" title="内部类" class="article-share-link">
+      <a data-url="https://mlone.top/2018/02/13/早绑定与晚绑定/" data-id="ck05i5ezf006280v9l4ds8age" title="早绑定与晚绑定" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
 
 
     </footer>
@@ -150,15 +148,15 @@
     
 <ul id="article-nav" class="nav nav-pills nav-justified">
   
-    <a href="/2017/08/05/安卓开发需要学什么/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/02/13/上转型对象/" id="article-nav-older" class="article-nav-link-wrap">
       <i class="fa fa-angle-double-left pull-left"></i>
-      <span class="article-nav-link-title">&nbsp;安卓开发需要学什么</span>
+      <span class="article-nav-link-title">&nbsp;上转型对象</span>
     </a>
   
   
   
-    <a href="/2017/09/08/java中的传值与传引用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <span class="article-nav-link-title">java中的传值与传引用&nbsp;</span>
+    <a href="/2018/02/15/wait、notify-notifyAll详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">wait、notify/notifyAll详解&nbsp;</span>
       <i class="fa fa-angle-double-right pull-right"></i>
     </a>
   
@@ -177,7 +175,7 @@
 		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
 		</a></strong>
 		<!-- list_number: false表示目录不自动编号 -->
-		<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#成员内部类："><span class="toc-text">成员内部类：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#局部内部类："><span class="toc-text">局部内部类：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#匿名内部类："><span class="toc-text">匿名内部类：</span></a></li></ol>
+		
 	</div>
 	<div>
 	  
@@ -244,7 +242,7 @@
   
   <div class="sidebar-module">
     <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">十一月 2017</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">十月 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">九月 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">八月 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">七月 2017</a><span class="sidebar-module-list-count">2</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">13</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">七月 2017</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
