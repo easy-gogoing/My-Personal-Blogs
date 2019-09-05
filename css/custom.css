@@ -138,12 +138,7 @@ pre {
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
-/* 当屏幕宽度<768px(手机)则隐藏：标题和副标题 */
-@media screen and (max-width:768px){ 
-	.blog-header {
-		visibility: hidden;
-	}
-}
+
 .blog-title {
   margin: .2em 0 0; /* padding：0.2em的意思就是这个元素的内边距 上下左右都为 当前字体大小乘以0.2 */
   font-style: normal;
@@ -223,12 +218,9 @@ pre {
     padding-bottom: 20px;
     word-wrap: break-word;
 }
-/* 当屏幕宽度<768px(手机)则不显示：侧边栏 */
-@media (max-width: 768px){
-	.blog-sidebar {
-		display: none;
-	}
-}
+
+
+
 .sidebar-module {
 	margin-bottom: 30px;
     border-radius: 5px;
@@ -406,8 +398,10 @@ p.tagcloud {
 }
 /* 文章内容及摘录 */
 .article-entry p {
-	clear: left;
+	font-family: "Verdana"; /*Times New Roman,Georgia, Arial,Verdana, Courier New,Lucida Console*/
+	font-weight: normal;
     font-size: 17px;
+	clear: left;
     line-height: 1.5;
     color: #222;
     padding-top: 0;
@@ -605,17 +599,13 @@ h2.archive-year-wrap {
 	}
 }
 #article-toc {
-	display: none;
+	display: block;
 	float: left;
 	width: 25%;
 	margin-left: -220px;
 	opacity: .8;
 }
-@media screen and (min-width:769px) {
-	#article-toc {
-		display: block
-	}
-}
+
 #article-toc .fixed {
 	position: absolute;
 	top: 0;
@@ -660,12 +650,7 @@ h2.archive-year-wrap {
     border: 1px solid #bbb;
     border-radius: 5px;
 }
-/*当屏幕宽度小于768px(手机)则不显示：该视图改变按钮*/
-@media screen and (max-width:768px){
-	#enlarge-shrink-view {
-		display: none;
-	}
-}
+
 
 #article-toc .article-toc-inner strong > a {
 	display: inline-block;
@@ -785,6 +770,31 @@ h2.archive-year-wrap {
         margin: -93px 15px 50px 15px;
         padding: 96px 10px 0px 10px;
     }
+}
+
+
+/*当屏幕宽度小于768px(手机)*/
+@media screen and (max-width:768px){
+	.blog-main {
+	  line-height: 1.5;
+	  padding-top: 20px;
+	  width: 100%;  /*文章主体全屏显示*/
+	}
+	.blog-sidebar {
+		display: none; /*不显示：侧边栏*/
+	}
+	#enlarge-shrink-view { 
+		display: none; /*隐藏：扩大文章视图按钮*/
+	}
+	#rocket.show {
+		visibility: hidden; /*隐藏：回到顶部按钮*/
+	}
+	.blog-header {
+		visibility: hidden; /*隐藏：标题和副标题*/
+	}
+	#article-toc {
+		display: none;  /*隐藏：文章目录按钮*/
+	}
 }
 
 
