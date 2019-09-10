@@ -1298,5 +1298,10 @@ h2.archive-year-wrap {
 	}
 }
 
+/*将有序、无序列表的字体大小由14px改为17px*/
+ol > li, ul > li{
+	font-size: 17px;
+}
+
 
 
