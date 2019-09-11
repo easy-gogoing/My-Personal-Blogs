@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mlone.top/"/>
-  <updated>2019-09-10T15:01:52.175Z</updated>
+  <updated>2019-09-11T15:40:14.096Z</updated>
   <id>https://mlone.top/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Class.forName和ClassLoader有什么区别？</title>
+    <link href="https://mlone.top/2019/09/11/Class-forName%E5%92%8CClassLoader%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
+    <id>https://mlone.top/2019/09/11/Class-forName和ClassLoader有什么区别？/</id>
+    <published>2019-09-11T15:02:44.000Z</published>
+    <updated>2019-09-11T15:40:14.096Z</updated>
+    
+    <content type="html"><![CDATA[<p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&amp;mid=2247488216&amp;idx=2&amp;sn=221b30554352cc71c3eeaacd2f22a067&amp;chksm=e8fe8ed1df8907c703e642a83c36f29a5b8638e544ee13d018be230543a15a6d1e450238abd5&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1566828808925&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">面试题：Class.forName 和 ClassLoader 有什么区别？</a><br><a id="more"></a></p><p>　　在 java 中 Class.forName() 和 ClassLoader 都可以对类进行加载。ClassLoader 就是遵循双亲委派模型最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到 JVM 中。Class.forName() 方法实际上也是调用的 CLassLoader 来实现的。<br>　　Class.forName(String className)；这个方法的源码是：<br>　　<img src="/blogImg/2019/9/11/1-1.png" alt></p><p>　　最后调用的方法是 forName0 这个方法，在这个 forName0 方法中的第二个参数被默认设置为了 true，这个参数代表是否对加载的类进行初始化，设置为 true 时会类进行初始化，代表会执行类中的静态代码块，以及对静态变量的赋值等操作。</p><p>　　也可以调用 Class.forName(String name, boolean initialize,ClassLoader loader) 方法来手动选择在加载类的时候是否要对类进行初始化。Class.forName(String name, boolean initialize,ClassLoader loader) 的源码如下：<br>　　<img src="/blogImg/2019/9/11/1-2.png" alt></p><p>　　源码中的注释只摘取了一部分，其中对参数 initialize 的描述是：if {@code true} the class will be initialized. 意思就是说：如果参数为 true，则加载的类将会被初始化。</p><p><strong>举例：</strong><br>　　一个含有静态代码块、静态变量、赋值给静态变量的静态方法的类：<br>　　<img src="/blogImg/2019/9/11/1-3.png" alt></p><p>测试方法：<br>　　<img src="/blogImg/2019/9/11/1-4.png" alt></p><p>运行结果：<br>　　<img src="/blogImg/2019/9/11/1-5.png" alt></p><p>　　根据运行结果得出 Class.forName 加载类是将类进了初始化，而 ClassLoader 的 loadClass 并没有对类进行初始化，只是把类加载到了虚拟机中。</p><p><strong>应用场景：</strong><br>　　在我们熟悉的 Spring 框架中的 IOC 的实现就是使用的 ClassLoader。</p><p>　　而在我们使用 JDBC 时通常是使用 Class.forName() 方法来加载数据库连接驱动。这是因为在 JDBC 规范中明确要求 Driver(数据库驱动)类必须向 DriverManager 注册自己。</p><p>　　以 MySQL 的驱动为例解释：<br>　　<img src="/blogImg/2019/9/11/1-6.png" alt></p><p>　　我们看到 Driver 注册到 DriverManager 中的操作写在了静态代码块中，这就是为什么在写 JDBC 时使用 Class.forName() 的原因了。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;转自：&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&amp;amp;mid=2247488216&amp;amp;idx=2&amp;amp;sn=221b30554352cc71c3eeaacd2f22a067&amp;amp;chksm=e8fe8ed1df8907c703e642a83c36f29a5b8638e544ee13d018be230543a15a6d1e450238abd5&amp;amp;mpshare=1&amp;amp;scene=1&amp;amp;srcid=&amp;amp;sharer_sharetime=1566828808925&amp;amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;面试题：Class.forName 和 ClassLoader 有什么区别？&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="https://mlone.top/categories/Java/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>如何解决分布式事务问题</title>
@@ -408,28 +428,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;/p&gt;&lt;p&gt;【作者】范仲淹  【朝代】宋&lt;/p&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="https://mlone.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="古诗词" scheme="https://mlone.top/tags/%E5%8F%A4%E8%AF%97%E8%AF%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小石潭记</title>
-    <link href="https://mlone.top/2019/08/05/%E5%B0%8F%E7%9F%B3%E6%BD%AD%E8%AE%B0/"/>
-    <id>https://mlone.top/2019/08/05/小石潭记/</id>
-    <published>2019-08-05T15:46:15.000Z</published>
-    <updated>2019-09-05T14:52:58.032Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><p>【作者】柳宗元  【朝代】唐</p><br><a id="more"></a><p></p><p>　　从小丘西行百二十步，隔篁竹，闻水声，如鸣珮环，心乐之。伐竹取道，下见小潭，水尤清冽。全石以为底，近岸，卷石底以出，为坻，为屿，为嵁，为岩。青树翠蔓，蒙络摇缀，参差披拂。</p><p>　　潭中鱼可百许头，皆若空游无所依，日光下澈，影布石上。佁然不动，俶尔远逝，往来翕忽。似与游者相乐。</p><p>　　潭西南而望，斗折蛇行，明灭可见。其岸势犬牙差互，不可知其源。</p><p>　　坐潭上，四面竹树环合，寂寥无人，凄神寒骨，悄怆幽邃。以其境过清，不可久居，乃记之而去。</p><p>　　同游者：吴武陵，龚古，余弟宗玄。隶而从者，崔氏二小生：曰恕己，曰奉壹。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;/p&gt;&lt;p&gt;【作者】柳宗元  【朝代】唐&lt;/p&gt;&lt;br&gt;
     
     </summary>
     
