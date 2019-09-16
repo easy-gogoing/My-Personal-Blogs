@@ -1303,5 +1303,10 @@ ol > li, ul > li{
 	font-size: 17px;
 }
 
+/*调整单行代码块字体大小*/
+p > code {
+	font-size: 17px;
+}
+
 
 

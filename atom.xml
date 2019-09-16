@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mlone.top/"/>
-  <updated>2019-09-11T15:40:14.096Z</updated>
+  <updated>2019-09-16T15:54:46.653Z</updated>
   <id>https://mlone.top/</id>
   
   <author>
@@ -17,13 +17,53 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>mysql数据类型</title>
+    <link href="https://mlone.top/2019/09/16/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://mlone.top/2019/09/16/mysql数据类型/</id>
+    <published>2019-09-16T15:06:45.000Z</published>
+    <updated>2019-09-16T15:54:46.653Z</updated>
+    
+    <content type="html"><![CDATA[<p>原文链接：<a href="https://www.cnblogs.com/zbseoag/archive/2013/03/19/2970004.html" target="_blank" rel="noopener">https://www.cnblogs.com/zbseoag/archive/2013/03/19/2970004.html</a><br><a id="more"></a></p><table><thead><tr><th>MySQL数据类型</th><th>含义（有符号）</th></tr></thead><tbody><tr><td>tinyint(m)</td><td>1个字节 范围(-128~127)</td></tr><tr><td>smallint(m)</td><td>2个字节 范围(-32768~32767)</td></tr><tr><td>mediumint(m)</td><td>3个字节 范围(-8388608~8388607)</td></tr><tr><td>int(m)</td><td>4个字节 范围(-2147483648~2147483647)</td></tr><tr><td>bigint(m)</td><td>8个字节 范围(+-9.22*10的18次方)</td></tr></tbody></table><p>　　取值范围如果加了unsigned，则最大值翻倍，如tinyint unsigned的取值范围为(0~256)。int(m)里的m是表示SELECT查询结果集中的显示宽度，并不影响实际的取值范围，没有影响到显示的宽度，不知道这个m有什么用。</p><h3 id="浮点型-float和double"><a href="#浮点型-float和double" class="headerlink" title="浮点型(float和double)"></a>浮点型(float和double)</h3><table><thead><tr><th>MySQL数据类型</th><th>含义</th></tr></thead><tbody><tr><td>float(m,d)</td><td>单精度浮点型 8位精度(4字节) m总个数，d小数位)</td></tr><tr><td>double(m,d)</td><td>双精度浮点型 16位精度(8字节) m总个数，d小数位</td></tr></tbody></table><p>　　设一个字段定义为float(5,3)，如果插入一个数123.45678,实际数据库里存的是123.457，但总个数还以实际为准，即6位。</p><h3 id="定点数"><a href="#定点数" class="headerlink" title="定点数"></a>定点数</h3><p>　　浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值。decimal(m,d) 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位。&lt;=”” p=””&gt;</p><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><table><thead><tr><th>MySQL数据类型</th><th>含义</th></tr></thead><tbody><tr><td>char(n)</td><td>固定长度，最多255个字符</td></tr><tr><td>varchar(n)</td><td>固定长度，最多65535个字符</td></tr><tr><td>tinytext</td><td>可变长度，最多255个字符</td></tr><tr><td>text</td><td>可变长度，最多65535个字符</td></tr><tr><td>mediumtext</td><td>可变长度，最多2的24次方-1个字符</td></tr><tr><td>longtext</td><td>可变长度，最多2的32次方-1个字符</td></tr></tbody></table><p><strong>char和varchar：</strong></p><ul><li>char(n) 若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以char类型存储的字符串末尾不能有空格，varchar不限于此；</li><li>char(n) 固定长度，char(4)不管是存入几个字符，都将占用4个字节，varchar是存入的实际字符数+1个字节（n&lt;=255）或2个字节(n&gt;255)，所以varchar(4),存入3个字符将占用4个字节；</li><li>char类型的字符串检索速度要比varchar类型的快。</li></ul><p><strong>varchar和text：</strong></p><ul><li>varchar可指定n，text不能指定，内部存储varchar是存入的实际字符数+1个字节（n&lt;=255）或2个字节(n&gt;255)，text是实际字符数+2个字节；</li><li>text类型不能有默认值；</li><li>varchar可直接创建索引，text创建索引要指定前多少个字符。varchar查询速度快于text,在都创建索引的情况下，text的索引似乎不起作用。</li></ul><h3 id="二进制数据-Blob"><a href="#二进制数据-Blob" class="headerlink" title="二进制数据(_Blob)"></a>二进制数据(_Blob)</h3><ul><li>BLOB和text存储方式不同，TEXT以文本方式存储，英文存储区分大小写，而Blob是以二进制方式存储，不分大小写；</li><li>_BLOB存储的数据只能整体读出；</li><li>TEXT可以指定字符集，BLO不用指定字符集。</li></ul><h3 id="日期时间类型"><a href="#日期时间类型" class="headerlink" title="日期时间类型"></a>日期时间类型</h3><table><thead><tr><th>MySQL数据类型</th><th>含义</th></tr></thead><tbody><tr><td>date</td><td>日期 ‘2008-12-2’</td></tr><tr><td>time</td><td>时间 ‘12:25:36’</td></tr><tr><td>datetime</td><td>日期时间 ‘2008-12-2 22:06:44’</td></tr><tr><td>timestamp</td><td>自动存储记录修改时间</td></tr></tbody></table><p>　　若定义一个字段为timestamp，这个字段里的时间数据会随其他字段修改的时候自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间。</p><h3 id="数据类型的属性"><a href="#数据类型的属性" class="headerlink" title="数据类型的属性"></a>数据类型的属性</h3><table><thead><tr><th>MySQL关键字</th><th>含义</th></tr></thead><tbody><tr><td>NULL</td><td>数据列可包含NULL值</td></tr><tr><td>NOT NULL</td><td>数据列不允许包含NULL值</td></tr><tr><td>DEFAULT</td><td>默认值</td></tr><tr><td>PRIMARY KEY</td><td>主键</td></tr><tr><td>AUTO_INCREMENT</td><td>自动递增，适用于整数类型</td></tr><tr><td>UNSIGNED</td><td>无符号</td></tr><tr><td>CHARACTER SET name</td><td>指定一个字符集</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文链接：&lt;a href=&quot;https://www.cnblogs.com/zbseoag/archive/2013/03/19/2970004.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.cnblogs.com/zbseoag/archive/2013/03/19/2970004.html&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="数据库" scheme="https://mlone.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>这句简单的sql如何加索引</title>
+    <link href="https://mlone.top/2019/09/16/%E8%BF%99%E5%8F%A5%E7%AE%80%E5%8D%95%E7%9A%84sql%E5%A6%82%E4%BD%95%E5%8A%A0%E7%B4%A2%E5%BC%95/"/>
+    <id>https://mlone.top/2019/09/16/这句简单的sql如何加索引/</id>
+    <published>2019-09-16T13:38:40.000Z</published>
+    <updated>2019-09-16T14:57:54.185Z</updated>
+    
+    <content type="html"><![CDATA[<p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MjM5OTMyNzQzMg==&amp;mid=2257484491&amp;idx=1&amp;sn=4bbc14d324c8f7ea0809baeea0b20516&amp;chksm=a447f96c9330707a1930cf9b46d3263d476135b90f23392b048f668c12c173a53f414c3778c2&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1568291267662&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">这句简单的sql，如何加索引？颠覆了我多年的认知</a><br><a id="more"></a></p><blockquote><p>请问下面的sql语句，要想加快查询速度，该怎么创建索引？（以下以mysql数据库为准）<br><code>select * from test where a=? and b&gt;? order by c limit 0,100</code></p></blockquote><p>　　结果可能会出乎你的意料。我们首先准备一下运行环境，然后按照<strong>最左前缀原则</strong>和<strong>explain关键字</strong>来进行验证。结果真是颠覆了我多年的认知。</p><h2 id="准备阶段"><a href="#准备阶段" class="headerlink" title="准备阶段"></a>准备阶段</h2><p>　　为了进行验证，我们创建一个简单的数据表。里面有a、b、c三个简单的int字段。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`a`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`b`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`c`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8</span><br></pre></td></tr></table></figure></p><p>　　接下来，写一个简单的存储过程，来插入10w条数据。等待大约1分钟，数据插入完毕。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">PROCEDURE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> test_initData;</span><br><span class="line">DELIMITER $</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> test_initData()</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="keyword">DECLARE</span> i <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="number">1</span>;</span><br><span class="line">    WHILE i&lt;=100000 DO</span><br><span class="line">        <span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">test</span>(<span class="keyword">id</span>,a,b,c) <span class="keyword">VALUES</span>(i,i*<span class="number">2</span>,i*<span class="number">3</span>,i*<span class="number">4</span>);</span><br><span class="line">        <span class="keyword">SET</span> i = i+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">END</span> <span class="keyword">WHILE</span>;</span><br><span class="line"><span class="keyword">END</span> $</span><br><span class="line"><span class="keyword">CALL</span> test_initData();</span><br></pre></td></tr></table></figure></p><p>　　由于mysql有<strong>最左前缀原则</strong>，我们对abc三列进行了全排列，创建了6个索引。这6个索引涵盖了所有的根据abc查询的情况。</p><pre><code>create INDEX idx_a_b_c on test(a,b,c);create INDEX idx_a_c_b on test(a,c,b);create INDEX idx_b_a_c on test(b,a,c);create INDEX idx_b_c_a on test(b,c,a);create INDEX idx_c_a_b on test(c,a,b);create INDEX idx_c_b_a on test(c,b,a);</code></pre><h2 id="使用Explain进行验证"><a href="#使用Explain进行验证" class="headerlink" title="使用Explain进行验证"></a>使用Explain进行验证</h2><h3 id="1、自动选用索引"><a href="#1、自动选用索引" class="headerlink" title="1、自动选用索引"></a>1、自动选用索引</h3><hr><p><code>explain select * from test where a &gt; 10 and b &gt; 10 order by c</code></p><p>首先，我们拿上面的sql语句进行验证。结果发现，查询使用了索引idx_a_b_c，只用到了前缀a，b。而extra部分，则用到了filesort，也就是性能非常差的方式。</p><table><thead><tr><th>字段</th><th>数值</th></tr></thead><tbody><tr><td>id</td><td>1</td></tr><tr><td>select_type</td><td>SIMPLE</td></tr><tr><td>table</td><td>test</td></tr><tr><td>type</td><td>range</td></tr><tr><td>possible_key</td><td>idx_a, idx_b, idx_a_b_c, idx_a_c_b, idx_b_a_c, idx_b_c_a</td></tr><tr><td>key</td><td>idx_a_b_c</td></tr><tr><td>key_len</td><td>5</td></tr><tr><td>ref</td><td></td></tr><tr><td>rows</td><td>50291</td></tr><tr><td>Extra</td><td>Using where; Using index; Using filesort</td></tr></tbody></table><p>我们尝试换一下查询参数的位置：<br><code>explain select * from test where c&gt;10 and b &gt;10   order by a</code></p><table><thead><tr><th>字段</th><th>数值</th></tr></thead><tbody><tr><td>id</td><td>1</td></tr><tr><td>select_type</td><td>SIMPLE</td></tr><tr><td>table</td><td>test</td></tr><tr><td>type</td><td>range</td></tr><tr><td>possible_key</td><td>idx_b, idx_c, idx_b_a_c, idx_b_c_a, idx_c_a_b, idx_c_b_a</td></tr><tr><td>key</td><td>idx_b_a_c</td></tr><tr><td>key_len</td><td>5</td></tr><tr><td>ref</td><td></td></tr><tr><td>rows</td><td>50291</td></tr><tr><td>Extra</td><td>Using where; Using index; Using filesort</td></tr></tbody></table><p>　　这次索引自动选择了idx_b_a_c，但依然使用的filesort，查询效果是一样的。按照上面的逻辑，不是应该选择idx_b_c_a么？</p><h3 id="2、指定索引"><a href="#2、指定索引" class="headerlink" title="2、指定索引"></a>2、指定索引</h3><hr><p>接下来使用force index方式，强制指定索引。这里直接给出结果，就是下面的sql：<br><code>explain select * from test    FORCE INDEX(idx_c_b_a)    where a&gt;10 and b &gt;10  order by c</code><br>结果如下：</p><table><thead><tr><th>字段</th><th>数值</th></tr></thead><tbody><tr><td>id</td><td>1</td></tr><tr><td>select_type</td><td>SIMPLE</td></tr><tr><td>table</td><td>test</td></tr><tr><td>type</td><td>index</td></tr><tr><td>possible_key</td><td></td></tr><tr><td>key</td><td>idx_c_b_a</td></tr><tr><td>key_len</td><td>15</td></tr><tr><td>ref</td><td></td></tr><tr><td>rows</td><td>100583</td></tr><tr><td>Extra</td><td>Using where; Using index</td></tr></tbody></table><p>　　我们使用force index来指定使用的索引。这次效果非常好，显示使用了index，使用了where，只在索引上就完成了操作。但扫描的行数却增加了。</p><p>　　但是，这与我们的经验是相悖的。idx_c_b_a的索引，是在字段(c,b,a)上创建的。按照最左原则，支持的搜索条件有：c,cb,cba。在这个例子中，order by后面的参数，却被当作了前缀的头部信息。</p><p>　　我们删掉其他索引，只留下idx_c_b_a，然后去掉force index部分。结果发现，mysql现在能够自动的选择索引了。</p><p>再看另外一种情况，order by上有两个参数：<br><code>explain select * from test    FORCE INDEX(idx_b_c_a)    where a&gt;10   order by b,c</code></p><table><thead><tr><th>字段</th><th>数值</th></tr></thead><tbody><tr><td>id</td><td>1</td></tr><tr><td>select_type</td><td>SIMPLE</td></tr><tr><td>table</td><td>test</td></tr><tr><td>type</td><td>index</td></tr><tr><td>possible_key</td><td></td></tr><tr><td>key</td><td>idx_b_c_a</td></tr><tr><td>key_len</td><td>15</td></tr><tr><td>ref</td><td></td></tr><tr><td>rows</td><td>100583</td></tr><tr><td>Extra</td><td>Using where; Using index</td></tr></tbody></table><p>　　结果如上，使用idx_b_c_a，不走filesort。其他索引都不是最优。</p><h3 id="3、explain部分返回值意义"><a href="#3、explain部分返回值意义" class="headerlink" title="3、explain部分返回值意义"></a>3、explain部分返回值意义</h3><hr><p>　　我们得出上面的结论，是根据mysql自己提供的explain工具。这个工具能够输出一些有用的信息。下面是相关的部分返回值的意义。</p><p><span style="color: red;"><strong>select_type</strong></span><br>表示SELECT的类型，常见的取值有：</p><blockquote><p><strong>SIMPLE</strong>    简单表，不使用表连接或子查询。<br><strong>PRIMARY</strong>    主查询，即外层的查询。<br><strong>UNION</strong>    UNION中的第二个或者后面的查询语句。<br><strong>SUBQUERY</strong>    子查询中的第一个。</p></blockquote><p><span style="color: red;"><strong>type</strong></span><br>表示MySQL在表中找到所需行的方式，或者叫访问类型。常见访问类型如下，从下到上，性能越来越差。</p><blockquote><p><strong>system,const</strong> 表只有一行记录（等于系统表），这是const类型的特列。<br><strong>eq_ref</strong> 唯一性索引扫描，对于每个索引键，表中只有一条记录与之匹配。<br><strong>ref</strong>  非唯一性索引扫描，返回匹配某个单独值的所有行，本质上也是一种索引访问，它返回所有匹配某个单独值的行，然而，它可能会找到多个符合条件的行，所以他应该属于查找和扫描的混合体。<br><strong>range</strong> 只检索给定范围的行，使用一个索引来选择行，key列显示使用了哪个索引。这种范围扫描索引比全表扫描要好，因为它只需要开始于索引的某一点，而结束于另一点，不用扫描全部索引。<br><strong>index</strong> Full Index Scan，Index与All区别为index类型只遍历索引树。这通常比ALL快，因为索引文件通常比数据文件小。<br><strong>all</strong> 全表扫描，性能最差</p></blockquote><p><span style="color: red;"><strong>Extra</strong></span></p><blockquote><p><strong>using index</strong><br>表示相应的select操作中使用了覆盖索引，避免访问了表的数据行，效率不错。如果同时出现using where，表明索引被用来执行索引键值的查找；如果没有同时出现using where，表明索引用来读取数据而非执行查找动作。<br><strong>using filesort</strong><br>说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。MySQL中无法利用索引完成的排序操作称为“文件排序”。<br><strong>using temporary</strong><br>使用了用临时表保存中间结果，mysql在对查询结果排序时使用临时表。常见于排序order by和分组查询group by。</p></blockquote><p>　　可以看到，在我们创建了多个索引的时候，mysql的查询优化，并不一定能够进行智能的解析、用到最优的方式，需要使用force index指定索引。</p><p>　　mysql中的索引，主要就用在where条件中和排序动作中。分两种情况：<br>　　1、<span style="color: red;"><strong>先过滤，再排序</strong></span>，会用到过滤条件中的索引参数，但是排序会使用较慢的外部排序。因为这个结果集是经过过滤的，并没有什么索引参与。</p><p>　　2、<span style="color: red;"><strong>先排序，再过滤</strong></span>，可以使用同一个索引，排序的优先级高于过滤的优先级。选择合适的索引，在过滤的同时就把这个事给办了。但是扫描的行数会增加。</p><p>　　我想，mysql并不能够了解到这两个过程，到底谁快谁慢，于是选了一个最通用的方式，直接选用了第一种。甚至在索引非常多的时候，直接晕菜了。<span style="font-color: red;"><strong>索引建多了，你可能间接把mysql给害了</strong></span>。这是现象，至于深层次的原因，欢迎读过mysql相关源码的给解释一下。</p><p>　　这对经常变换字段进行排序的代码来说，并不是一个好的信号。考虑到程序的稳定性，我想应该要尽量减少where条件过滤后的结果集。这种情况下，创建一个（a，b）的联合索引，或许是一个折衷的方式。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;转自：&lt;a href=&quot;https://mp.weixin.qq.com/s?__biz=MjM5OTMyNzQzMg==&amp;amp;mid=2257484491&amp;amp;idx=1&amp;amp;sn=4bbc14d324c8f7ea0809baeea0b20516&amp;amp;chksm=a447f96c9330707a1930cf9b46d3263d476135b90f23392b048f668c12c173a53f414c3778c2&amp;amp;mpshare=1&amp;amp;scene=1&amp;amp;srcid=&amp;amp;sharer_sharetime=1568291267662&amp;amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这句简单的sql，如何加索引？颠覆了我多年的认知&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="数据库" scheme="https://mlone.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Class.forName和ClassLoader有什么区别？</title>
     <link href="https://mlone.top/2019/09/11/Class-forName%E5%92%8CClassLoader%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
     <id>https://mlone.top/2019/09/11/Class-forName和ClassLoader有什么区别？/</id>
     <published>2019-09-11T15:02:44.000Z</published>
-    <updated>2019-09-11T15:40:14.096Z</updated>
+    <updated>2019-09-11T15:50:29.131Z</updated>
     
-    <content type="html"><![CDATA[<p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&amp;mid=2247488216&amp;idx=2&amp;sn=221b30554352cc71c3eeaacd2f22a067&amp;chksm=e8fe8ed1df8907c703e642a83c36f29a5b8638e544ee13d018be230543a15a6d1e450238abd5&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1566828808925&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">面试题：Class.forName 和 ClassLoader 有什么区别？</a><br><a id="more"></a></p><p>　　在 java 中 Class.forName() 和 ClassLoader 都可以对类进行加载。ClassLoader 就是遵循双亲委派模型最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到 JVM 中。Class.forName() 方法实际上也是调用的 CLassLoader 来实现的。<br>　　Class.forName(String className)；这个方法的源码是：<br>　　<img src="/blogImg/2019/9/11/1-1.png" alt></p><p>　　最后调用的方法是 forName0 这个方法，在这个 forName0 方法中的第二个参数被默认设置为了 true，这个参数代表是否对加载的类进行初始化，设置为 true 时会类进行初始化，代表会执行类中的静态代码块，以及对静态变量的赋值等操作。</p><p>　　也可以调用 Class.forName(String name, boolean initialize,ClassLoader loader) 方法来手动选择在加载类的时候是否要对类进行初始化。Class.forName(String name, boolean initialize,ClassLoader loader) 的源码如下：<br>　　<img src="/blogImg/2019/9/11/1-2.png" alt></p><p>　　源码中的注释只摘取了一部分，其中对参数 initialize 的描述是：if {@code true} the class will be initialized. 意思就是说：如果参数为 true，则加载的类将会被初始化。</p><p><strong>举例：</strong><br>　　一个含有静态代码块、静态变量、赋值给静态变量的静态方法的类：<br>　　<img src="/blogImg/2019/9/11/1-3.png" alt></p><p>测试方法：<br>　　<img src="/blogImg/2019/9/11/1-4.png" alt></p><p>运行结果：<br>　　<img src="/blogImg/2019/9/11/1-5.png" alt></p><p>　　根据运行结果得出 Class.forName 加载类是将类进了初始化，而 ClassLoader 的 loadClass 并没有对类进行初始化，只是把类加载到了虚拟机中。</p><p><strong>应用场景：</strong><br>　　在我们熟悉的 Spring 框架中的 IOC 的实现就是使用的 ClassLoader。</p><p>　　而在我们使用 JDBC 时通常是使用 Class.forName() 方法来加载数据库连接驱动。这是因为在 JDBC 规范中明确要求 Driver(数据库驱动)类必须向 DriverManager 注册自己。</p><p>　　以 MySQL 的驱动为例解释：<br>　　<img src="/blogImg/2019/9/11/1-6.png" alt></p><p>　　我们看到 Driver 注册到 DriverManager 中的操作写在了静态代码块中，这就是为什么在写 JDBC 时使用 Class.forName() 的原因了。</p>]]></content>
+    <content type="html"><![CDATA[<p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&amp;mid=2247488216&amp;idx=2&amp;sn=221b30554352cc71c3eeaacd2f22a067&amp;chksm=e8fe8ed1df8907c703e642a83c36f29a5b8638e544ee13d018be230543a15a6d1e450238abd5&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1566828808925&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">面试题：Class.forName 和 ClassLoader 有什么区别？</a><br><a id="more"></a></p><p>　　在 java 中 Class.forName() 和 ClassLoader 都可以对类进行加载。ClassLoader 就是遵循双亲委派模型最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到 JVM 中。Class.forName() 方法实际上也是调用的 CLassLoader 来实现的。<br>　　Class.forName(String className)；这个方法的源码是：<br>　　<img src="/blogImg/2019/9/11/1-1.png" alt></p><p>　　最后调用的方法是 forName0 这个方法，在这个 forName0 方法中的第二个参数被默认设置为了 true，这个参数代表是否对加载的类进行初始化，设置为 true 时会类进行初始化，代表会执行类中的静态代码块，以及对静态变量的赋值等操作。</p><p>　　也可以调用 Class.forName(String name, boolean initialize,ClassLoader loader) 方法来手动选择在加载类的时候是否要对类进行初始化。Class.forName(String name, boolean initialize,ClassLoader loader) 的源码如下：<br>　　<img src="/blogImg/2019/9/11/1-2.png" alt></p><p>　　源码中的注释只摘取了一部分，其中对参数 initialize 的描述是：if {@code true} the class will be initialized. 意思就是说：如果参数为 true，则加载的类将会被初始化。<br>　　<br><strong>举例：</strong><br>　　一个含有静态代码块、静态变量、赋值给静态变量的静态方法的类：<br>　　<img src="/blogImg/2019/9/11/1-3.png" alt></p><p>测试方法：<br>　　<img src="/blogImg/2019/9/11/1-4.png" alt></p><p>运行结果：<br>　　<img src="/blogImg/2019/9/11/1-5.png" alt></p><p>　　根据运行结果得出 Class.forName 加载类是将类进了初始化，而 ClassLoader 的 loadClass 并没有对类进行初始化，只是把类加载到了虚拟机中。<br>　　<br><strong>应用场景：</strong><br>　　在我们熟悉的 Spring 框架中的 IOC 的实现就是使用的 ClassLoader。</p><p>　　而在我们使用 JDBC 时通常是使用 Class.forName() 方法来加载数据库连接驱动。这是因为在 JDBC 规范中明确要求 Driver(数据库驱动)类必须向 DriverManager 注册自己。</p><p>　　以 MySQL 的驱动为例解释：<br>　　<img src="/blogImg/2019/9/11/1-6.png" alt></p><p>　　我们看到 Driver 注册到 DriverManager 中的操作写在了静态代码块中，这就是为什么在写 JDBC 时使用 Class.forName() 的原因了。</p>]]></content>
     
     <summary type="html">
     
@@ -384,50 +424,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;/p&gt;&lt;p&gt;【作者】杜牧 【朝代】唐&lt;/p&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="https://mlone.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="古诗词" scheme="https://mlone.top/tags/%E5%8F%A4%E8%AF%97%E8%AF%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>三峡</title>
-    <link href="https://mlone.top/2019/08/05/%E4%B8%89%E5%B3%A1/"/>
-    <id>https://mlone.top/2019/08/05/三峡/</id>
-    <published>2019-08-05T15:53:17.000Z</published>
-    <updated>2019-09-05T14:55:19.958Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><p>【作者】郦道元  【朝代】南北朝</p><br><a id="more"></a><p></p><p>　　自三峡七百里中，两岸连山，略无阙处。重岩叠嶂，隐天蔽日，自非亭午夜分，不见曦月。<br>　　<br>　　至于夏水襄陵，沿溯阻绝。或王命急宣，有时朝发白帝，暮到江陵，其间千二百里，虽乘奔御风，不以疾也。<br>　　<br>　　春冬之时，则素湍绿潭，回清倒影，绝巘多生怪柏，悬泉瀑布，飞漱其间，清荣峻茂，良多趣味。<br>　　<br>　　每至晴初霜旦，林寒涧肃，常有高猿长啸，属引凄异，空谷传响，哀转久绝。故渔者歌曰：“巴东三峡巫峡长，猿鸣三声泪沾裳。”</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;/p&gt;&lt;p&gt;【作者】郦道元  【朝代】南北朝&lt;/p&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="https://mlone.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="古诗词" scheme="https://mlone.top/tags/%E5%8F%A4%E8%AF%97%E8%AF%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>岳阳楼记</title>
-    <link href="https://mlone.top/2019/08/05/%E5%B2%B3%E9%98%B3%E6%A5%BC%E8%AE%B0/"/>
-    <id>https://mlone.top/2019/08/05/岳阳楼记/</id>
-    <published>2019-08-05T15:51:30.000Z</published>
-    <updated>2019-09-05T14:54:59.643Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><p>【作者】范仲淹  【朝代】宋</p><br><a id="more"></a><p></p><p>　　庆历四年春，滕子京谪守巴陵郡。越明年，政通人和，百废具兴。乃重修岳阳楼，增其旧制，刻唐贤今人诗赋于其上。属予作文以记之。<br>　　<br>　　予观夫巴陵胜状，在洞庭一湖。衔远山，吞长江，浩浩汤汤，横无际涯；朝晖夕阴，气象万千。此则岳阳楼之大观也，前人之述备矣。然则北通巫峡，南极潇湘，迁客骚人，多会于此，览物之情，得无异乎？<br>　　<br>　　若夫霪雨霏霏，连月不开，阴风怒号，浊浪排空；日星隐曜，山岳潜形；商旅不行，樯倾楫摧；薄暮冥冥，虎啸猿啼。登斯楼也，则有去国怀乡，忧谗畏讥，满目萧然，感极而悲者矣。<br>　　<br>　　至若春和景明，波澜不惊，上下天光，一碧万顷；沙鸥翔集，锦鳞游泳；岸芷汀兰，郁郁青青。而或长烟一空，皓月千里，浮光跃金，静影沉璧，渔歌互答，此乐何极！登斯楼也，则有心旷神怡，宠辱偕忘，把酒临风，其喜洋洋者矣。<br>　　<br>　　嗟夫！予尝求古仁人之心，或异二者之为，何哉？不以物喜，不以己悲；居庙堂之高则忧其民；处江湖之远则忧其君。是进亦忧，退亦忧。然则何时而乐耶？其必曰“先天下之忧而忧，后天下之乐而乐”乎。噫！微斯人，吾谁与归？<br>　　<br>　　时六年九月十五日。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;/p&gt;&lt;p&gt;【作者】范仲淹  【朝代】宋&lt;/p&gt;&lt;br&gt;
     
     </summary>
     

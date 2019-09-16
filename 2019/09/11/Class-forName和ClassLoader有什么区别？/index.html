@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://mlone.top/blogImg/2019/9/11/1-4.png">
 <meta property="og:image" content="https://mlone.top/blogImg/2019/9/11/1-5.png">
 <meta property="og:image" content="https://mlone.top/blogImg/2019/9/11/1-6.png">
-<meta property="og:updated_time" content="2019-09-11T15:40:14.096Z">
+<meta property="og:updated_time" content="2019-09-11T15:50:29.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Class.forName和ClassLoader有什么区别？">
 <meta name="twitter:description" content="转自：面试题：Class.forName 和 ClassLoader 有什么区别？">
@@ -132,12 +132,10 @@
 <p>　　在 java 中 Class.forName() 和 ClassLoader 都可以对类进行加载。ClassLoader 就是遵循双亲委派模型最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到 JVM 中。Class.forName() 方法实际上也是调用的 CLassLoader 来实现的。<br>　　Class.forName(String className)；这个方法的源码是：<br>　　<img src="/blogImg/2019/9/11/1-1.png" alt></p>
 <p>　　最后调用的方法是 forName0 这个方法，在这个 forName0 方法中的第二个参数被默认设置为了 true，这个参数代表是否对加载的类进行初始化，设置为 true 时会类进行初始化，代表会执行类中的静态代码块，以及对静态变量的赋值等操作。</p>
 <p>　　也可以调用 Class.forName(String name, boolean initialize,ClassLoader loader) 方法来手动选择在加载类的时候是否要对类进行初始化。Class.forName(String name, boolean initialize,ClassLoader loader) 的源码如下：<br>　　<img src="/blogImg/2019/9/11/1-2.png" alt></p>
-<p>　　源码中的注释只摘取了一部分，其中对参数 initialize 的描述是：if {@code true} the class will be initialized. 意思就是说：如果参数为 true，则加载的类将会被初始化。</p>
-<p><strong>举例：</strong><br>　　一个含有静态代码块、静态变量、赋值给静态变量的静态方法的类：<br>　　<img src="/blogImg/2019/9/11/1-3.png" alt></p>
+<p>　　源码中的注释只摘取了一部分，其中对参数 initialize 的描述是：if {@code true} the class will be initialized. 意思就是说：如果参数为 true，则加载的类将会被初始化。<br>　　<br><strong>举例：</strong><br>　　一个含有静态代码块、静态变量、赋值给静态变量的静态方法的类：<br>　　<img src="/blogImg/2019/9/11/1-3.png" alt></p>
 <p>测试方法：<br>　　<img src="/blogImg/2019/9/11/1-4.png" alt></p>
 <p>运行结果：<br>　　<img src="/blogImg/2019/9/11/1-5.png" alt></p>
-<p>　　根据运行结果得出 Class.forName 加载类是将类进了初始化，而 ClassLoader 的 loadClass 并没有对类进行初始化，只是把类加载到了虚拟机中。</p>
-<p><strong>应用场景：</strong><br>　　在我们熟悉的 Spring 框架中的 IOC 的实现就是使用的 ClassLoader。</p>
+<p>　　根据运行结果得出 Class.forName 加载类是将类进了初始化，而 ClassLoader 的 loadClass 并没有对类进行初始化，只是把类加载到了虚拟机中。<br>　　<br><strong>应用场景：</strong><br>　　在我们熟悉的 Spring 框架中的 IOC 的实现就是使用的 ClassLoader。</p>
 <p>　　而在我们使用 JDBC 时通常是使用 Class.forName() 方法来加载数据库连接驱动。这是因为在 JDBC 规范中明确要求 Driver(数据库驱动)类必须向 DriverManager 注册自己。</p>
 <p>　　以 MySQL 的驱动为例解释：<br>　　<img src="/blogImg/2019/9/11/1-6.png" alt></p>
 <p>　　我们看到 Driver 注册到 DriverManager 中的操作写在了静态代码块中，这就是为什么在写 JDBC 时使用 Class.forName() 的原因了。</p>
@@ -147,7 +145,7 @@
 	
 	<!-- 分享按钮和标签显示 -->
     <footer class="article-footer">
-      <a data-url="https://mlone.top/2019/09/11/Class-forName和ClassLoader有什么区别？/" data-id="ck0ffw4tz0001s0v9it3uk0yl" title="Class.forName和ClassLoader有什么区别？" class="article-share-link">
+      <a data-url="https://mlone.top/2019/09/11/Class-forName和ClassLoader有什么区别？/" data-id="ck0mlbkuv0001egv9ycfkmyob" title="Class.forName和ClassLoader有什么区别？" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -166,6 +164,11 @@
     </a>
   
   
+  
+    <a href="/2019/09/16/这句简单的sql如何加索引/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">这句简单的sql如何加索引&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
   
 </ul>
 
@@ -207,8 +210,8 @@
    
   <div class="aboutme-name">@Easygo</div>
   <ul class="aboutme-content">
-    <li><a href="/archives"><p class="num">131</p><p class="title">文章</p></a></li>
-    <li><p class="num">120.2k</p><p class="title">总字数</p></li>
+    <li><a href="/archives"><p class="num">133</p><p class="title">文章</p></a></li>
+    <li><p class="num">123k</p><p class="title">总字数</p></li>
     <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
   </ul>
 </div>
@@ -232,7 +235,7 @@
   
 	<div class="sidebar-module">
 		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
-		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">38</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JavaWeb/">JavaWeb</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">38</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JavaWeb/">JavaWeb</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
 	</div>   
 
 
@@ -249,7 +252,7 @@
   
   <div class="sidebar-module">
     <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
   </div>
 
 
@@ -258,6 +261,14 @@
   <div class="sidebar-module">
     <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
     <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/16/mysql数据类型/">mysql数据类型</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/16/这句简单的sql如何加索引/">这句简单的sql如何加索引</a>
+        </li>
       
         <li class="recent-post">
           <a href="/2019/09/11/Class-forName和ClassLoader有什么区别？/">Class.forName和ClassLoader有什么区别？</a>
@@ -269,14 +280,6 @@
       
         <li class="recent-post">
           <a href="/2019/09/10/Java中long和double的原子性？/">Java中long和double的原子性？</a>
-        </li>
-      
-        <li class="recent-post">
-          <a href="/2019/09/10/Java逃逸分析/">Java逃逸分析</a>
-        </li>
-      
-        <li class="recent-post">
-          <a href="/2019/09/10/什么是重入锁/">什么是重入锁</a>
         </li>
       
     </ul>
