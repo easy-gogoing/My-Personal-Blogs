@@ -1,0 +1,406 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Lambda表达式有何用处？如何使用？ | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原文地址：https://www.zhihu.com/question/20125256/answer/324121308">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda表达式有何用处？如何使用？">
+<meta property="og:url" content="https://mlone.top/2019/09/21/Lambda表达式有何用处？如何使用？/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="原文地址：https://www.zhihu.com/question/20125256/answer/324121308">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-1.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-2.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-3.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-4.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-5.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-6.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-7.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-8.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-9.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-10.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-11.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-12.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-13.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-14.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-15.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-16.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-17.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-18.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-19.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-20.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-21.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-22.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-23.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta property="og:updated_time" content="2019-09-21T13:21:54.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lambda表达式有何用处？如何使用？">
+<meta name="twitter:description" content="原文地址：https://www.zhihu.com/question/20125256/answer/324121308">
+<meta name="twitter:image" content="https://mlone.top/blogImg/2019/9/21/3-24.png">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-Lambda表达式有何用处？如何使用？" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Lambda表达式有何用处？如何使用？
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/21/Lambda表达式有何用处？如何使用？/" class="article-date"><time datetime="2019-09-21T12:38:40.000Z" itemprop="datePublished">2019-09-21</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>原文地址：<a href="https://www.zhihu.com/question/20125256/answer/324121308" target="_blank" rel="noopener">https://www.zhihu.com/question/20125256/answer/324121308</a><br><a id="more"></a></p>
+<p>　　<img src="/blogImg/2019/9/21/3-24.png" alt></p>
+<h3 id="什么是Lambda"><a href="#什么是Lambda" class="headerlink" title="什么是Lambda?"></a>什么是Lambda?</h3><p>　　我们知道，对于一个Java变量，我们可以赋给其一个<strong>“值”</strong>。<br>　　<img src="/blogImg/2019/9/21/3-1.png" alt></p>
+<p>　　如果你想把<strong>“一块代码”</strong>赋给一个Java变量，应该怎么做呢？</p>
+<p>　　比如，我想把右边那块代码，赋给一个叫做aBlockOfCode的Java变量：<br>　　<img src="/blogImg/2019/9/21/3-2.png" alt></p>
+<p>　　在Java 8之前，这个是做不到的。但是Java 8问世之后，利用Lambda特性，就可以做到了。<br>　　<img src="/blogImg/2019/9/21/3-3.png" alt></p>
+<p>　　当然，这个并不是一个很简洁的写法。所以，为了使这个赋值操作更加elegant, 我们可以移除一些没用的声明。<br>　　<img src="/blogImg/2019/9/21/3-4.png" alt></p>
+<p>　　这样，我们就成功的非常优雅的把“一块代码”赋给了一个变量。<strong>而“这块代码”，或者说“这个被赋给一个变量的函数”，就是一个Lambda表达式</strong>。</p>
+<blockquote>
+<p>但是这里仍然有一个问题，就是变量aBlockOfCode的类型应该是什么？</p>
+</blockquote>
+<p>　　在Java 8里面，<strong>所有的Lambda的类型都是一个接口，而Lambda表达式本身，也就是”那段代码“，需要是这个接口的实现。</strong>这是我认为理解Lambda的一个关键所在，简而言之就是，<strong>Lambda表达式本身就是一个接口的实现</strong>。直接这样说可能还是有点让人困扰，我们继续看看例子。我们给上面的aBlockOfCode加上一个类型：<br>　　<img src="/blogImg/2019/9/21/3-5.png" alt></p>
+<p>　　这种只有<strong>一个接口函数需要被实现的接口类型，我们叫它”函数式接口“。</strong>为了避免后来的人在这个接口中增加接口函数导致其有多个接口函数需要被实现，变成”非函数接口”，我们可以在这个上面加上一个声明@FunctionalInterface, 这样别人就无法在里面添加新的接口函数了：<br>　　<img src="/blogImg/2019/9/21/3-6.png" alt></p>
+<p>　　这样，我们就得到了一个完整的Lambda表达式声明：<br>　　<img src="/blogImg/2019/9/21/3-7.png" alt></p>
+<p>　　<img src="/blogImg/2019/9/21/3-24.png" alt></p>
+<h3 id="Lambda表达式有什么作用"><a href="#Lambda表达式有什么作用" class="headerlink" title="Lambda表达式有什么作用?"></a>Lambda表达式有什么作用?</h3><p>　　<strong>最直观的作用就是使得代码变得异常简洁。</strong></p>
+<p>　　我们可以对比一下Lambda表达式和传统的Java对同一个接口的实现：<br>　　<img src="/blogImg/2019/9/21/3-8.png" alt></p>
+<p>　　这两种写法本质上是等价的。但是显然，Java 8中的写法更加优雅简洁。并且，由于Lambda可以直接赋值给一个变量，<strong>我们就可以直接把Lambda作为参数传给函数, 而传统的Java必须有明确的接口实现的定义，初始化才行：</strong><br>　　<img src="/blogImg/2019/9/21/3-9.png" alt></p>
+<p>　　有些情况下，这个接口实现只需要用到一次。传统的Java 7必须要求你定义一个“污染环境”的接口实现MyInterfaceImpl，而相较之下Java 8的Lambda, 就显得干净很多。</p>
+<p>　　<img src="/blogImg/2019/9/21/3-24.png" alt></p>
+<h3 id="Lambda结合FunctionalInterface-Lib-forEach-stream-，method-reference等新特性可以使代码变的更加简洁！"><a href="#Lambda结合FunctionalInterface-Lib-forEach-stream-，method-reference等新特性可以使代码变的更加简洁！" class="headerlink" title="Lambda结合FunctionalInterface Lib, forEach, stream()，method reference等新特性可以使代码变的更加简洁！"></a>Lambda结合FunctionalInterface Lib, forEach, stream()，method reference等新特性可以使代码变的更加简洁！</h3><p>直接上例子，假设Person的定义和List<person>的值都给定：</person></p>
+<p>　　<img src="/blogImg/2019/9/21/3-10.png" alt></p>
+<p>　　现在需要你打印出guiltyPersons List里面所有LastName以”Z”开头的人的FirstName。</p>
+<p>　　<strong>原生态Lambda写法</strong>：定义两个函数式接口，定义一个静态函数，调用静态函数并给参数赋值Lambda表达式。<br>　　<img src="/blogImg/2019/9/21/3-11.png" alt></p>
+<blockquote>
+<p><strong>这个代码实际上已经比较简洁了，但是我们还可以更简洁么？</strong></p>
+</blockquote>
+<p>　　当然可以。在Java 8中有一个函数式接口的包，里面定义了大量可能用到的函数式接口（<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html" target="_blank" rel="noopener">java.util.function (Java Platform SE 8 )</a>）。所以，我们在这里压根都不需要定义NameChecker和Executor这两个函数式接口，直接用Java 8函数式接口包里的Predicate<t>和Consumer<t>就可以了——因为他们这一对的接口定义和NameChecker/Executor其实是一样的。<br>　　<img src="/blogImg/2019/9/21/3-12.png" alt></t></t></p>
+<p><strong>第一步简化 - 利用函数式接口包：</strong><br>　　<img src="/blogImg/2019/9/21/3-13.png" alt></p>
+<p>　　静态函数里面的for each循环其实是非常碍眼的。这里可以利用Iterable自带的forEach()来替代。forEach()本身可以接受一个Consumer<t> 参数。</t></p>
+<p><strong>第二步简化 - 用Iterable.forEach()取代foreach loop：</strong><br>　　<img src="/blogImg/2019/9/21/3-14.png" alt></p>
+<p>　　**由于静态函数其实只是对List进行了一通操作，这里我们可以甩掉静态函数，直接使用stream()特性来完成。stream()的几个方法都是接受Predicate<t>，Consumer<t>等参数的（<a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html" target="_blank" rel="noopener">java.util.stream (Java Platform SE 8 )</a>）。你理解了上面的内容，stream()这里就非常好理解了，并不需要多做解释。</t></t></p>
+<p><strong>第三步简化 - 利用stream()替代静态函数：</strong><br>　　<img src="/blogImg/2019/9/21/3-15.png" alt></p>
+<p>　　对比最开始的Lambda写法，这里已经非常非常简洁了。但是如果，我们的要求变一下，变成print这个人的全部信息，及p -&gt; System.out.println(p); 那么还可以利用Method reference来继续简化。所谓Method reference, 就是用已经写好的别的Object/Class的method来代替Lambda expression。格式如下：<br>　　<img src="/blogImg/2019/9/21/3-16.png" alt></p>
+<p><strong>第四步简化 - 如果是println(p)，则可以利用Method reference代替forEach中的Lambda表达式：</strong><br>　　<img src="/blogImg/2019/9/21/3-17.png" alt></p>
+<p>　　这基本上就是能写的最简洁的版本了。</p>
+<p>　　<img src="/blogImg/2019/9/21/3-24.png" alt></p>
+<h3 id="Lambda配合Optional可以使Java对于null的处理变的异常优雅"><a href="#Lambda配合Optional可以使Java对于null的处理变的异常优雅" class="headerlink" title="Lambda配合Optional可以使Java对于null的处理变的异常优雅"></a>Lambda配合Optional<t>可以使Java对于null的处理变的异常优雅</t></h3><p>　　这里假设我们有一个person object，以及一个person object的Optional wrapper:<br>　　<img src="/blogImg/2019/9/21/3-18.png" alt></p>
+<p>　　Optional<t>如果不结合Lambda使用的话，并不能使原来繁琐的null check变的简单。<br>　　<img src="/blogImg/2019/9/21/3-19.png" alt></t></p>
+<p>　　<strong>只有当Optional<t>结合Lambda一起使用的时候，才能发挥出其真正的威力！</t></strong></p>
+<p>　　我们现在就来对比一下下面四种常见的null处理中，Java 8的Lambda+Optional<t>和传统Java两者之间对于null的处理差异。</t></p>
+<p><strong>情况一 - 存在则开干</strong><br>　　<img src="/blogImg/2019/9/21/3-20.png" alt></p>
+<p><strong>情况二 - 存在则返回，无则返回屁</strong><br>　　<img src="/blogImg/2019/9/21/3-21.png" alt></p>
+<p><strong>情况三 - 存在则返回，无则由函数产生</strong><br>　　<img src="/blogImg/2019/9/21/3-22.png" alt></p>
+<p><strong>情况四 - 夺命连环null检查</strong><br>　　<img src="/blogImg/2019/9/21/3-23.png" alt></p>
+<p>　　由上述四种情况可以清楚地看到，Optional<t>+Lambda可以让我们少写很多ifElse块。尤其是对于情况四那种夺命连环null检查，传统java的写法显得冗长难懂，而新的Optional<t>+Lambda则清新脱俗，清楚简洁。</t></t></p>
+<p>　　<img src="/blogImg/2019/9/21/3-24.png" alt><br>　　关于Java的Lambda, 还有东西需要讨论和学习。比如如何handle lambda exception，如何利用Lambda的特性来进行parallel processing等。总之，我只是一如既往地介绍个大概，让你大概知道，哦！原来是这样子就OK了。网上关于Lambda有很多相关的教程，多看多练。假以时日，必定有所精益。</p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/21/Lambda表达式有何用处？如何使用？/" data-id="ck0tjyuae0013z4v9stjsn7w2" title="Lambda表达式有何用处？如何使用？" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/21/面试题-多线程篇-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;面试题|多线程篇(一)</span>
+    </a>
+  
+  
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是Lambda"><span class="toc-text">什么是Lambda?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda表达式有什么作用"><span class="toc-text">Lambda表达式有什么作用?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda结合FunctionalInterface-Lib-forEach-stream-，method-reference等新特性可以使代码变的更加简洁！"><span class="toc-text">Lambda结合FunctionalInterface Lib, forEach, stream()，method reference等新特性可以使代码变的更加简洁！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda配合Optional可以使Java对于null的处理变的异常优雅"><span class="toc-text">Lambda配合Optional可以使Java对于null的处理变的异常优雅</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">147</p><p class="title">文章</p></a></li>
+    <li><p class="num">159k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">44</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">22</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/Lambda表达式有何用处？如何使用？/">Lambda表达式有何用处？如何使用？</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-多线程篇-一/">面试题|多线程篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-MyBatis篇-一/">面试题|MyBatis篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/synchronized与volatile/">synchronized与volatile</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/一个TCP连接上面能发多少个HTTP请求/">一个TCP连接上面能发多少个HTTP请求</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
