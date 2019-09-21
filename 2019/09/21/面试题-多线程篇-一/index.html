@@ -1,0 +1,514 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>面试题|多线程篇(一) | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转自：每日3分钟技术干货 | 面试题+答案 |多线程篇(一)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题|多线程篇(一)">
+<meta property="og:url" content="https://mlone.top/2019/09/21/面试题-多线程篇-一/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="转自：每日3分钟技术干货 | 面试题+答案 |多线程篇(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-21T10:08:51.944Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试题|多线程篇(一)">
+<meta name="twitter:description" content="转自：每日3分钟技术干货 | 面试题+答案 |多线程篇(一)">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-面试题-多线程篇-一" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      面试题|多线程篇(一)
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/21/面试题-多线程篇-一/" class="article-date"><time datetime="2019-09-21T09:28:47.000Z" itemprop="datePublished">2019-09-21</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MzI4OTkwNDk2Ng==&amp;mid=2247483976&amp;idx=1&amp;sn=cc3fef354be2f4db951ab48eb30c9fd6&amp;chksm=ec294261db5ecb77f2b52a5c007cfc46878fdf161eeae7817259ee83d41c50a0567c988bf45e&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1568038989685&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">每日3分钟技术干货 | 面试题+答案 |多线程篇(一)</a><br><a id="more"></a></p>
+<p>　　</p>
+<h4 id="1-为什么要使用线程池"><a href="#1-为什么要使用线程池" class="headerlink" title="1. 为什么要使用线程池"></a><strong>1. 为什么要使用线程池</strong></h4><p>　　避免频繁地创建和销毁线程，达到线程对象的重用。另外，使用线程池还可以根据项目灵活地控制并发的数目。</p>
+<p>　　</p>
+<h4 id="2-java中如何获取到线程dump文件"><a href="#2-java中如何获取到线程dump文件" class="headerlink" title="2. java中如何获取到线程dump文件"></a><strong>2. java中如何获取到线程dump文件</strong></h4><p>　　死循环、死锁、阻塞、页面打开慢等问题，打线程dump是最好的解决问题的途径。所谓线程dump也就是线程堆栈，获取到线程堆栈有两步：</p>
+<p>1）获取到线程的pid，可以通过使用jps命令，在Linux环境下还可以使用ps -ef | grep java</p>
+<p>2）打印线程堆栈，可以通过使用jstack pid命令，在Linux环境下还可以使用kill -3 pid</p>
+<p>　　另外提一点，Thread类提供了一个getStackTrace()方法也可以用于获取线程堆栈。这是一个实例方法，因此此方法是和具体线程实例绑定的，每次获取获取到的是具体某个线程当前运行的堆栈。</p>
+<p>　　</p>
+<h4 id="3-怎么检测一个线程是否持有对象监视器"><a href="#3-怎么检测一个线程是否持有对象监视器" class="headerlink" title="3. 怎么检测一个线程是否持有对象监视器"></a><strong>3. 怎么检测一个线程是否持有对象监视器</strong></h4><p>　　我也是在网上看到一道多线程面试题才知道有方法可以判断某个线程是否持有对象监视器：Thread类提供了一个holdsLock(Object obj)方法，当且仅当对象obj的监视器被某条线程持有的时候才会返回true，注意这是一个static方法，这意味着”某条线程”指的是当前线程。</p>
+<p>　　</p>
+<h4 id="4-synchronized和ReentrantLock的区别"><a href="#4-synchronized和ReentrantLock的区别" class="headerlink" title="4. synchronized和ReentrantLock的区别"></a><strong>4. synchronized和ReentrantLock的区别</strong></h4><p>　　synchronized是和if、else、for、while一样的关键字，ReentrantLock是类，这是二者的本质区别。既然ReentrantLock是类，那么它就提供了比synchronized更多更灵活的特性，可以被继承、可以有方法、可以有各种各样的类变量，ReentrantLock比synchronized的扩展性体现在几点上：</p>
+<p>（1）ReentrantLock可以对获取锁的等待时间进行设置，这样就避免了死锁</p>
+<p>（2）ReentrantLock可以获取各种锁的信息</p>
+<p>（3）ReentrantLock可以灵活地实现多路通知</p>
+<p>　　另外，二者的锁机制其实也是不一样的。ReentrantLock底层调用的是Unsafe的park方法加锁，synchronized操作的应该是对象头中mark word，这点我不能确定。</p>
+<p>　　</p>
+<h4 id="5-ConcurrentHashMap的并发度是什么"><a href="#5-ConcurrentHashMap的并发度是什么" class="headerlink" title="5. ConcurrentHashMap的并发度是什么"></a><strong>5. ConcurrentHashMap的并发度是什么</strong></h4><p>　　ConcurrentHashMap的并发度就是segment的大小，默认为16，这意味着最多同时可以有16条线程操作ConcurrentHashMap，这也是ConcurrentHashMap对Hashtable的最大优势，任何情况下，Hashtable能同时有两条线程获取Hashtable中的数据吗？</p>
+<p>　　</p>
+<h4 id="6-ReentrantLock是什么"><a href="#6-ReentrantLock是什么" class="headerlink" title="6. ReentrantLock是什么"></a><strong>6. ReentrantLock是什么</strong></h4><p>　　首先明确一下，不是说ReentrantLock不好，只是ReentrantLock某些时候有局限。如果使用ReentrantLock，可能本身是为了防止线程A在写数据、线程B在读数据造成的数据不一致，但这样，如果线程C在读数据、线程D也在读数据，读数据是不会改变数据的，没有必要加锁，但是还是加锁了，降低了程序的性能。</p>
+<p>　　因为这个，才诞生了读写锁ReadWriteLock。ReadWriteLock是一个读写锁接口，ReentrantReadWriteLock是ReadWriteLock接口的一个具体实现，实现了读写的分离，读锁是共享的，写锁是独占的，读和读之间不会互斥，读和写、写和读、写和写之间才会互斥，提升了读写的性能。</p>
+<p>　　</p>
+<h4 id="7-FutureTask是什么"><a href="#7-FutureTask是什么" class="headerlink" title="7. FutureTask是什么"></a><strong>7. FutureTask是什么</strong></h4><p>　　这个其实前面有提到过，FutureTask表示一个异步运算的任务。FutureTask里面可以传入一个Callable的具体实现类，可以对这个异步运算的任务的结果进行等待获取、判断是否已经完成、取消任务等操作。当然，由于FutureTask也是Runnable接口的实现类，所以FutureTask也可以放入线程池中。</p>
+<p>　　</p>
+<h4 id="8-Linux环境下如何查找哪个线程使用CPU最长"><a href="#8-Linux环境下如何查找哪个线程使用CPU最长" class="headerlink" title="8. Linux环境下如何查找哪个线程使用CPU最长"></a><strong>8. Linux环境下如何查找哪个线程使用CPU最长</strong></h4><p>这是一个比较偏实践的问题，这种问题我觉得挺有意义的。可以这么做：</p>
+<ul>
+<li><p>（1）获取项目的pid，<code>jps</code>或者<code>ps -ef | grep java</code>，这个前面有讲过</p>
+</li>
+<li><p>（2）<code>top -H -p pid</code>，顺序不能改变</p>
+</li>
+</ul>
+<p>　　这样就可以打印出当前的项目，每条线程占用CPU时间的百分比。注意这里打出的是LWP，也就是操作系统原生线程的线程号，我笔记本山没有部署Linux环境下的Java工程，因此没有办法截图演示，网友朋友们如果公司是使用Linux环境部署项目的话，可以尝试一下。</p>
+<p>　　使用<code>top -H -p pid</code>+<code>jps pid</code>可以很容易地找到某条占用CPU高的线程的线程堆栈，从而定位占用CPU高的原因，一般是因为不当的代码操作导致了死循环。</p>
+<p>　　最后提一点，<code>top -H -p pid</code>打出来的LWP是十进制的，<code>jps pid</code>打出来的本地线程号是十六进制的，转换一下，就能定位到占用CPU高的线程的当前线程堆栈了。</p>
+<p>　　</p>
+<h4 id="9-一个线程如果出现了运行时异常会怎么样"><a href="#9-一个线程如果出现了运行时异常会怎么样" class="headerlink" title="9. 一个线程如果出现了运行时异常会怎么样"></a><strong>9. 一个线程如果出现了运行时异常会怎么样</strong></h4><p>　　如果这个异常没有被捕获的话，这个线程就停止执行了。另外重要的一点是：如果这个线程持有某个某个对象的监视器，那么这个对象监视器会被立即释放</p>
+<p>　　</p>
+<h4 id="10-如何在两个线程之间共享数据"><a href="#10-如何在两个线程之间共享数据" class="headerlink" title="10. 如何在两个线程之间共享数据"></a><strong>10. 如何在两个线程之间共享数据</strong></h4><p>　　通过在线程之间共享对象就可以了，然后通过wait/notify/notifyAll、await/signal/signalAll进行唤起和等待，比方说阻塞队列BlockingQueue就是为线程之间共享数据而设计的</p>
+<p>　　</p>
+<h4 id="11-线程和进程的区别？"><a href="#11-线程和进程的区别？" class="headerlink" title="11.  线程和进程的区别？"></a><strong>11.  线程和进程的区别？</strong></h4><p>　　一个程序下至少有一个进程，一个进程下至少有一个线程，一个进程下也可以有多个线程来增加程序的执行速度。</p>
+<p>　　</p>
+<h4 id="12-守护线程是什么？"><a href="#12-守护线程是什么？" class="headerlink" title="12. 守护线程是什么？"></a><strong>12. 守护线程是什么？</strong></h4><p>　　守护线程是运行在后台的一种特殊进程。它独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。在 Java 中垃圾回收线程就是特殊的守护线程。</p>
+<p>　　</p>
+<h4 id="13-创建线程有哪几种方式？"><a href="#13-创建线程有哪几种方式？" class="headerlink" title="13. 创建线程有哪几种方式？"></a><strong>13. 创建线程有哪几种方式？</strong></h4><p>创建线程有三种方式：</p>
+<ul>
+<li>继承 Thread 重新 run 方法；</li>
+<li>实现 Runnable 接口；</li>
+<li>实现 Callable 接口。</li>
+</ul>
+<p>　　</p>
+<h4 id="14-说一下-runnable-和-callable-有什么区别？"><a href="#14-说一下-runnable-和-callable-有什么区别？" class="headerlink" title="14. 说一下 runnable 和 callable 有什么区别？"></a><strong>14. 说一下 runnable 和 callable 有什么区别？</strong></h4><p>　　runnable 没有返回值，callable 可以拿到有返回值，callable 可以看作是 runnable 的补充。</p>
+<p>　　</p>
+<h4 id="15-线程有哪些状态？"><a href="#15-线程有哪些状态？" class="headerlink" title="15. 线程有哪些状态？"></a><strong>15. 线程有哪些状态？</strong></h4><blockquote>
+<p>线程的状态：</p>
+</blockquote>
+<ul>
+<li><code>NEW</code> 尚未启动</li>
+<li><code>RUNNABLE</code> 正在执行中</li>
+<li><code>BLOCKED</code> 阻塞的（被同步锁或者IO锁阻塞）</li>
+<li><code>WAITING</code> 永久等待状态</li>
+<li><code>TIMED_WAITING</code> 等待指定的时间重新被唤醒的状态</li>
+<li><code>TERMINATED</code> 执行完成</li>
+</ul>
+<p>　　</p>
+<h4 id="16-sleep-和-wait-有什么区别？"><a href="#16-sleep-和-wait-有什么区别？" class="headerlink" title="16. sleep() 和 wait() 有什么区别？"></a><strong>16. sleep() 和 wait() 有什么区别？</strong></h4><ul>
+<li>类的不同：sleep() 来自 Thread，wait() 来自 Object。</li>
+<li>释放锁：sleep() 不释放锁；wait() 释放锁。</li>
+<li>用法不同：sleep() 时间到会自动恢复；wait() 可以使用 notify()/notifyAll()直接唤醒。</li>
+</ul>
+<p>　　</p>
+<h4 id="17-notify-和-notifyAll-有什么区别？"><a href="#17-notify-和-notifyAll-有什么区别？" class="headerlink" title="17. notify()和 notifyAll()有什么区别？"></a><strong>17. notify()和 notifyAll()有什么区别？</strong></h4><ul>
+<li>notifyAll()会唤醒所有的线程，而notify()只会唤醒一个线程。</li>
+<li>notifyAll() 调用后，会将全部线程由等待池移到锁池，然后参与锁的竞争，竞争成功则继续执行，如果不成功则留在锁池等待锁被释放后再次参与竞争。<br>　　而 notify()只会唤醒一个线程，具体唤醒哪一个线程由虚拟机控制。</li>
+</ul>
+<p>　　</p>
+<h4 id="18-线程的-run-和-start-有什么区别？"><a href="#18-线程的-run-和-start-有什么区别？" class="headerlink" title="18. 线程的 run() 和 start() 有什么区别？"></a><strong>18. 线程的 run() 和 start() 有什么区别？</strong></h4><p>　　start() 方法用于启动线程，run() 方法用于执行线程的运行时代码。run() 可以重复调用，而 start() 只能调用一次。</p>
+<p>　　</p>
+<h4 id="19-创建线程池有哪几种方式？"><a href="#19-创建线程池有哪几种方式？" class="headerlink" title="19. 创建线程池有哪几种方式？"></a><strong>19. 创建线程池有哪几种方式？</strong></h4><p>线程池创建有七种方式，最核心的是最后一种：</p>
+<ul>
+<li><p><code>newSingleThreadExecutor()</code>：它的特点在于工作线程数目被限制为 1，操作一个无界的工作队列，所以它保证了所有任务的都是被顺序执行，最多会有一个任务处于活动状态，并且不允许使用者改动线程池实例，因此可以避免其改变线程数目；</p>
+</li>
+<li><p><code>newCachedThreadPool()</code>：它是一种用来处理大量短时间工作任务的线程池，具有几个鲜明特点：它会试图缓存线程并重用，当无缓存线程可用时，就会创建新的工作线程；如果线程闲置的时间超过 60 秒，则被终止并移出缓存；长时间闲置时，这种线程池，不会消耗什么资源。其内部使用 SynchronousQueue 作为工作队列；</p>
+</li>
+<li><p><code>newFixedThreadPool(int nThreads)</code>：重用指定数目（nThreads）的线程，其背后使用的是无界的工作队列，任何时候最多有 nThreads 个工作线程是活动的。这意味着，如果任务数量超过了活动队列数目，将在工作队列中等待空闲线程出现；如果有工作线程退出，将会有新的工作线程被创建，以补足指定的数目 nThreads；</p>
+</li>
+<li><p><code>newSingleThreadScheduledExecutor()</code>：创建单线程池，返回 ScheduledExecutorService，可以进行定时或周期性的工作调度；</p>
+</li>
+<li><p><code>newScheduledThreadPool(int corePoolSize)</code>：和<code>newSingleThreadScheduledExecutor()</code>类似，创建的是个 <code>ScheduledExecutorService</code>，可以进行定时或周期性的工作调度，区别在于单一工作线程还是多个工作线程；</p>
+</li>
+<li><p><code>newWorkStealingPool(int parallelism)</code>：这是一个经常被人忽略的线程池，Java 8 才加入这个创建方法，其内部会构建ForkJoinPool，利用Work-Stealing算法，并行地处理任务，不保证处理顺序；</p>
+</li>
+<li><p><code>ThreadPoolExecutor()</code>：是最原始的线程池创建，上面1-3创建方式都是对<code>ThreadPoolExecutor</code>的封装。</p>
+</li>
+</ul>
+<p>　　</p>
+<h4 id="20-线程池都有哪些状态？"><a href="#20-线程池都有哪些状态？" class="headerlink" title="20. 线程池都有哪些状态？"></a><strong>20. 线程池都有哪些状态？</strong></h4><ul>
+<li><code>RUNNING</code>：这是最正常的状态，接受新的任务，处理等待队列中的任务。</li>
+<li><code>SHUTDOWN</code>：不接受新的任务提交，但是会继续处理等待队列中的任务。</li>
+<li><code>STOP</code>：不接受新的任务提交，不再处理等待队列中的任务，中断正在执行任务的线程。</li>
+<li><code>TIDYING</code>：所有的任务都销毁了，workCount 为 0，线程池的状态在转换为 TIDYING 状态时，会执行钩子方法 terminated()。</li>
+<li><code>TERMINATED</code>：terminated()方法结束后，线程池的状态就会变成这个。</li>
+</ul>
+<p>　　</p>
+<h4 id="21-线程池中-submit-和-execute-方法有什么区别？"><a href="#21-线程池中-submit-和-execute-方法有什么区别？" class="headerlink" title="21. 线程池中 submit() 和 execute() 方法有什么区别？"></a><strong>21. 线程池中 submit() 和 execute() 方法有什么区别？</strong></h4><ul>
+<li><code>execute()</code>：只能执行 Runnable 类型的任务。</li>
+<li><code>submit()</code>：可以执行 Runnable 和 Callable 类型的任务。<br>Callable 类型的任务可以获取执行的返回值，而 Runnable 执行无返回值。</li>
+</ul>
+<p>　　</p>
+<h4 id="22-在-Java-程序中怎么保证多线程的运行安全？"><a href="#22-在-Java-程序中怎么保证多线程的运行安全？" class="headerlink" title="22. 在 Java 程序中怎么保证多线程的运行安全？"></a><strong>22. 在 Java 程序中怎么保证多线程的运行安全？</strong></h4><ul>
+<li>方法一：使用安全类，比如 Java. util. concurrent 下的类。</li>
+<li>方法二：使用自动锁 synchronized。</li>
+<li>方法三：使用手动锁 Lock。</li>
+</ul>
+<p>手动锁 Java 示例代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   System. out. println(<span class="string">"获得锁"</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">   <span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   System. out. println(<span class="string">"释放锁"</span>);</span><br><span class="line">   lock. unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　</p>
+<h4 id="23-多线程中-synchronized-锁升级的原理是什么？"><a href="#23-多线程中-synchronized-锁升级的原理是什么？" class="headerlink" title="23. 多线程中 synchronized 锁升级的原理是什么？"></a><strong>23. 多线程中 synchronized 锁升级的原理是什么？</strong></h4><p>　　<strong>synchronized锁升级原理：</strong>在锁对象的对象头里面有一个 threadid 字段，在第一次访问的时候 threadid 为空，jvm 让其持有偏向锁，并将 threadid 设置为其线程 id，再次进入的时候会先判断 threadid 是否与其线程 id 一致，如果一致则可以直接使用此对象，如果不一致，则升级偏向锁为轻量级锁，通过自旋循环一定次数来获取锁，执行一定次数之后，如果还没有正常获取到要使用的对象，此时就会把锁从轻量级升级为重量级锁，此过程就构成了 synchronized 锁的升级。</p>
+<p>　　<strong>锁的升级的目的：</strong>锁升级是为了减低了锁带来的性能消耗。在Java6之后优化 synchronized 的实现方式，使用了偏向锁升级为轻量级锁再升级到重量级锁的方式，从而减低了锁带来的性能消耗。</p>
+<p>　　</p>
+<h4 id="24-什么是死锁？"><a href="#24-什么是死锁？" class="headerlink" title="24. 什么是死锁？"></a><strong>24. 什么是死锁？</strong></h4><p>　　当线程 A 持有独占锁a，并尝试去获取独占锁 b 的同时，线程 B 持有独占锁 b，并尝试获取独占锁 a 的情况下，就会发生 AB 两个线程由于互相持有对方需要的锁，而发生的阻塞现象，我们称为死锁。</p>
+<p>　　</p>
+<h4 id="25-怎么防止死锁？"><a href="#25-怎么防止死锁？" class="headerlink" title="25. 怎么防止死锁？"></a><strong>25. 怎么防止死锁？</strong></h4><ul>
+<li>尽量使用 <code>tryLock(long timeout, TimeUnit unit)</code>的方法<code>(ReentrantLock、ReentrantReadWriteLock)</code>，设置超时时间，超时可以退出防止死锁。</li>
+<li>尽量使用 <code>Java.util.concurrent</code> 并发类代替自己手写锁。</li>
+<li>尽量降低锁的使用粒度，尽量不要几个功能用同一把锁。</li>
+<li>尽量减少同步的代码块。</li>
+</ul>
+<p>　　</p>
+<h4 id="26-ThreadLocal是什么？有哪些使用场景？"><a href="#26-ThreadLocal是什么？有哪些使用场景？" class="headerlink" title="26. ThreadLocal是什么？有哪些使用场景？"></a><strong>26. ThreadLocal是什么？有哪些使用场景？</strong></h4><p>　　ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</p>
+<p>　　ThreadLocal 的经典使用场景是数据库连接和 session 管理等。</p>
+<p>　　</p>
+<h4 id="27-说一下-synchronized-底层实现原理？"><a href="#27-说一下-synchronized-底层实现原理？" class="headerlink" title="27. 说一下 synchronized 底层实现原理？"></a><strong>27. 说一下 synchronized 底层实现原理？</strong></h4><p>　　synchronized 是由一对 monitorenter/monitorexit 指令实现的，monitor 对象是同步的基本实现单元。在 Java 6 之前，monitor 的实现完全是依靠操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作，性能也很低。但在 Java 6 的时候，Java 虚拟机 对此进行了大刀阔斧地改进，提供了三种不同的 monitor 实现，也就是常说的三种不同的锁：偏向锁（Biased Locking）、轻量级锁和重量级锁，大大改进了其性能。</p>
+<p>　　</p>
+<h4 id="28-synchronized-和-volatile-的区别是什么？"><a href="#28-synchronized-和-volatile-的区别是什么？" class="headerlink" title="28. synchronized 和 volatile 的区别是什么？"></a><strong>28. synchronized 和 volatile 的区别是什么？</strong></h4><ul>
+<li>volatile 是变量修饰符；synchronized 是修饰类、方法、代码段。</li>
+<li>volatile 仅能实现变量的修改可见性，不能保证原子性；而 synchronized 则可以保证变量的修改可见性和原子性。</li>
+<li>volatile 不会造成线程的阻塞；synchronized 可能会造成线程的阻塞。</li>
+</ul>
+<p>　　</p>
+<h4 id="29-synchronized-和-Lock-有什么区别？"><a href="#29-synchronized-和-Lock-有什么区别？" class="headerlink" title="29. synchronized 和 Lock 有什么区别？"></a><strong>29. synchronized 和 Lock 有什么区别？</strong></h4><ul>
+<li>synchronized 可以给类、方法、代码块加锁；而 lock 只能给代码块加锁。</li>
+<li>synchronized 不需要手动获取锁和释放锁，使用简单，发生异常会自动释放锁，不会造成死锁；而 lock 需要自己加锁和释放锁，如果使用不当没有 unLock()去释放锁就会造成死锁。</li>
+<li>通过 Lock 可以知道有没有成功获取锁，而 synchronized 却无法办到。</li>
+</ul>
+<p>　　</p>
+<h4 id="30-synchronized-和-ReentrantLock-区别是什么？"><a href="#30-synchronized-和-ReentrantLock-区别是什么？" class="headerlink" title="30. synchronized 和 ReentrantLock 区别是什么？"></a><strong>30. synchronized 和 ReentrantLock 区别是什么？</strong></h4><p>　　synchronized 早期的实现比较低效，对比 ReentrantLock，大多数场景性能都相差较大，但是在 Java 6 中对 synchronized 进行了非常多的改进。</p>
+<p>主要区别如下：</p>
+<ul>
+<li>ReentrantLock 使用起来比较灵活，但是必须有释放锁的配合动作；</li>
+<li>ReentrantLock 必须手动获取与释放锁，而 synchronized 不需要手动释放和开启锁；</li>
+<li>ReentrantLock 只适用于代码块锁，而 synchronized 可用于修饰方法、代码块等。</li>
+<li>volatile 标记的变量不会被编译器优化；synchronized 标记的变量可以被编译器优化。</li>
+</ul>
+<p>　　</p>
+<h4 id="31-说一下-atomic-的原理？"><a href="#31-说一下-atomic-的原理？" class="headerlink" title="31. 说一下 atomic 的原理？"></a><strong>31. 说一下 atomic 的原理？</strong></h4><p>　　atomic 主要利用 CAS (Compare And Wwap) 和 volatile 和 native 方法来保证原子操作，从而避免 synchronized 的高开销，执行效率大为提升。</p>
+<p>　　</p>
+<h4 id="32-线程类的构造方法，静态块是哪个线程调用的"><a href="#32-线程类的构造方法，静态块是哪个线程调用的" class="headerlink" title="32.线程类的构造方法，静态块是哪个线程调用的"></a><strong>32.线程类的构造方法，静态块是哪个线程调用的</strong></h4><p>　　这是一个非常刁钻和狡猾的问题。请记住：线程类的构造方法、静态块是被new这个线程类所在的线程所调用的，而run方法里面的代码才是被线程自身所调用的。</p>
+<p>　　如果说上面的说法让你感到困惑，那么我举个例子，假设Thread2中new了Thread1，main函数中new了Thread2，那么：</p>
+<ul>
+<li>1）Thread2的构造方法、静态块是main线程调用的，Thread2的run()方法是Thread2自己调用的</li>
+<li>2）Thread1的构造方法、静态块是Thread2调用的，Thread1的run()方法是Thread1自己调用的</li>
+</ul>
+<p>　　</p>
+<h4 id="33-同步方法和同步块，哪个是更好的选择"><a href="#33-同步方法和同步块，哪个是更好的选择" class="headerlink" title="33. 同步方法和同步块，哪个是更好的选择"></a><strong>33. 同步方法和同步块，哪个是更好的选择</strong></h4><p>　　同步块，这意味着同步块之外的代码是异步执行的，这比同步整个方法更提升代码的效率。请知道一条原则：<strong>同步的范围越小越好。</strong></p>
+<p>　　借着这一条，我额外提一点，虽说同步的范围越少越好，但是在Java虚拟机中还是存在着一种叫做锁粗化的优化方法，这种方法就是把同步范围变大。这是有用的，比方说StringBuffer，它是一个线程安全的类，自然最常用的append()方法是一个同步方法，我们写代码的时候会反复append字符串，这意味着要进行反复的加锁-&gt;解锁，这对性能不利，因为这意味着Java虚拟机在这条线程上要反复地在内核态和用户态之间进行切换，因此Java虚拟机会将多次append方法调用的代码进行一个锁粗化的操作，将多次的append的操作扩展到append方法的头尾，变成一个大的同步块，这样就减少了加锁–&gt;解锁的次数，有效地提升了代码执行的效率。</p>
+<p>　　</p>
+<h4 id="34-高并发、任务执行时间短的业务怎样使用线程池？-并发不高、任务执行时间长的业务怎样使用线程池？-并发高、业务执行时间长的业务怎样使用线程池？"><a href="#34-高并发、任务执行时间短的业务怎样使用线程池？-并发不高、任务执行时间长的业务怎样使用线程池？-并发高、业务执行时间长的业务怎样使用线程池？" class="headerlink" title="34. 高并发、任务执行时间短的业务怎样使用线程池？**并发不高、任务执行时间长的业务怎样使用线程池？**并发高、业务执行时间长的业务怎样使用线程池？"></a><strong>34. 高并发、任务执行时间短的业务怎样使用线程池？**</strong>并发不高、任务执行时间长的业务怎样使用线程池？<strong>**并发高、业务执行时间长的业务怎样使用线程池？</strong></h4><p>　　这是我在并发编程网上看到的一个问题，把这个问题放在最后一个，希望每个人都能看到并且思考一下，因为这个问题非常好、非常实际、非常专业。关于这个问题，个人看法是：</p>
+<ul>
+<li><p>1）高并发、任务执行时间短的业务，线程池线程数可以设置为CPU核数+1，减少线程上下文的切换</p>
+</li>
+<li><p>2）并发不高、任务执行时间长的业务要区分开看：</p>
+</li>
+<li><ul>
+<li>a）假如是业务时间长集中在IO操作上，也就是IO密集型的任务，因为IO操作并不占用CPU，所以不要让所有的CPU闲下来，可以加大线程池中的线程数目，让CPU处理更多的业务</li>
+</ul>
+</li>
+<li><ul>
+<li>b）假如是业务时间长集中在计算操作上，也就是计算密集型任务，这个就没办法了，和（1）一样吧，线程池中的线程数设置得少一些，减少线程上下文的切换</li>
+</ul>
+</li>
+<li><ul>
+<li>c）并发高、业务执行时间长，解决这种类型任务的关键不在于线程池而在于整体架构的设计，看看这些业务里面某些数据是否能做缓存是第一步，增加服务器是第二步，至于线程池的设置，设置参考其他有关线程池的文章。最后，业务执行时间长的问题，也可能需要分析一下，看看能不能使用中间件对任务进行拆分和解耦。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/21/面试题-多线程篇-一/" data-id="ck0tdbh3n00cvn0v9hl3r8zj5" title="面试题|多线程篇(一)" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/21/面试题-MyBatis篇-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;面试题|MyBatis篇(一)</span>
+    </a>
+  
+  
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-为什么要使用线程池"><span class="toc-text">1. 为什么要使用线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-java中如何获取到线程dump文件"><span class="toc-text">2. java中如何获取到线程dump文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-怎么检测一个线程是否持有对象监视器"><span class="toc-text">3. 怎么检测一个线程是否持有对象监视器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-synchronized和ReentrantLock的区别"><span class="toc-text">4. synchronized和ReentrantLock的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-ConcurrentHashMap的并发度是什么"><span class="toc-text">5. ConcurrentHashMap的并发度是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-ReentrantLock是什么"><span class="toc-text">6. ReentrantLock是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-FutureTask是什么"><span class="toc-text">7. FutureTask是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-Linux环境下如何查找哪个线程使用CPU最长"><span class="toc-text">8. Linux环境下如何查找哪个线程使用CPU最长</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-一个线程如果出现了运行时异常会怎么样"><span class="toc-text">9. 一个线程如果出现了运行时异常会怎么样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-如何在两个线程之间共享数据"><span class="toc-text">10. 如何在两个线程之间共享数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-线程和进程的区别？"><span class="toc-text">11.  线程和进程的区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-守护线程是什么？"><span class="toc-text">12. 守护线程是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-创建线程有哪几种方式？"><span class="toc-text">13. 创建线程有哪几种方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-说一下-runnable-和-callable-有什么区别？"><span class="toc-text">14. 说一下 runnable 和 callable 有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#15-线程有哪些状态？"><span class="toc-text">15. 线程有哪些状态？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#16-sleep-和-wait-有什么区别？"><span class="toc-text">16. sleep() 和 wait() 有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-notify-和-notifyAll-有什么区别？"><span class="toc-text">17. notify()和 notifyAll()有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#18-线程的-run-和-start-有什么区别？"><span class="toc-text">18. 线程的 run() 和 start() 有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#19-创建线程池有哪几种方式？"><span class="toc-text">19. 创建线程池有哪几种方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#20-线程池都有哪些状态？"><span class="toc-text">20. 线程池都有哪些状态？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#21-线程池中-submit-和-execute-方法有什么区别？"><span class="toc-text">21. 线程池中 submit() 和 execute() 方法有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#22-在-Java-程序中怎么保证多线程的运行安全？"><span class="toc-text">22. 在 Java 程序中怎么保证多线程的运行安全？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#23-多线程中-synchronized-锁升级的原理是什么？"><span class="toc-text">23. 多线程中 synchronized 锁升级的原理是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#24-什么是死锁？"><span class="toc-text">24. 什么是死锁？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#25-怎么防止死锁？"><span class="toc-text">25. 怎么防止死锁？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#26-ThreadLocal是什么？有哪些使用场景？"><span class="toc-text">26. ThreadLocal是什么？有哪些使用场景？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#27-说一下-synchronized-底层实现原理？"><span class="toc-text">27. 说一下 synchronized 底层实现原理？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#28-synchronized-和-volatile-的区别是什么？"><span class="toc-text">28. synchronized 和 volatile 的区别是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#29-synchronized-和-Lock-有什么区别？"><span class="toc-text">29. synchronized 和 Lock 有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#30-synchronized-和-ReentrantLock-区别是什么？"><span class="toc-text">30. synchronized 和 ReentrantLock 区别是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#31-说一下-atomic-的原理？"><span class="toc-text">31. 说一下 atomic 的原理？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#32-线程类的构造方法，静态块是哪个线程调用的"><span class="toc-text">32.线程类的构造方法，静态块是哪个线程调用的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#33-同步方法和同步块，哪个是更好的选择"><span class="toc-text">33. 同步方法和同步块，哪个是更好的选择</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#34-高并发、任务执行时间短的业务怎样使用线程池？-并发不高、任务执行时间长的业务怎样使用线程池？-并发高、业务执行时间长的业务怎样使用线程池？"><span class="toc-text">34. 高并发、任务执行时间短的业务怎样使用线程池？**并发不高、任务执行时间长的业务怎样使用线程池？**并发高、业务执行时间长的业务怎样使用线程池？</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">146</p><p class="title">文章</p></a></li>
+    <li><p class="num">157.4k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">43</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">21</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-多线程篇-一/">面试题|多线程篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-MyBatis篇-一/">面试题|MyBatis篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/synchronized与volatile/">synchronized与volatile</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/一个TCP连接上面能发多少个HTTP请求/">一个TCP连接上面能发多少个HTTP请求</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/java单例类实现及其原理/">java单例类实现及其原理</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>

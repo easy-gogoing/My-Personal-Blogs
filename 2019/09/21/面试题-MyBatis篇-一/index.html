@@ -1,0 +1,403 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>面试题|MyBatis篇(一) | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转自：每日3分钟技术干货 | 面试题+答案 | MyBatis篇(一)">
+<meta name="keywords" content="mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题|MyBatis篇(一)">
+<meta property="og:url" content="https://mlone.top/2019/09/21/面试题-MyBatis篇-一/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="转自：每日3分钟技术干货 | 面试题+答案 | MyBatis篇(一)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-21T07:13:34.348Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试题|MyBatis篇(一)">
+<meta name="twitter:description" content="转自：每日3分钟技术干货 | 面试题+答案 | MyBatis篇(一)">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-面试题-MyBatis篇-一" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      面试题|MyBatis篇(一)
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/21/面试题-MyBatis篇-一/" class="article-date"><time datetime="2019-09-21T06:57:11.000Z" itemprop="datePublished">2019-09-21</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/FrameWorks/">FrameWorks</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>转自：<a href="https://mp.weixin.qq.com/s?__biz=MzI4OTkwNDk2Ng==&amp;mid=2247483985&amp;idx=2&amp;sn=f39c83232616fd3f1f41872cf5cd821b&amp;chksm=ec294278db5ecb6ea40b263c482699aa8fe8fd37e2bd052cc5b7833e718d2a6e1173110089fc&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1568038876476&amp;sharer_shareid=b7684e8d9c73854311a908ce0138e103#rd" target="_blank" rel="noopener">每日3分钟技术干货 | 面试题+答案 | MyBatis篇(一)</a><br><a id="more"></a></p>
+<h4 id="1-MyBatis-中-和-的区别是什么？"><a href="#1-MyBatis-中-和-的区别是什么？" class="headerlink" title="1. MyBatis 中 #{}和 ${}的区别是什么？"></a><strong>1. MyBatis 中 #{}和 ${}的区别是什么？</strong></h4><p>　　#{}是预编译处理，${}是字符替换。在使用 #{}时，MyBatis 会将 SQL 中的 #{}替换成“?”，配合 PreparedStatement 的 set 方法赋值，这样可以有效的防止 SQL 注入，保证程序的运行安全。</p>
+<p>　　</p>
+<h4 id="2-MyBatis-有几种分页方式？"><a href="#2-MyBatis-有几种分页方式？" class="headerlink" title="2. MyBatis 有几种分页方式？"></a><strong>2. MyBatis 有几种分页方式？</strong></h4><ul>
+<li><p><strong>分页方式：</strong>逻辑分页和物理分页。</p>
+</li>
+<li><p><strong>逻辑分页：</strong>使用 MyBatis 自带的 RowBounds 进行分页，它是一次性查询很多数据，然后在数据中再进行检索。</p>
+</li>
+<li><p><strong>物理分页：</strong>自己手写 SQL 分页或使用分页插件 PageHelper，去数据库查询指定条数的分页数据的形式。</p>
+</li>
+</ul>
+<p>　　</p>
+<h4 id="3-RowBounds-是一次性查询全部结果吗？为什么？"><a href="#3-RowBounds-是一次性查询全部结果吗？为什么？" class="headerlink" title="3. RowBounds 是一次性查询全部结果吗？为什么？"></a><strong>3. RowBounds 是一次性查询全部结果吗？为什么？</strong></h4><p>　　RowBounds 表面是在“所有”数据中检索数据，其实并非是一次性查询出所有数据，因为 MyBatis 是对 jdbc 的封装，在 jdbc 驱动中有一个 Fetch Size 的配置，它规定了每次最多从数据库查询多少条数据，假如你要查询更多数据，它会在你执行 next()的时候，去查询更多的数据。就好比你去自动取款机取 10000 元，但取款机每次最多能取 2500 元，所以你要取 4 次才能把钱取完。只是对于 jdbc 来说，当你调用 next()的时候会自动帮你完成查询工作。这样做的好处可以有效的防止内存溢出。</p>
+<p>　　</p>
+<h4 id="4-MyBatis-逻辑分页和物理分页的区别是什么？"><a href="#4-MyBatis-逻辑分页和物理分页的区别是什么？" class="headerlink" title="4. MyBatis 逻辑分页和物理分页的区别是什么？"></a><strong>4. MyBatis 逻辑分页和物理分页的区别是什么？</strong></h4><p>　　逻辑分页是一次性查询很多数据，然后再在结果中检索分页的数据。这样做弊端是需要消耗大量的内存、有内存溢出的风险、对数据库压力较大。</p>
+<p>　　物理分页是从数据库查询指定条数的数据，弥补了一次性全部查出的所有数据的种种缺点，比如需要大量的内存，对数据库查询压力较大等问题。</p>
+<p>　　</p>
+<h4 id="5-MyBatis-是否支持延迟加载？延迟加载的原理是什么？"><a href="#5-MyBatis-是否支持延迟加载？延迟加载的原理是什么？" class="headerlink" title="5. MyBatis 是否支持延迟加载？延迟加载的原理是什么？"></a><strong>5. MyBatis 是否支持延迟加载？延迟加载的原理是什么？</strong></h4><p>　　MyBatis 支持延迟加载，设置 lazyLoadingEnabled=true 即可。</p>
+<p>　　延迟加载的原理的是调用的时候触发加载，而不是在初始化的时候就加载信息。比如调用 a. getB(). getName()，这个时候发现 a. getB() 的值为 null，此时会单独触发事先保存好的关联 B 对象的 SQL，先查询出来 B，然后再调用 a. setB(b)，而这时候再调用 a. getB(). getName() 就有值了，这就是延迟加载的基本原理。</p>
+<p>　　</p>
+<h4 id="6-说一下-MyBatis-的一级缓存和二级缓存？"><a href="#6-说一下-MyBatis-的一级缓存和二级缓存？" class="headerlink" title="6. 说一下 MyBatis 的一级缓存和二级缓存？"></a><strong>6. 说一下 MyBatis 的一级缓存和二级缓存？</strong></h4><p><strong>一级缓存：</strong>基于 PerpetualCache 的 HashMap 本地缓存，它的声明周期是和 　　SQLSession 一致的，有多个 SQLSession 或者分布式的环境中数据库操作，可能会出现脏数据。当 Session flush 或 close 之后，该 Session 中的所有 Cache 就将清空，默认一级缓存是开启的。</p>
+<p><strong>二级缓存：</strong>也是基于 PerpetualCache 的 HashMap 本地缓存，不同在于其存储作用域为 Mapper 级别的，如果多个SQLSession之间需要共享缓存，则需要使用到二级缓存，并且二级缓存可自定义存储源，如 Ehcache。默认不打开二级缓存，要开启二级缓存，使用二级缓存属性类需要实现 Serializable 序列化接口(可用来保存对象的状态)。</p>
+<blockquote>
+<p>开启二级缓存数据查询流程：二级缓存 -&gt; 一级缓存 -&gt; 数据库。</p>
+</blockquote>
+<p><strong>缓存更新机制：</strong>当某一个作用域(一级缓存 Session/二级缓存 Mapper)进行了C/U/D 操作后，默认该作用域下所有 select 中的缓存将被 clear。</p>
+<p>　　</p>
+<h4 id="7-MyBatis-和-hibernate-的区别有哪些？"><a href="#7-MyBatis-和-hibernate-的区别有哪些？" class="headerlink" title="7. MyBatis 和 hibernate 的区别有哪些？"></a><strong>7. MyBatis 和 hibernate 的区别有哪些？</strong></h4><ul>
+<li><p><strong>灵活性：</strong>MyBatis 更加灵活，自己可以写 SQL 语句，使用起来比较方便。</p>
+</li>
+<li><p><strong>可移植性：</strong>MyBatis 有很多自己写的 SQL，因为每个数据库的 SQL 可以不相同，所以可移植性比较差。</p>
+</li>
+<li><p><strong>学习和使用门槛：</strong>MyBatis 入门比较简单，使用门槛也更低。</p>
+</li>
+<li><p><strong>二级缓存：</strong>hibernate 拥有更好的二级缓存，它的二级缓存可以自行更换为第三方的二级缓存。</p>
+</li>
+</ul>
+<p>　　</p>
+<h4 id="8-MyBatis-有哪些执行器（Executor）？"><a href="#8-MyBatis-有哪些执行器（Executor）？" class="headerlink" title="8. MyBatis 有哪些执行器（Executor）？"></a><strong>8. MyBatis 有哪些执行器（Executor）？</strong></h4><p>MyBatis 有三种基本的Executor执行器：</p>
+<ul>
+<li><p><strong>SimpleExecutor：</strong>每执行一次 update 或 select 就开启一个 Statement 对象，用完立刻关闭 Statement 对象；</p>
+</li>
+<li><p><strong>ReuseExecutor：</strong>执行 update 或 select，以 SQL 作为 key 查找 Statement 对象，存在就使用，不存在就创建，用完后不关闭 Statement 对象，而是放置于 Map 内供下一次使用。简言之，就是重复使用 Statement 对象；</p>
+</li>
+<li><p><strong>BatchExecutor：</strong>执行 update（没有 select，jdbc 批处理不支持 select），将所有 SQL 都添加到批处理中（addBatch()），等待统一执行（executeBatch()），它缓存了多个 Statement 对象，每个 Statement 对象都是 addBatch()完毕后，等待逐一执行 executeBatch()批处理，与 jdbc 批处理相同。</p>
+</li>
+</ul>
+<p>　　</p>
+<h4 id="9-MyBatis-分页插件的实现原理是什么？"><a href="#9-MyBatis-分页插件的实现原理是什么？" class="headerlink" title="9. MyBatis 分页插件的实现原理是什么？"></a><strong>9. MyBatis 分页插件的实现原理是什么？</strong></h4><p>　　分页插件的基本原理是使用 MyBatis 提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的 SQL，然后重写 SQL，根据 dialect 方言，添加对应的物理分页语句和物理分页参数。</p>
+<p>　　</p>
+<h4 id="10-MyBatis-如何编写一个自定义插件？"><a href="#10-MyBatis-如何编写一个自定义插件？" class="headerlink" title="10. MyBatis 如何编写一个自定义插件？"></a><strong>10. MyBatis 如何编写一个自定义插件？</strong></h4><p><strong>自定义插件实现原理</strong></p>
+<p>　　MyBatis 自定义插件针对 MyBatis 四大对象（Executor、StatementHandler、ParameterHandler、ResultSetHandler）进行拦截：</p>
+<ul>
+<li>Executor：拦截内部执行器，它负责调用 StatementHandler 操作数据库，并把结果集通过 ResultSetHandler 进行自动映射，另外它还处理了二级缓存的操作；</li>
+<li>StatementHandler：拦截 SQL 语法构建的处理，它是 MyBatis 直接和数据库执行 SQL 脚本的对象，另外它也实现了 MyBatis 的一级缓存；</li>
+<li>ParameterHandler：拦截参数的处理；</li>
+<li>ResultSetHandler：拦截结果集的处理。</li>
+</ul>
+<p>　　<br><strong>自定义插件实现关键</strong><br>　　MyBatis 插件要实现 Interceptor 接口，接口包含的方法，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">Object <span class="title">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">Object <span class="title">plugin</span><span class="params">(Object target)</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>setProperties 方法是在 MyBatis 进行配置插件的时候可以配置自定义相关属性，即：接口实现对象的参数配置；</li>
+<li>plugin 方法是插件用于封装目标对象的，通过该方法我们可以返回目标对象本身，也可以返回一个它的代理，可以决定是否要进行拦截进而决定要返回一个什么样的目标对象，官方提供了示例：return Plugin. wrap(target, this)；</li>
+<li>intercept 方法就是要进行拦截的时候要执行的方法。</li>
+</ul>
+<p>　　<br><strong>自定义插件实现示例</strong><br>　　官方插件实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Intercepts</span>(&#123;<span class="meta">@Signature</span>(type = Executor. <span class="class"><span class="keyword">class</span>, <span class="title">method</span> </span>= <span class="string">"query"</span>,</span><br><span class="line">args = &#123;MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class&#125;)&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">      Object target = invocation. getTarget(); <span class="comment">//被代理对象</span></span><br><span class="line"></span><br><span class="line">      Method method = invocation. getMethod(); <span class="comment">//代理方法</span></span><br><span class="line"></span><br><span class="line">      Object[] args = invocation. getArgs(); <span class="comment">//方法参数</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// do something . . . . . .  方法拦截前执行代码块</span></span><br><span class="line"></span><br><span class="line">      Object result = invocation. proceed();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// do something . . . . . . . 方法拦截后执行代码块</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">plugin</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> Plugin. wrap(target, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/21/面试题-MyBatis篇-一/" data-id="ck0tdbh1m00a0n0v9as7oodhs" title="面试题|MyBatis篇(一)" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mybatis/">mybatis</a></li></ul>
+
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/21/synchronized与volatile/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;synchronized与volatile</span>
+    </a>
+  
+  
+  
+    <a href="/2019/09/21/面试题-多线程篇-一/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">面试题|多线程篇(一)&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-MyBatis-中-和-的区别是什么？"><span class="toc-text">1. MyBatis 中 #{}和 ${}的区别是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-MyBatis-有几种分页方式？"><span class="toc-text">2. MyBatis 有几种分页方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-RowBounds-是一次性查询全部结果吗？为什么？"><span class="toc-text">3. RowBounds 是一次性查询全部结果吗？为什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-MyBatis-逻辑分页和物理分页的区别是什么？"><span class="toc-text">4. MyBatis 逻辑分页和物理分页的区别是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-MyBatis-是否支持延迟加载？延迟加载的原理是什么？"><span class="toc-text">5. MyBatis 是否支持延迟加载？延迟加载的原理是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-说一下-MyBatis-的一级缓存和二级缓存？"><span class="toc-text">6. 说一下 MyBatis 的一级缓存和二级缓存？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-MyBatis-和-hibernate-的区别有哪些？"><span class="toc-text">7. MyBatis 和 hibernate 的区别有哪些？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-MyBatis-有哪些执行器（Executor）？"><span class="toc-text">8. MyBatis 有哪些执行器（Executor）？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-MyBatis-分页插件的实现原理是什么？"><span class="toc-text">9. MyBatis 分页插件的实现原理是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-MyBatis-如何编写一个自定义插件？"><span class="toc-text">10. MyBatis 如何编写一个自定义插件？</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">146</p><p class="title">文章</p></a></li>
+    <li><p class="num">157.4k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">43</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">21</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-多线程篇-一/">面试题|多线程篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/面试题-MyBatis篇-一/">面试题|MyBatis篇(一)</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/synchronized与volatile/">synchronized与volatile</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/一个TCP连接上面能发多少个HTTP请求/">一个TCP连接上面能发多少个HTTP请求</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/21/java单例类实现及其原理/">java单例类实现及其原理</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
