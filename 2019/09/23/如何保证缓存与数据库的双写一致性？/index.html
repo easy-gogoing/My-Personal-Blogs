@@ -1,0 +1,403 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>如何保证缓存与数据库的双写一致性？ | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转自：https://blog.csdn.net/chang384915878/article/details/86756463">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何保证缓存与数据库的双写一致性？">
+<meta property="og:url" content="https://mlone.top/2019/09/23/如何保证缓存与数据库的双写一致性？/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="转自：https://blog.csdn.net/chang384915878/article/details/86756463">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/1-1.png">
+<meta property="og:updated_time" content="2019-09-22T17:04:41.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何保证缓存与数据库的双写一致性？">
+<meta name="twitter:description" content="转自：https://blog.csdn.net/chang384915878/article/details/86756463">
+<meta name="twitter:image" content="https://mlone.top/blogImg/2019/9/23/1-1.png">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-如何保证缓存与数据库的双写一致性？" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      如何保证缓存与数据库的双写一致性？
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/23/如何保证缓存与数据库的双写一致性？/" class="article-date"><time datetime="2019-09-22T16:40:45.000Z" itemprop="datePublished">2019-09-23</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>转自：<a href="https://blog.csdn.net/chang384915878/article/details/86756463" target="_blank" rel="noopener">https://blog.csdn.net/chang384915878/article/details/86756463</a><br><a id="more"></a></p>
+<p>　　</p>
+<h2 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h2><blockquote>
+<p>如何保证缓存与数据库的双写一致性？</p>
+</blockquote>
+<h2 id="面试官心理分析"><a href="#面试官心理分析" class="headerlink" title="面试官心理分析"></a>面试官心理分析</h2><p>　　你只要用缓存，就可能会涉及到缓存与数据库双存储双写，你只要是双写，就一定会有数据一致性的问题，那么你如何解决一致性问题？</p>
+<h2 id="面试题剖析"><a href="#面试题剖析" class="headerlink" title="面试题剖析"></a>面试题剖析</h2><p>　　一般来说，如果允许缓存可以稍微的跟数据库偶尔有不一致的情况，也就是说如果你的系统<strong>不是严格要求</strong> “缓存+数据库” 必须保持一致性的话，最好不要做这个方案，即：<strong>读请求和写请求串行化</strong>，串到一个<strong>内存队列</strong>里去。</p>
+<p>　　串行化可以保证一定不会出现不一致的情况，但是它也会导致系统的吞吐量大幅度降低，用比正常情况下多几倍的机器去支撑线上的一个请求。</p>
+<h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache Aside Pattern"></a>Cache Aside Pattern</h3><p>最经典的缓存+数据库读写的模式，就是 Cache Aside Pattern：</p>
+<ul>
+<li>读的时候，先读缓存，缓存没有的话，就读数据库，然后取出数据后放入缓存，同时返回响应。</li>
+<li>更新的时候，<strong>先更新数据库，然后再删除缓存</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>为什么是删除缓存，而不是更新缓存？</strong></p>
+</blockquote>
+<p>　　原因很简单，很多时候，在复杂点的缓存场景，缓存不单单是数据库中直接取出来的值。</p>
+<p>　　比如可能更新了某个表的一个字段，然后其对应的缓存，是需要查询另外两个表的数据并进行运算，才能计算出缓存最新的值的。</p>
+<p>　　<br>　　另外更新缓存的代价有时候是很高的。是不是说，每次修改数据库的时候，都一定要将其对应的缓存更新一份？也许有的场景是这样，但是对于<strong>比较复杂的缓存数据计算的场景</strong>，就不是这样了。如果你频繁修改一个缓存涉及的多个表，缓存也频繁更新。但是问题在于，<strong>这个缓存到底会不会被频繁访问到？</strong></p>
+<p>　　举个栗子，一个缓存涉及的表的字段，在 1 分钟内就修改了 20 次，或者是 100 次，那么缓存更新 20 次、100 次；但是这个缓存在 1 分钟内只被读取了 1 次，有<strong>大量的冷数据</strong>。实际上，如果你只是删除缓存的话，那么在 1 分钟内，这个缓存不过就重新计算一次而已，开销大幅度降低。用<strong>到缓存才去算缓存</strong>。</p>
+<p>　　其实删除缓存，而不是更新缓存，就是一个 lazy 计算的思想，不要每次都重新做复杂的计算，不管它会不会用到，而是让它到需要被使用的时候再重新计算。像 mybatis，hibernate，都有懒加载思想。查询一个部门，部门带了一个员工的 list，没有必要说每次查询部门，都里面的 1000 个员工的数据也同时查出来啊。80% 的情况，查这个部门，就只是要访问这个部门的信息就可以了。先查部门，同时要访问里面的员工，那么这个时候只有在你要访问里面的员工的时候，才会去数据库里面查询 1000 个员工。</p>
+<h3 id="最初级的缓存不一致问题及解决方案"><a href="#最初级的缓存不一致问题及解决方案" class="headerlink" title="最初级的缓存不一致问题及解决方案"></a>最初级的缓存不一致问题及解决方案</h3><p><strong>问题：</strong>先修改数据库，再删除缓存。如果删除缓存失败了，那么会导致数据库中是新数据，缓存中是旧数据，数据就出现了不一致。<br><img src="/blogImg/2019/9/23/1-1.png" alt></p>
+<p><strong>解决思路：</strong>先删除缓存，再修改数据库。如果数据库修改失败了，那么数据库中是旧数据，缓存中是空的，那么数据不会不一致。因为读的时候缓存没有，则读数据库中旧数据，然后更新到缓存中。</p>
+<h3 id="比较复杂的数据不一致问题分析"><a href="#比较复杂的数据不一致问题分析" class="headerlink" title="比较复杂的数据不一致问题分析"></a>比较复杂的数据不一致问题分析</h3><p>　　数据发生了变更，先删除了缓存，然后要去修改数据库，此时还没修改。一个请求过来，去读缓存，发现缓存空了，去查询数据库，<strong>查到了修改前的旧数据</strong>，放到了缓存中。随后数据变更的程序完成了数据库的修改。完了，数据库和缓存中的数据不一样了…</p>
+<blockquote>
+<p> <strong>为什么上亿流量高并发场景下，缓存会出现这个问题？</strong></p>
+</blockquote>
+<p>　　只有在对一个数据在并发的进行读写的时候，才可能会出现这种问题。其实如果说你的并发量很低的话，特别是读并发很低，每天访问量就 1 万次，那么很少的情况下，会出现刚才描述的那种不一致的场景。但是问题是，如果每天的是上亿的流量，每秒并发读是几万，每秒只要有数据更新的请求，就<strong>可能会出现上述的数据库+缓存不一致的情况</strong>。</p>
+<p>　　<br><strong>解决方案如下：</strong></p>
+<p>　　更新数据的时候，根据<strong>数据的唯一标识</strong>，将操作路由之后，发送到一个 jvm 内部队列中。读取数据的时候，如果发现数据不在缓存中，那么将重新读取数据+更新缓存的操作，根据唯一标识路由之后，也发送同一个 jvm 内部队列中。</p>
+<p>　　一个队列对应一个工作线程，每个工作线程<strong>串行</strong>拿到对应的操作，然后一条一条的执行。这样的话，一个数据变更的操作，先删除缓存，然后再去更新数据库，但是还没完成更新。此时如果一个读请求过来，读到了空的缓存，那么可以先将缓存更新的请求发送到队列中，此时会在队列中积压，然后同步等待缓存更新完成。</p>
+<p>　　这里有一个<strong>优化点</strong>，一个队列中，其实<strong>多个更新缓存请求串在一起是没意义的</strong>，因此可以做过滤，如果发现队列中已经有一个更新缓存的请求了，那么就不用再放个更新请求操作进去了，直接等待前面的更新操作请求完成即可。</p>
+<p>　　待那个队列对应的工作线程完成了上一个操作的数据库的修改之后，才会去执行下一个操作，也就是缓存更新的操作，此时会从数据库中读取最新的值，然后写入缓存中。</p>
+<p>　　如果请求还在等待时间范围内，不断轮询发现可以取到值了，那么就直接返回；如果请求等待的时间超过一定时长，那么这一次直接从数据库中读取当前的旧值。</p>
+<p>　　<br><strong>高并发的场景下，该解决方案要注意的问题：</strong></p>
+<blockquote>
+<ol>
+<li>读请求长时阻塞</li>
+</ol>
+</blockquote>
+<p>　　由于读请求进行了非常轻度的异步化，所以一定要注意读超时的问题，每个读请求必须在超时时间范围内返回。</p>
+<p>　　该解决方案，最大的风险点在于说，<strong>可能数据更新很频繁</strong>，导致队列中积压了大量更新操作在里面，然后<strong>读请求会发生大量的超时</strong>，最后导致大量的请求直接走数据库。务必通过一些模拟真实的测试，看看更新数据的频率是怎样的。</p>
+<p>　　另外一点，因为一个队列中，可能会积压针对多个数据项的更新操作，因此需要根据自己的业务情况进行测试，可能需要<strong>部署多个服务</strong>，每个服务分摊一些数据的更新操作。如果一个内存队列里居然会挤压 100 个商品的库存修改操作，每隔库存修改操作要耗费 10ms 去完成，那么最后一个商品的读请求，可能等待 10 * 100 = 1000ms = 1s 后，才能得到数据，这个时候就导致<strong>读请求的长时阻塞</strong>。</p>
+<p>　　一定要做根据实际业务系统的运行情况，去进行一些压力测试，和模拟线上环境，去看看最繁忙的时候，内存队列可能会挤压多少更新操作，可能会导致最后一个更新操作对应的读请求，会 hang 多少时间，如果读请求在 200ms 返回，如果你计算过后，哪怕是最繁忙的时候，积压 10 个更新操作，最多等待 200ms，那还可以的。</p>
+<p>　　<strong>如果一个内存队列中可能积压的更新操作特别多</strong>，那么你就要<strong>加机器</strong>，让每个机器上部署的服务实例处理更少的数据，那么每个内存队列中积压的更新操作就会越少。<br>　　<br>　　其实根据之前的项目经验，一般来说，数据的写频率是很低的，因此实际上正常来说，在队列中积压的更新操作应该是很少的。像这种针对读高并发、读缓存架构的项目，一般来说写请求是非常少的，每秒的 QPS 能到几百就不错了。</p>
+<p>我们来<strong>实际粗略测算一下</strong>：</p>
+<p>　　如果一秒有 500 的写操作，如果分成 5 个时间片，每 200ms 就 100 个写操作，放到 20 个内存队列中，每个内存队列，可能就积压 5 个写操作。每个写操作性能测试后，一般是在 20ms 左右就完成，那么针对每个内存队列的数据的读请求，也就最多 hang 一会儿，200ms 以内肯定能返回了。</p>
+<p>　　经过刚才简单的测算，我们知道，单机支撑的写 QPS 在几百是没问题的，如果写 QPS 扩大了 10 倍，那么就扩容机器，扩容 10 倍的机器，每个机器 20 个队列。</p>
+<p>　　</p>
+<blockquote>
+<ol start="2">
+<li>读请求并发量过高</li>
+</ol>
+</blockquote>
+<p>　　这里还必须做好压力测试，确保恰巧碰上上述情况的时候，还有一个风险，就是突然间大量读请求会在几十毫秒的延时 hang 在服务上，看服务能不能扛的住，需要多少机器才能扛住最大的极限情况的峰值。</p>
+<p>　　但是因为并不是所有的数据都在同一时间更新，缓存也不会同一时间失效，所以每次可能也就是少数数据的缓存失效了，然后那些数据对应的读请求过来，并发量应该也不会特别大。</p>
+<p>　　</p>
+<blockquote>
+<ol start="3">
+<li>多服务实例部署的请求路由</li>
+</ol>
+</blockquote>
+<p>　　可能这个服务部署了多个实例，那么必须<strong>保证</strong>说，执行数据更新操作，以及执行缓存更新操作的请求，都通过 Nginx 服务器<strong>路由到相同的服务实例上</strong>。</p>
+<p>　　比如说，对同一个商品的读写请求，全部路由到同一台机器上。可以自己去做服务间的按照某个请求参数的 hash 路由，也可以用 Nginx 的 hash 路由功能等等。</p>
+<p>　　</p>
+<blockquote>
+<ol start="4">
+<li>热点商品的路由问题，导致请求的倾斜</li>
+</ol>
+</blockquote>
+<p>　　万一某个商品的读写请求特别高，全部打到相同的机器的相同的队列里面去了，可能会造成某台机器的压力过大。就是说，因为只有在商品数据更新的时候才会清空缓存，然后才会导致读写并发，所以其实要根据业务系统去看，如果更新频率不是太高的话，这个问题的影响并不是特别大，但是的确可能某些机器的负载会高一些。</p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/23/如何保证缓存与数据库的双写一致性？/" data-id="ck0v896c200btqkv93nxs7v03" title="如何保证缓存与数据库的双写一致性？" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/22/ConcurrentHashMap与HashMap、Hashtable的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;ConcurrentHashMap与HashMap、Hashtable的区别</span>
+    </a>
+  
+  
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#面试题"><span class="toc-text">面试题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面试官心理分析"><span class="toc-text">面试官心理分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面试题剖析"><span class="toc-text">面试题剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache-Aside-Pattern"><span class="toc-text">Cache Aside Pattern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最初级的缓存不一致问题及解决方案"><span class="toc-text">最初级的缓存不一致问题及解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较复杂的数据不一致问题分析"><span class="toc-text">比较复杂的数据不一致问题分析</span></a></li></ol></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">154</p><p class="title">文章</p></a></li>
+    <li><p class="num">181.7k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">48</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">11</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">29</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/如何保证缓存与数据库的双写一致性？/">如何保证缓存与数据库的双写一致性？</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/ConcurrentHashMap与HashMap、Hashtable的区别/">ConcurrentHashMap与HashMap、Hashtable的区别</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/常见OOM原因及解决方案/">常见OOM原因及解决方案</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/ArrayList源码分析（扩容机制jdk8）/">ArrayList源码分析（扩容机制jdk8）</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/Spring-WebClient与RestTemplate比较/">Spring WebClient与RestTemplate比较</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
