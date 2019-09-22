@@ -1,0 +1,447 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>常见OOM原因及解决方案 | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="来自微信公众号：java深度理解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见OOM原因及解决方案">
+<meta property="og:url" content="https://mlone.top/2019/09/22/常见OOM原因及解决方案/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="来自微信公众号：java深度理解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/22/3-1.png">
+<meta property="og:updated_time" content="2019-09-22T08:43:20.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见OOM原因及解决方案">
+<meta name="twitter:description" content="来自微信公众号：java深度理解">
+<meta name="twitter:image" content="https://mlone.top/blogImg/2019/9/22/3-1.png">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-常见OOM原因及解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      常见OOM原因及解决方案
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/22/常见OOM原因及解决方案/" class="article-date"><time datetime="2019-09-22T08:14:54.000Z" itemprop="datePublished">2019-09-22</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p></p><p>来自微信公众号：java深度理解</p><br><a id="more"></a><p></p>
+<p>　　<br>　　当 JVM 内存严重不足时，就会抛出 java.lang.OutOfMemoryError 错误。本文总结了常见的 OOM 原因及其解决方法，如下图所示：<br>　　<img src="/blogImg/2019/9/22/3-1.png" alt></p>
+<p>　　</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ul>
+<li>Java heap space</li>
+<li>GC overhead limit exceeded</li>
+<li>Permgen spaceMetaspace</li>
+<li>Unable to create new native thread</li>
+<li>Out of swap space？</li>
+<li>Kill process or sacrifice child</li>
+<li>Requested array size exceeds VM limit</li>
+<li>Direct buffer memory</li>
+<li>推荐工具&amp;产品</li>
+</ul>
+<p>　　</p>
+<h3 id="1-Java-heap-space"><a href="#1-Java-heap-space" class="headerlink" title="1. Java heap space"></a>1. Java heap space</h3><p>　　当堆内存（Heap Space）没有足够空间存放新创建的对象时，就会抛出 <code>java.lang.OutOfMemoryError: Java heap space</code>错误（根据实际生产经验，可以对程序日志中的 <code>OutOfMemoryError</code> 配置关键字告警，一经发现，立即处理）。</p>
+<p><strong>原因分析：</strong><br>　　Java heap space 错误产生的常见原因可以分为以下几类：</p>
+<ul>
+<li>请求创建一个超大对象，通常是一个大数组。</li>
+<li>超出预期的访问量/数据量，通常是上游系统请求流量飙升，常见于各类促销/秒杀活动，可以结合业务流量指标排查是否有尖状峰值。</li>
+<li>过度使用终结器（Finalizer），该对象没有立即被 GC。</li>
+<li>内存泄漏（Memory Leak），大量对象引用没有释放，JVM 无法对其自动回收，常见于使用了 File 等资源没有回收。</li>
+</ul>
+<p><strong>解决方案：</strong><br>　　针对大部分情况，通常只需要通过 -Xmx 参数调高 JVM 堆内存空间即可。如果仍然没有解决，可以参考以下情况做进一步处理：</p>
+<pre><code>* 如果是超大对象，可以检查其合理性，比如是否一次性查询了数据库全部结果，而没有做结果数限制。
+* 如果是业务峰值压力，可以考虑添加机器资源，或者做限流降级。
+* 如果是内存泄漏，需要找到持有的对象，修改代码设计，比如关闭没有释放的连接。
+</code></pre><p>　　</p>
+<h3 id="2-GC-overhead-limit-exceeded"><a href="#2-GC-overhead-limit-exceeded" class="headerlink" title="2. GC overhead limit exceeded"></a>2. GC overhead limit exceeded</h3><p>　　当 Java 进程花费 98% 以上的时间执行 GC，但只恢复了不到 2% 的内存，且该动作连续重复了 5 次，就会抛出 java.lang.OutOfMemoryError:GC overhead limit exceeded 错误。简单地说，就是应用程序已经基本耗尽了所有可用内存， GC 也无法回收。</p>
+<p>　　此类问题的原因与解决方案跟 Java heap space 非常类似，可以参考上文。</p>
+<p>　　</p>
+<h3 id="3-Permgen-space"><a href="#3-Permgen-space" class="headerlink" title="3. Permgen space"></a>3. Permgen space</h3><p>　　该错误表示永久代（Permanent Generation）已用满，通常是因为加载的 class 数目太多或体积太大。</p>
+<p><strong> 原因分析：</strong><br>　　永久代存储对象主要包括以下几类：</p>
+<ul>
+<li>加载/缓存到内存中的 class 定义，包括类的名称，字段，方法和字节码；</li>
+<li>常量池；</li>
+<li>对象数组/类型数组所关联的 class；</li>
+<li>JIT 编译器优化后的 class 信息。</li>
+</ul>
+<p>　　PermGen 的使用量与加载到内存的 class 的数量/大小正相关。</p>
+<p><strong>解决方案：</strong><br>　　根据 Permgen space 报错的时机，可以采用不同的解决方案，如下所示：</p>
+<pre><code>* 程序启动报错，修改 -XX:MaxPermSize 启动参数，调大永久代空间。
+* 应用重新部署时报错，很可能是没有应用没有重启，导致加载了多份 class 信息，只需重启 JVM 即可解决。
+* 运行时报错，应用程序可能会动态创建大量 class，而这些 class 的生命周期很短暂，但是 JVM 默认不会卸载 class，可以设置 `-XX:+CMSClassUnloadingEnabled `和 `-XX:+UseConcMarkSweepGC` 这两个参数允许 JVM 卸载 class。
+</code></pre><p>　　如果上述方法无法解决，可以通过 jmap 命令 dump 内存对象 jmap -dump:format=b,file=dump.hprof <process-id> ，然后利用 Eclipse MAT 功能逐一分析开销最大的 classloader 和重复 class。</process-id></p>
+<p>　　</p>
+<h3 id="4-Metaspace"><a href="#4-Metaspace" class="headerlink" title="4. Metaspace"></a>4. Metaspace</h3><p>　　JDK 1.8 使用 Metaspace 替换了永久代（Permanent Generation），该错误表示 Metaspace 已被用满，通常是因为加载的 class 数目太多或体积太大。<br>此类问题的原因与解决方法跟 Permgen space 非常类似，可以参考上文。需要特别注意的是调整 Metaspace 空间大小的启动参数为<code>-XX:MaxMetaspaceSize</code>。</p>
+<p>　　</p>
+<h3 id="5-Unable-to-create-new-native-thread"><a href="#5-Unable-to-create-new-native-thread" class="headerlink" title="5. Unable to create new native thread"></a>5. Unable to create new native thread</h3><p>　　每个 Java 线程都需要占用一定的内存空间，当 JVM 向底层操作系统请求创建一个新的 native 线程时，如果没有足够的资源分配就会报此类错误。</p>
+<p><strong> 原因分析：</strong><br>　　JVM 向 OS 请求创建 native 线程失败，就会抛出 Unable to create new native thread，常见的原因包括以下几类：</p>
+<ul>
+<li>线程数超过操作系统最大线程数 ulimit 限制。</li>
+<li>线程数超过 kernel.pid_max（只能重启）。</li>
+<li>native 内存不足。</li>
+</ul>
+<p>该问题发生的常见过程主要包括以下几步：</p>
+<pre><code>1. JVM 内部的应用程序请求创建一个新的 Java 线程；
+2. JVM native 方法代理了该次请求，并向操作系统请求创建一个 native 线程；
+3. 操作系统尝试创建一个新的 native 线程，并为其分配内存；
+4. 如果操作系统的虚拟内存已耗尽，或是受到 32 位进程的地址空间限制，操作系统就会拒绝本次 native 内存分配；
+5. JVM 将抛出 java.lang.OutOfMemoryError: Unable to create new native thread 错误。
+</code></pre><p><strong>解决方案：</strong></p>
+<pre><code>* 升级配置，为机器提供更多的内存；
+* 降低 Java Heap Space 大小；
+* 修复应用程序的线程泄漏问题；
+* 限制线程池大小；
+* 使用 -Xss 参数减少线程栈的大小；
+* 调高 OS 层面的线程最大数：执行 ulimia -a 查看最大线程数限制，使用 ulimit -u xxx 调整最大线程数限制。
+</code></pre><hr>
+<pre><code>ulimit -a
+.... 省略部分内容 .....
+max user processes              (-u) 16384
+</code></pre><p>　　</p>
+<h3 id="6-Out-of-swap-space？"><a href="#6-Out-of-swap-space？" class="headerlink" title="6. Out of swap space？"></a>6. Out of swap space？</h3><p>　　该错误表示所有可用的虚拟内存已被耗尽。虚拟内存（Virtual Memory）由物理内存（Physical Memory）和交换空间（Swap Space）两部分组成。当运行时程序请求的虚拟内存溢出时就会报 Out of swap space? 错误。</p>
+<p><strong>原因分析：</strong><br>　　该错误出现的常见原因包括以下几类：</p>
+<pre><code>* 地址空间不足；
+* 物理内存已耗光；
+* 应用程序的本地内存泄漏（native leak），例如不断申请本地内存，却不释放。
+* 执行 jmap -histo:live 命令，强制执行 Full GC；如果几次执行后内存明显下降，则基本确认为 Direct ByteBuffer 问题。
+</code></pre><p><strong>解决方案：</strong></p>
+<p>　　根据错误原因可以采取如下解决方案：</p>
+<pre><code>* 升级地址空间为 64 bit；
+* 使用 Arthas 检查是否为 Inflater/Deflater 解压缩问题，如果是，则显式调用 end 方法。
+* Direct ByteBuffer 问题可以通过启动参数 -XX:MaxDirectMemorySize 调低阈值。
+* 升级服务器配置/隔离部署，避免争用。
+</code></pre><p>　　</p>
+<h3 id="7-Kill-process-or-sacrifice-child"><a href="#7-Kill-process-or-sacrifice-child" class="headerlink" title="7. Kill process or sacrifice child"></a>7. Kill process or sacrifice child</h3><p>　　有一种内核作业（Kernel Job）名为 Out of Memory Killer，它会在可用内存极低的情况下“杀死”（kill）某些进程。OOM Killer 会对所有进程进行打分，然后将评分较低的进程“杀死”，具体的评分规则可以参考 Surviving the Linux OOM Killer。<br>不同于其他的 OOM 错误，Kill process or sacrifice child 错误不是由 JVM 层面触发的，而是由操作系统层面触发的。</p>
+<p><strong>原因分析：</strong><br>　　默认情况下，Linux 内核允许进程申请的内存总量大于系统可用内存，通过这种“错峰复用”的方式可以更有效的利用系统资源。</p>
+<p>　　然而，这种方式也会无可避免地带来一定的“超卖”风险。例如某些进程持续占用系统内存，然后导致其他进程没有可用内存。此时，系统将自动激活 OOM Killer，寻找评分低的进程，并将其“杀死”，释放内存资源。</p>
+<p><strong>解决方案：</strong></p>
+<pre><code>* 升级服务器配置/隔离部署，避免争用。
+* OOM Killer 调优。
+</code></pre><p>　　</p>
+<h3 id="8-Requested-array-size-exceeds-VM-limit"><a href="#8-Requested-array-size-exceeds-VM-limit" class="headerlink" title="8. Requested array size exceeds VM limit"></a>8. Requested array size exceeds VM limit</h3><p>　　JVM 限制了数组的最大长度，该错误表示程序请求创建的数组超过最大长度限制。<br>　　JVM 在为数组分配内存前，会检查要分配的数据结构在系统中是否可寻址，通常为 <code>Integer.MAX_VALUE - 2</code>。<br>　　此类问题比较罕见，通常需要检查代码，确认业务是否需要创建如此大的数组，是否可以拆分为多个块，分批执行。</p>
+<p>　　</p>
+<h3 id="9-Direct-buffer-memory"><a href="#9-Direct-buffer-memory" class="headerlink" title="9. Direct buffer memory"></a>9. Direct buffer memory</h3><p>　　Java 允许应用程序通过 Direct ByteBuffer 直接访问堆外内存，许多高性能程序通过 Direct ByteBuffer 结合内存映射文件（Memory Mapped File）实现高速 IO。</p>
+<p><strong>原因分析：</strong><br>　　Direct ByteBuffer 的默认大小为 64 MB，一旦使用超出限制，就会抛出 Direct buffer memory 错误。</p>
+<p><strong>解决方案：</strong></p>
+<pre><code>* Java 只能通过 ByteBuffer.allocateDirect 方法使用 Direct ByteBuffer，因此，可以通过 Arthas 等在线诊断工具拦截该方法进行排查。
+* 检查是否直接或间接使用了 NIO，如 netty，jetty 等。
+* 通过启动参数 -XX:MaxDirectMemorySize 调整 Direct ByteBuffer 的上限值。
+* 检查 JVM 参数是否有 -XX:+DisableExplicitGC 选项，如果有就去掉，因为该参数会使 System.gc() 失效。
+* 检查堆外内存使用代码，确认是否存在内存泄漏；或者通过反射调用 sun.misc.Cleaner 的 clean() 方法来主动释放被 Direct ByteBuffer 持有的内存空间。
+* 内存容量确实不足，升级配置。
+</code></pre><p>　　</p>
+<h3 id="推荐工具-amp-产品"><a href="#推荐工具-amp-产品" class="headerlink" title="推荐工具&amp;产品"></a>推荐工具&amp;产品</h3><ul>
+<li>Eclipse Memory Analyzer —— JVM 内存分析工具</li>
+<li>ARMS —— 阿里云 APM 产品，支持 OOM 异常关键字告警</li>
+<li>Arthas —— Java 在线诊断工具</li>
+</ul>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/22/常见OOM原因及解决方案/" data-id="ck0usmvh100c8mov9mqycmp0c" title="常见OOM原因及解决方案" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/22/ArrayList源码分析（扩容机制jdk8）/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;ArrayList源码分析（扩容机制jdk8）</span>
+    </a>
+  
+  
+  
+    <a href="/2019/09/22/ConcurrentHashMap与HashMap、Hashtable的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">ConcurrentHashMap与HashMap、Hashtable的区别&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java-heap-space"><span class="toc-text">1. Java heap space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GC-overhead-limit-exceeded"><span class="toc-text">2. GC overhead limit exceeded</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Permgen-space"><span class="toc-text">3. Permgen space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Metaspace"><span class="toc-text">4. Metaspace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Unable-to-create-new-native-thread"><span class="toc-text">5. Unable to create new native thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Out-of-swap-space？"><span class="toc-text">6. Out of swap space？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Kill-process-or-sacrifice-child"><span class="toc-text">7. Kill process or sacrifice child</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Requested-array-size-exceeds-VM-limit"><span class="toc-text">8. Requested array size exceeds VM limit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Direct-buffer-memory"><span class="toc-text">9. Direct buffer memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#推荐工具-amp-产品"><span class="toc-text">推荐工具&amp;产品</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">153</p><p class="title">文章</p></a></li>
+    <li><p class="num">178.8k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">48</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">28</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/ConcurrentHashMap与HashMap、Hashtable的区别/">ConcurrentHashMap与HashMap、Hashtable的区别</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/常见OOM原因及解决方案/">常见OOM原因及解决方案</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/ArrayList源码分析（扩容机制jdk8）/">ArrayList源码分析（扩容机制jdk8）</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/Spring-WebClient与RestTemplate比较/">Spring WebClient与RestTemplate比较</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/22/Spring如何解决循环依赖的问题/">Spring如何解决循环依赖的问题</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
