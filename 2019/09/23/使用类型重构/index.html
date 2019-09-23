@@ -1,0 +1,360 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>使用类型重构 | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原文地址：https://dzone.com/articles/refactoring-with-types">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用类型重构">
+<meta property="og:url" content="https://mlone.top/2019/09/23/使用类型重构/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="原文地址：https://dzone.com/articles/refactoring-with-types">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-23T14:56:04.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用类型重构">
+<meta name="twitter:description" content="原文地址：https://dzone.com/articles/refactoring-with-types">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-使用类型重构" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      使用类型重构
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/23/使用类型重构/" class="article-date"><time datetime="2019-09-23T14:39:31.000Z" itemprop="datePublished">2019-09-23</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+
+	| <div class="article-author">ImportNew</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p>原文地址：<a href="https://dzone.com/articles/refactoring-with-types" target="_blank" rel="noopener">https://dzone.com/articles/refactoring-with-types</a><br><a id="more"></a></p>
+<p>　　<br>　　在本文中，我们将介绍一些使用类型进行重构的技术。类型可以精确定义某个领域，还可以通过它在合并业务规则时保证代码的正确性。这样使得我们能够编写简单优雅的单元测试，验证代码是否正确。</p>
+<p>　　</p>
+<h3 id="使用类型重构"><a href="#使用类型重构" class="headerlink" title="使用类型重构"></a>使用类型重构</h3><p>最近在检查代码时，我遇到了下面这个类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderLine</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> quantity;</span><br><span class="line">  <span class="keyword">private</span> Double unitPrice;</span><br><span class="line">  <span class="keyword">private</span> Double listPrice;</span><br><span class="line">  <span class="keyword">private</span> Double tax;</span><br><span class="line">  <span class="keyword">private</span> Double charge;</span><br><span class="line">  <span class="comment">// 其余实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　上面是典型的“代码异味”，称为基本类型强迫症。</p>
+<p>　　上面代码中，所有参数都用数字表示。但是，它们只是数字吗？<code>unitPrice</code>是否可以与 <code>listPrice</code> 或者 <code>tax</code>互换?</p>
+<p>　　在领域驱动的设计中，这些的确是不同的东西，而不仅仅表示数字。理想情况下，我们希望用特定类型来表示这些概念。</p>
+<p>　　<br>　　第一级重构是为这些类创建简单的封装类型：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListPrice</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ListPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Getter</span> Double listPrice;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ListPrice</span><span class="params">(Double listPrice)</span> </span>&#123;</span><br><span class="line">        setListPrice(listPrice);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setListPrice</span><span class="params">(Double listPrice)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(listPrice, <span class="string">"list price can not be null"</span>);</span><br><span class="line">        <span class="keyword">if</span> (listPrice &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid list price: "</span>+listPrice);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.listPrice = listPrice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnitPrice</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">UnitPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Getter</span> Double unitPrice;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">unitPrice</span><span class="params">(Double unitPrice)</span> </span>&#123;</span><br><span class="line">        setUnitPrice(unitPrice);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setUnitPrice</span><span class="params">(Double unitPrice)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(unitPrice, <span class="string">"unit price can not be null"</span>);</span><br><span class="line">        <span class="keyword">if</span> (unitPrice &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid unit price: "</span>+unitPrice);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.unitPrice = unitPrice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　这是一个很好的开始。现在，我们为他们定义了概念。可以把需要的业务规则加到这些结构中，不必在OrderLine容器类里实现。</p>
+<p>　　但是，如果发现有检查listPrice和unitPrice是否为null或者非负数负数的重复代码，那么这些检查很可能也适用于quantity、tax和charge。</p>
+<p>　　<br>　　因此，创建一个代表非负数的Type很有意义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NonNegativeDouble</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Getter</span> Double value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NonNegativeDouble</span><span class="params">(Double value)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setValue(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(Double value)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(value,<span class="string">"Value cannot be null"</span>);</span><br><span class="line">        <span class="keyword">if</span>(value &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Value has to be positive"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　现在，可以用 NonNegativeDouble 安全地重构UnitPrice和ListPrice类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnitPrice</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">UnitPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span></span><br><span class="line">    <span class="meta">@Getter</span></span><br><span class="line">    NonNegativeDouble unitPrice;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UnitPrice</span><span class="params">(NonNegativeDouble unitPrice)</span> </span>&#123;</span><br><span class="line">        setUnitPrice(unitPrice);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setUnitPrice</span><span class="params">(NonNegativeDouble unitPrice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unitPrice = unitPrice;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　可以用一个简单的测试来验证UnitPrice为非负数，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Unroll</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnitPriceSpec</span> <span class="keyword">extends</span> <span class="title">Specification</span> </span>&#123;</span><br><span class="line">    def <span class="string">"#text creation of Unit Price object with value - (#unitPriceValue)"</span>() &#123;</span><br><span class="line">        given:</span><br><span class="line">        def unitPrice</span><br><span class="line">        when:</span><br><span class="line">        <span class="keyword">boolean</span> isExceptionThrown = <span class="keyword">false</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            unitPrice = <span class="keyword">new</span> UnitPrice(<span class="keyword">new</span> NonNegativeDouble(unitPriceValue))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            isExceptionThrown = <span class="keyword">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        then:</span><br><span class="line">        <span class="keyword">assert</span> isExceptionThrown == isExceptionExpected</span><br><span class="line">        where:</span><br><span class="line">        text        |   unitPriceValue      |   isExceptionExpected</span><br><span class="line">        <span class="string">'Valid'</span>     |   <span class="number">120</span>                 |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Valid'</span>     |   <span class="number">12.34</span>               |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Valid'</span>     |   <span class="number">0.8989</span>              |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Valid'</span>     |   <span class="number">12567652365.67667</span>   |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Invalid'</span>   |   <span class="number">0</span>                   |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Invalid'</span>   |   <span class="number">0.00000</span>             |   <span class="keyword">false</span></span><br><span class="line">        <span class="string">'Invalid'</span>   |   -<span class="number">23.5676</span>            |   <span class="keyword">true</span></span><br><span class="line">        <span class="string">'Invalid'</span>   |   -<span class="number">23478687</span>           |   <span class="keyword">true</span></span><br><span class="line">        <span class="string">'Invalid'</span>   |   <span class="keyword">null</span>                |   <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　尽管上面展示的重构用法很简单，但它同样适用于基本类型，例如Email、名字、货币、 范围以及日期和时间。</p>
+<p>　　</p>
+<h3 id="重构：使用类型让非法状态无处躲藏"><a href="#重构：使用类型让非法状态无处躲藏" class="headerlink" title="重构：使用类型让非法状态无处躲藏"></a>重构：使用类型让非法状态无处躲藏</h3><p>　　重构带来的另一个巨大价值是让非法状态在模型中无处躲藏。作为示例，请思考下面这个 Java 类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerContact</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="meta">@Getter</span> EmailContactInfo emailContactInfo;</span><br><span class="line">   <span class="keyword">private</span> <span class="meta">@Getter</span> PostalContactInfo postalContactInfo;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">CustomerContact</span><span class="params">(EmailContactInfo emailContactInfo, PostalContactInfo postalContactInfo)</span></span>&#123;</span><br><span class="line">      setEmailContactInfo(emailContactInfo);</span><br><span class="line">      setPostalContactInfo(postalContactInfo);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setEmailContactInfo</span><span class="params">(EmailContactInfo emailContactInfo)</span></span>&#123;</span><br><span class="line">      Objects.requireNonNull(emailContactInfo,<span class="string">"Email Contact Info cannot be null"</span>);</span><br><span class="line">      <span class="keyword">this</span>.emailContactInfo = emailContactInfo;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setPostalContactInfo</span><span class="params">(PostalContactInfo postalContactInfo)</span></span>&#123;</span><br><span class="line">      Objects.requireNonNull(postalContactInfo,<span class="string">"Postal Contact Info cannot be null"</span>);</span><br><span class="line">      <span class="keyword">this</span>.postalContactInfo = postalContactInfo;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　在之前重构基础上，我们已经提取了EmailContactInfo和PostalContactInfo。它们与strings不同，是真正的领域结构。</p>
+<p>　　假设有这么一个简单的业务规则：“客户必须有 Email 信息或邮政地址。”</p>
+<p>　　这意味着至少有一个EmailContactInfo或者CustomerContactInfo。也可以两个都有。但是，当前的实现要求两个同时存在。</p>
+<p>　　<br>　　为了实现业务规则，第一次重构看起来像下面这样：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerContact</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Getter</span> Optional&lt;EmailContactInfo&gt; emailContactInfo;</span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Getter</span> Optional&lt;PostalContactInfo&gt; postalContactInfo;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomerContact</span><span class="params">(PersonName name, Optional&lt;EmailContactInfo&gt; emailContactInfo, Optional&lt;PostalContactInfo&gt; postalContactInfo)</span></span>&#123;</span><br><span class="line">        setEmailContactInfo(emailContactInfo);</span><br><span class="line">        setPostalContactInfo(postalContactInfo);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setEmailContactInfo</span><span class="params">(Optional&lt;EmailContactInfo&gt; emailContactInfo)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.emailContactInfo = emailContactInfo;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setPostalContactInfo</span><span class="params">(Optional&lt;PostalContactInfo&gt; postalContactInfo)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.postalContactInfo = postalContactInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　现在这个版本反而超出了规则要求。规则要求CustomerContact至少包含 Email 或者邮政地址。但是，当前的实现中，CustomerContact可能一个联系方式也没有。</p>
+<p>　　这种简化的业务规则会导致下面的结果：<br>　　<strong>客户联系方式 = Email or 邮政地址 or Email和邮政地址都有</strong></p>
+<p>　　在函数式语言中，可以用<code>sum types</code>满足这种条件。但是，像 Java 这样的语言没有把这种结构作为一等公民。尽管如此，还是有<code>JavaSealedUnions</code>这样的开发库为 Java 提供  Sum和Union支持。</p>
+<p>　　<br>　　使用 JavaSealedUnions，实现业务规则：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerContact</span> <span class="keyword">implements</span> <span class="title">Union2</span>&lt;<span class="title">EmailContact</span>, <span class="title">PostalContact</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">valid</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomerContact <span class="title">email</span><span class="params">(String emailAddress)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> EmailContact(emailAddress);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomerContact <span class="title">postal</span><span class="params">(String postalAddress)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PostalContact(postalAddress);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmailContact</span> <span class="keyword">extends</span> <span class="title">CustomerContact</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String emailAddress;</span><br><span class="line">    EmailContact(String emailAddress) &#123;</span><br><span class="line">        <span class="keyword">this</span>.emailAddress = emailAddress;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">valid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="comment">/* 一些业务逻辑 */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">continued</span><span class="params">(Consumer&lt;EmailContact&gt; continuationLeft, Consumer&lt;PostalContact&gt; continuationRight)</span> </span>&#123;</span><br><span class="line">        continuationLeft.call(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">join</span><span class="params">(Function&lt;EmailContact, T&gt; mapLeft, Function&lt;PostalContact, T&gt; mapRight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mapLeft.call(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostalContact</span> <span class="keyword">extends</span> <span class="title">CustomerContact</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String address;</span><br><span class="line">    PostalContact(String address) &#123;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">valid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="comment">/* 一些业务逻辑 */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">continued</span><span class="params">(Consumer&lt;EmailContact&gt; continuationLeft, Consumer&lt;PostalContact&gt; continuationRight)</span> </span>&#123;</span><br><span class="line">        continuationRight.call(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">join</span><span class="params">(Function&lt;EmailContact, T&gt; mapLeft, Function&lt;PostalContact, T&gt; mapRight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mapRight.call(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 示例</span></span><br><span class="line">CustomerContact customerContact = getCustomerContact();</span><br><span class="line"><span class="keyword">if</span> (customerContact.valid()) &#123;</span><br><span class="line">    customerContact.continued(customerContactService::byEmail(), customerContactService::byPostalAddress())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　本文展示了如何使用类型让设计变得更简洁。使用类型还能够有助于避免业务规则本身的歧义。前文展示的方法也可以在其他情况下使用，例如得到允许使用、发生成功或失败的情况。</p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/23/使用类型重构/" data-id="ck0wlm40x00bvy0v92p5jvqih" title="使用类型重构" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/23/JVM内存结构面试题十道/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;JVM内存结构面试题十道</span>
+    </a>
+  
+  
+  
+    <a href="/2019/09/23/面试题：MySQL读写分离/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">面试题：MySQL读写分离&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用类型重构"><span class="toc-text">使用类型重构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重构：使用类型让非法状态无处躲藏"><span class="toc-text">重构：使用类型让非法状态无处躲藏</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">159</p><p class="title">文章</p></a></li>
+    <li><p class="num">188.3k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">52</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">12</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">34</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/使用Java-Faker生成随机数/">使用Java Faker生成随机数</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/Java-Optional实例介绍/">Java Optional实例介绍</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/面试题：MySQL读写分离/">面试题：MySQL读写分离</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/使用类型重构/">使用类型重构</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/JVM内存结构面试题十道/">JVM内存结构面试题十道</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>

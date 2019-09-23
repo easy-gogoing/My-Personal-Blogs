@@ -1,0 +1,428 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>JVM内存结构面试题十道 | Easygo_Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="文章转载自公众号 Hollis ， 作者 Hollis">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM内存结构面试题十道">
+<meta property="og:url" content="https://mlone.top/2019/09/23/JVM内存结构面试题十道/index.html">
+<meta property="og:site_name" content="Easygo_Space">
+<meta property="og:description" content="文章转载自公众号 Hollis ， 作者 Hollis">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/2-1.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/2-2.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/2-3.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/2-4.png">
+<meta property="og:image" content="https://mlone.top/blogImg/2019/9/23/2-5.png">
+<meta property="og:updated_time" content="2019-09-23T14:37:42.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM内存结构面试题十道">
+<meta name="twitter:description" content="文章转载自公众号 Hollis ， 作者 Hollis">
+<meta name="twitter:image" content="https://mlone.top/blogImg/2019/9/23/2-1.png">
+<meta name="twitter:creator" content="@yangdongliu2016">
+  
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script></html>
+
+<body>
+<div>
+  <div class="container">
+    <div id="header">
+		
+<div class="blog-header">
+  <h1 class="blog-title">Easygo_Space</h1>
+  
+    <p class="blog-description">The quick brown fox jumps over the lazy dog.</p>
+  
+</div>
+
+		<nav class="navbar">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class href="/index.html"><i class="fa fa-home"> home</i></a></li>
+        
+          <li><a class href="/archives/"><i class="fa fa-archive"> archive</i></a></li>
+        
+          <li><a class href="/photo/"><i class="fa fa-photo"> photo</i></a></li>
+        
+          <li><a class href="/top/"><i class="fa fa-signal"> signal</i></a></li>
+        
+          <li><a class href="/about/"><i class="fa fa-user"> user</i></a></li>
+        
+          <li><a class href="/atom.xml"><i class="fa fa-rss"> rss</i></a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+	</div>
+    <div class="row">
+		<!-- 文章主题 -->
+        <div class="col-sm-8 blog-main">
+		  <div class="post-body">
+            <article id="post-JVM内存结构面试题十道" class="article article-type-post" itemscope itemprop="blogPost">
+  <!-- 文章加密 -->
+  	
+  
+  <!-- 文章头部标题 -->
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      JVM内存结构面试题十道
+    </h1>
+  
+
+
+  </header>
+  <!-- 文章头部元数据 -->
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2019/09/23/JVM内存结构面试题十道/" class="article-date"><time datetime="2019-09-23T14:10:55.000Z" itemprop="datePublished">2019-09-23</time></a>
+</div>
+
+    | 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+
+	| <div class="article-author">easy_go</div>
+	
+		<a id="enlarge-shrink-view" class="btn"> 扩大/缩小文章视图</a>
+	
+	
+  </div>	
+  
+  <!-- 文章内容 -->
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+	    <!-- 非首页展示文章全部内容 -->
+		<!-- 先显示图片集（在文章md文件的photos属性下添加图片url） -->
+		
+		  
+
+		
+		
+        <p></p><p>文章转载自公众号 Hollis ， 作者 Hollis</p><br><a id="more"></a><p></p>
+<p>　　<br>　　以下10道题，如果您可以全部准确无误的回答的话，那说明你真的很了解JVM的内存结构以及内存分配相关的知识了，如果有哪些知识点是不了解的，那么本文正好可以帮你答疑解惑。</p>
+<blockquote>
+<ol>
+<li>JVM管理的内存结构是怎样的？ </li>
+<li>不同的虚拟机在实现运行时内存的时候有什么区别？ </li>
+<li>运行时数据区中哪些区域是线程共享的？哪些是独享的？ </li>
+<li>除了JVM运行时内存以外，还有什么区域可以用吗？ </li>
+<li>堆和栈的区别是什么？ </li>
+<li>Java中的数组是存储在堆上还是栈上的？ </li>
+<li>Java中的对象创建有多少种方式？ </li>
+<li>Java中对象创建的过程是怎么样的？ </li>
+<li>Java中的对象一定在堆上分配内存吗？ </li>
+<li>如何获取堆和栈的dump文件？</li>
+</ol>
+</blockquote>
+<p>　　</p>
+<h3 id="Q1：JVM管理的内存结构是怎样的？"><a href="#Q1：JVM管理的内存结构是怎样的？" class="headerlink" title="Q1：JVM管理的内存结构是怎样的？"></a>Q1：JVM管理的内存结构是怎样的？</h3><p>　　Java虚拟机在执行Java程序的过程中会把他所管理的内存划分为若干个不同的数据区域。《Java虚拟机规范》中规定了JVM所管理的内存需要包括以下几个运行时区域：</p>
+<p><img src="/blogImg/2019/9/23/2-1.png" alt></p>
+<p>　　Java虚拟机运行时数据区域主要包含了PC寄存器（程序计数器）、Java虚拟机栈、本地方法栈、Java堆、方法区以及运行时常量池。</p>
+<p>　　各个区域有各自不同的作用，关于各个区域的作用就不在本文中相信介绍了。</p>
+<p>　　但是，需要注意的是，<span style="color: orange;">上面的区域划分只是逻辑区域，规范对于有些区域的限制是比较松的，所以不同的虚拟机厂商在实现上，甚至是同一款虚拟机的不同版本也是不尽相同的。</span></p>
+<p>　　</p>
+<h3 id="Q2：不同的虚拟机在实现运行时内存的时候有什么区别？"><a href="#Q2：不同的虚拟机在实现运行时内存的时候有什么区别？" class="headerlink" title="Q2：不同的虚拟机在实现运行时内存的时候有什么区别？"></a>Q2：不同的虚拟机在实现运行时内存的时候有什么区别？</h3><p>　　前面提到过《Java虚拟机规范》定义的JVM运行时所需的内存区域，不同的虚拟机实现上有所不同，而在这么多区域中，规范对于方法区的管理是最宽松的，规范中关于这部分的描述如下：</p>
+<blockquote>
+<p>　　方法区在虚拟机启动的时候创建，虽然方法区是堆的逻辑组成部分，但是简单的虚拟机实现可以选择在这个区域不实现垃圾收集与压缩。本版本的规范也不限定实现方法区的内存位置和代码编译的管理策略。方法区的容量可以是固定的，也可以随着程序执行的需求动态扩展，并在不需要过多的空间时自行收缩。方法区在实际内存空间站可以是不连续的。</p>
+</blockquote>
+<p>　　这一规定，可以说是给了虚拟机厂商很大的自由。</p>
+<p>　　虚拟机规范对方法区实现的位置并没有明确要求，<span style="color: orange;">在最著名的HotSopt虚拟机实现中（在Java 8 之前），方法区仅是逻辑上的独立区域，在物理上并没有独立于堆而存在，而是位于永久代中。</span>所以，这时候方法区也是可以被垃圾回收的。</p>
+<blockquote>
+<p>实践证明，JVM中存在着大量的声明短暂的对象，还有一些生命周期比较长的对象。为了对他们采用不同的收集策略，采用了分代收集算法，所以HotSpot虚拟机把的根据对象的年龄不同，把堆分为新生代、老年代和永久代。</p>
+</blockquote>
+<p><span style="color: orange;">在Java 8中 ，HotSpot虚拟机移除了永久代，使用本地内存来存储类元数据信息并称之为：元空间（Metaspace）</span><br>　　<img src="/blogImg/2019/9/23/2-2.png" alt></p>
+<p>　　</p>
+<h3 id="Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？"><a href="#Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？" class="headerlink" title="Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？"></a>Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？</h3><p>　　在JVM运行时内存区域中，PC寄存器、虚拟机栈和本地方法栈是线程独享的。</p>
+<p>　　而Java堆、方法区是线程共享的。但是值得注意的是，<span style="color: orange;">Java堆其实还为每一个线程单独分配了一块TLAB空间，这部分空间在分配时是线程独享的，在使用时是线程共享的。</span>（TLAB介绍）</p>
+<p>　　</p>
+<h3 id="Q4：除了JVM运行时内存以外，还有什么区域可以用吗？"><a href="#Q4：除了JVM运行时内存以外，还有什么区域可以用吗？" class="headerlink" title="Q4：除了JVM运行时内存以外，还有什么区域可以用吗？"></a>Q4：除了JVM运行时内存以外，还有什么区域可以用吗？</h3><p>　　除了我们前面介绍的虚拟机运行时数据区以外，还有一部分内存也被频繁使用，他不是运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，他就是——直接内存。</p>
+<p>　　<span style="color: orange;">直接内存的分配不受Java堆大小的限制，但是他还是会收到服务器总内存的影响。</span></p>
+<p>　　在JDK 1.4中引入的NIO中，引入了一种基于Channel和Buffer的I/O方式，他可以使用Native函数直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的应用进行操作。<br>　　<img src="/blogImg/2019/9/23/2-3.png" alt></p>
+<p>　　</p>
+<h3 id="Q5：堆和栈的区别是什么？"><a href="#Q5：堆和栈的区别是什么？" class="headerlink" title="Q5：堆和栈的区别是什么？"></a>Q5：堆和栈的区别是什么？</h3><p>　　堆和栈（虚拟机栈）是完全不同的两块内存区域，一个是线程独享的，一个是线程共享的，二者之间最大的区别就是存储的内容不同：</p>
+<ul>
+<li>堆中主要存放对象实例。 </li>
+<li>栈（局部变量表）中主要存放各种基本数据类型、对象的引用。</li>
+</ul>
+<p>　　</p>
+<h3 id="Q6：Java中的数组是存储在堆上还是栈上的？"><a href="#Q6：Java中的数组是存储在堆上还是栈上的？" class="headerlink" title="Q6：Java中的数组是存储在堆上还是栈上的？"></a>Q6：Java中的数组是存储在堆上还是栈上的？</h3><p>　　在Java中，数组同样是一个对象，所以对象在内存中如何存放同样适用于数组；</p>
+<p>　　所以，<span style="color: orange;">数组的实例是保存在堆中，而数组的引用是保存在栈上的。</span><br>　　<img src="/blogImg/2019/9/23/2-4.png" alt></p>
+<p>　　</p>
+<h3 id="Q7：Java中的对象创建有多少种方式？"><a href="#Q7：Java中的对象创建有多少种方式？" class="headerlink" title="Q7：Java中的对象创建有多少种方式？"></a>Q7：Java中的对象创建有多少种方式？</h3><p>Java中共有5种方式可以创建一个对象：</p>
+<ol>
+<li><p>最简单的方式就是使用new关键字。</p>
+<pre><code>User user = new User();
+</code></pre></li>
+<li><p>使用反射机制创建对象：</p>
+<pre><code>User user = User.class.newInstance();
+</code></pre></li>
+<li><p>使用Constructor类的newInstance：</p>
+<pre><code>Constructor&lt;User&gt; constructor = User.class.getConstructor();
+User user = constructor.newInstance();
+</code></pre></li>
+<li><p>使用clone方法</p>
+</li>
+<li>使用反序列化的方式</li>
+</ol>
+<p>　　</p>
+<h3 id="Q8：Java中对象创建的过程是怎么样的？"><a href="#Q8：Java中对象创建的过程是怎么样的？" class="headerlink" title="Q8：Java中对象创建的过程是怎么样的？"></a>Q8：Java中对象创建的过程是怎么样的？</h3><p>对于一个普通的Java对象的创建，大致过程如下：</p>
+<ol>
+<li>虚拟机遇到new指令，到常量池定位到这个类的符号引用。 </li>
+<li>检查符号引用代表的类是否被加载、解析、初始化过。 </li>
+<li>虚拟机为对象分配内存。 </li>
+<li>虚拟机将分配到的内存空间都初始化为零值。 </li>
+<li>虚拟机对对象进行必要的设置。 </li>
+<li>执行方法，成员变量进行初始化。</li>
+</ol>
+<p>　　</p>
+<h3 id="Q9：Java中的对象一定在堆上分配内存吗？"><a href="#Q9：Java中的对象一定在堆上分配内存吗？" class="headerlink" title="Q9：Java中的对象一定在堆上分配内存吗？"></a>Q9：Java中的对象一定在堆上分配内存吗？</h3><p>　　前面我们说过，Java堆中主要保存了对象实例，但是，随着JIT编译期的发展与逃逸分析技术逐渐成熟，栈上分配、标量替换优化技术将会导致一些微妙的变化，所有的对象都分配到堆上也渐渐变得不那么“绝对”了。</p>
+<p>　　其实，在编译期间，JIT会对代码做很多优化。其中有一部分优化的目的就是减少内存堆分配压力，其中一种重要的技术叫做逃逸分析。</p>
+<p>　　<span style="color: orange;">如果JIT经过逃逸分析，发现有些对象没有逃逸出方法，那么有可能堆内存分配会被优化成栈内存分配。</span>（关于逃逸分析和栈上分配可以参考：深入理解Java中的逃逸分析、对象并不一定都是在堆上分配内存的）<br>　　<img src="/blogImg/2019/9/23/2-5.png" alt></p>
+<p>　　</p>
+<h3 id="Q10：怎么如何获取堆和栈的dump文件？"><a href="#Q10：怎么如何获取堆和栈的dump文件？" class="headerlink" title="Q10：怎么如何获取堆和栈的dump文件？"></a>Q10：怎么如何获取堆和栈的dump文件？</h3><p>　　Java Dump，Java虚拟机的运行时快照。将Java虚拟机运行时的状态和信息保存到文件。</p>
+<p>　　<span style="color: orange;">可以使用在服务器上使用jmap命令来获取堆dump，使用jstack命令来获取线程的调用栈dump。</span>（关于jmap和jstack可以参考：<a href="http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&amp;mid=402312019&amp;idx=1&amp;sn=97736feb967ecbffb454fa037015ad6d&amp;chksm=7964d6724e135f64a5c0d65e41afbeac45700dd91149375f99071731954e855e13b11cd6c30b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Java命令学习系列（三）——Jmap</a>、<a href="http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&amp;mid=402296484&amp;idx=1&amp;sn=8e7fc8197a216afb590b17e15f9b721e&amp;chksm=796493854e131a932b3dd53839820eaba022cb87a601062b6bf6a574d742cd8e92a707432173&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Java命令学习系列（二）——Jstack</a>）</p>
+<p>　　<br>　　以上，就是本文的全部内容，对于其中的很多知识点，作者并未逐一展开，感兴趣的朋友可以自行学习一下，关于Java虚拟机相关知识，推荐三本书：《深入理解Java虚拟机》、《HotSpot实战》以及《Java虚拟机规范（第8版）》，本文中内容也参考了这三本书中很多内容。希望对你有帮助。</p>
+
+      
+    </div>
+	
+	<!-- 分享按钮和标签显示 -->
+    <footer class="article-footer">
+      <a data-url="https://mlone.top/2019/09/23/JVM内存结构面试题十道/" data-id="ck0wlm40i00b5y0v9tf8yqyqs" title="JVM内存结构面试题十道" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
+
+    </footer>
+  </div>
+  <!-- 页码 -->
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+    <a href="/2019/09/23/如何保证缓存与数据库的双写一致性？/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-angle-double-left pull-left"></i>
+      <span class="article-nav-link-title">&nbsp;如何保证缓存与数据库的双写一致性？</span>
+    </a>
+  
+  
+  
+    <a href="/2019/09/23/使用类型重构/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">使用类型重构&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
+  
+</ul>
+
+
+  
+</article>
+
+<!-- 自定义添加的文章目录 -->
+
+  <!-- 文章目录 -->
+<aside id="article-toc" role="navigation" class="fixed">
+	<div id="article-toc-inner">
+		<strong class="sidebar-title">
+		  <a class="toggleToc btn"><i class="fa fa-list">文章目录</i>
+		</a></strong>
+		<!-- list_number: false表示目录不自动编号 -->
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1：JVM管理的内存结构是怎样的？"><span class="toc-text">Q1：JVM管理的内存结构是怎样的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2：不同的虚拟机在实现运行时内存的时候有什么区别？"><span class="toc-text">Q2：不同的虚拟机在实现运行时内存的时候有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？"><span class="toc-text">Q3：运行时数据区中哪些区域是线程共享的？哪些是独享的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4：除了JVM运行时内存以外，还有什么区域可以用吗？"><span class="toc-text">Q4：除了JVM运行时内存以外，还有什么区域可以用吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5：堆和栈的区别是什么？"><span class="toc-text">Q5：堆和栈的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6：Java中的数组是存储在堆上还是栈上的？"><span class="toc-text">Q6：Java中的数组是存储在堆上还是栈上的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7：Java中的对象创建有多少种方式？"><span class="toc-text">Q7：Java中的对象创建有多少种方式？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8：Java中对象创建的过程是怎么样的？"><span class="toc-text">Q8：Java中对象创建的过程是怎么样的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9：Java中的对象一定在堆上分配内存吗？"><span class="toc-text">Q9：Java中的对象一定在堆上分配内存吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10：怎么如何获取堆和栈的dump文件？"><span class="toc-text">Q10：怎么如何获取堆和栈的dump文件？</span></a></li></ol>
+	</div>
+	<div>
+	  
+	</div>
+</aside> 
+
+
+
+	
+
+
+
+		  </div>
+        </div>
+		<!-- 侧边栏 -->
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		  
+  <div class="sidebar-module sidebar-module-inset">
+  <!--<h4>About</h4>
+   <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+ -->
+   
+  <div class="aboutme-name">@Easygo</div>
+  <ul class="aboutme-content">
+    <li><a href="/archives"><p class="num">159</p><p class="title">文章</p></a></li>
+    <li><p class="num">188.3k</p><p class="title">总字数</p></li>
+    <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
+  </ul>
+</div>
+
+<script>(function() {
+  var created_time = new Date('2018/08/01 00:00:00');
+  var now_time = new Date();
+  document.getElementById("run-day").textContent = Math.floor((now_time.getTime() - created_time.getTime())/1000/60/60/24);
+})();</script>
+
+
+  <div class="sidebar-module sidebar-module-inset">
+	<form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank">
+		<input type="text" name="q" maxlength="20" placeholder="Search">
+		<input type="hidden" name="sitesearch" value="https://www.mlone.top">
+	</form>
+</div>
+
+
+
+  
+	<div class="sidebar-module">
+		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">52</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">12</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+	</div>   
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-star-o"> 标签</i></div>
+    <p class="tagcloud">
+      <a href="/tags/GC/" style="font-size: 13.75px;">GC</a> <a href="/tags/JDBC/" style="font-size: 10px;">JDBC</a> <a href="/tags/JVM/" style="font-size: 16.25px;">JVM</a> <a href="/tags/RMI/" style="font-size: 10px;">RMI</a> <a href="/tags/STL/" style="font-size: 11.25px;">STL</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/sql/" style="font-size: 11.25px;">sql</a> <a href="/tags/事务/" style="font-size: 11.25px;">事务</a> <a href="/tags/分治/" style="font-size: 12.5px;">分治</a> <a href="/tags/动态规划/" style="font-size: 12.5px;">动态规划</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/古诗词/" style="font-size: 18.75px;">古诗词</a> <a href="/tags/多线程/" style="font-size: 17.5px;">多线程</a> <a href="/tags/安卓开发/" style="font-size: 10px;">安卓开发</a> <a href="/tags/序列化/" style="font-size: 10px;">序列化</a> <a href="/tags/排列组合/" style="font-size: 10px;">排列组合</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/散文/" style="font-size: 10px;">散文</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/查找/" style="font-size: 18.75px;">查找</a> <a href="/tags/电影/" style="font-size: 11.25px;">电影</a> <a href="/tags/线程池/" style="font-size: 11.25px;">线程池</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/贪心/" style="font-size: 11.25px;">贪心</a> <a href="/tags/遍历/" style="font-size: 11.25px;">遍历</a>
+    </p>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">34</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
+    <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/使用Java-Faker生成随机数/">使用Java Faker生成随机数</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/Java-Optional实例介绍/">Java Optional实例介绍</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/面试题：MySQL读写分离/">面试题：MySQL读写分离</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/使用类型重构/">使用类型重构</a>
+        </li>
+      
+        <li class="recent-post">
+          <a href="/2019/09/23/JVM内存结构面试题十道/">JVM内存结构面试题十道</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+<div class="sidebar-module">
+	<div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div>
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="http://www.netcan666.com/" title="Netcan" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Netcan</a></i> 
+	<ul></ul>
+	<i class="fa fa-paperclip"> <a class="link" href="https://www.codeliu.com/" title="Codetiger" target="_blank" rel="external nofollow noopener noreferrer"> &nbsp;Codetiger</a></i> 
+</div>
+
+
+
+
+		</div>
+    </div>
+	
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018-2019
+	  | Easygo_Space
+      | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  <!-- 回到顶部 -->
+  <a class="show" id="rocket" href="#top"></a>
+  
+</div>
+		
+
+
+<!-- 改由在\themes\bootstrap-blog\layout\layout.ejs文件中引入jQuery -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+</body>
+<!-- 扩大/缩小文章视图按钮功能 -->
+<style type='text/css'>
+  .col-sm-main {
+      width: 100%;
+  }
+  .col-sm-sidebar {
+	display: none;
+  }
+</style>
+<script>
+  $('#enlarge-shrink-view').click(function(){
+	  $('div.col-sm-8.blog-main').toggleClass('col-sm-main');
+	  $('div.col-sm-3.col-sm-offset-1.blog-sidebar').toggleClass('col-sm-sidebar');
+  });
+</script>
+</html>
