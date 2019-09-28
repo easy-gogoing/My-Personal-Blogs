@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Easygo_Space">
 <meta property="og:description" content="原文地址：www.cnblogs.com/rocomp/p/4781987.html">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-28T09:13:24.338Z">
+<meta property="og:updated_time" content="2019-09-28T09:21:07.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反射—Java高级开发必须懂的">
 <meta name="twitter:description" content="原文地址：www.cnblogs.com/rocomp/p/4781987.html">
@@ -120,13 +120,13 @@
 <p>　　<br>　　理解反射对学习Java框架有很大的帮助，如Spring框架的核心就是使用Java反射实现的，而且对做一些Java底层的操作会很有帮助。 </p>
 <p>　　</p>
 <h2 id="一、Class类的使用"><a href="#一、Class类的使用" class="headerlink" title="一、Class类的使用"></a>一、Class类的使用</h2><p>　　1、万事万物皆对象，（当然，基本数据类型，静态成员不是面向对象（属于类的）），所以我们创建的每一个类也都是对象，即类本身是java.lang.Class类的实例对象，但是这些对象都不需要new出来，因为java.lang.Class类的构造方法是私有的</p>
-<p>　　2、任何一个类都是Class类的实例对象，这个实例对象有三种表示方式：(我们新建一个Student类)</p>
+<p>　　2、任何一个类都是Class类的实例对象，这个实例对象有三种表示方式：(我们新建一个Student类)`</p>
 <ul>
-<li><p>Class c1 = Student.class;//实际告诉我们任何一个类都有一个隐含的静态成员变量class（知道类名时用）</p>
+<li><p><code>Class c1 = Student.class; //实际告诉我们任何一个类都有一个隐含的静态成员变量class（知道类名时用）</code></p>
 </li>
-<li><p>Class c2 = stu.getClass();//已知该类的对象通过getClass方法（知道对象时用）  </p>
+<li><p><code>Class c2 = stu.getClass(); //已知该类的对象通过getClass方法（知道对象时用）</code></p>
 </li>
-<li><p>Class c3 = Class.forName(“类的全名”);//会有一个ClassNotFoundException异常</p>
+<li><p><code>Class c3 = Class.forName(&quot;类的全名&quot;); //会有一个ClassNotFoundException异常</code></p>
 </li>
 </ul>
 <p>　　官网解释说：c1,c2表示了Student类的类类型（）class type)，万事万物皆对象，类也是对象，是Class类的实例对象，这个对象我们成为该类的类类型（有点乱，但是慢慢捋一下还是能理解的）</p>
@@ -134,27 +134,27 @@
 <p>　　我们完全可以通过类的类类型创建该类的对象实例，即通过c1或c2创建Student的实例。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student stu = (Student)c1.newInstance();<span class="comment">//前提是必须要有无参的构造方法，因为该语句会去调用其无参构造方法。该语句会抛出异常。</span></span><br></pre></td></tr></table></figure></p>
 <p>　　</p>
 <h2 id="二、动态加载类"><a href="#二、动态加载类" class="headerlink" title="二、动态加载类"></a>二、动态加载类</h2><p>　　1、编译时加载类是静态加载类，</p>
-<p>　　new 创建对象是静态加载类，在编译时刻就需要加载所有可用使用到的类，如果有一个用不了，那么整个文件都无法通过编译</p>
+<p>　　<code>new</code> 创建对象是静态加载类，在编译时刻就需要加载所有可用使用到的类，如果有一个用不了，那么整个文件都无法通过编译</p>
 <p>　　2、运行时加载类是动态加载类      </p>
-<p>　　Class c =  Class.forName(“类的全名”)，不仅表示了类的类型，还表示了动态加载类，编译不会报错，在运行时才会加载，使用接口标准能更方便动态加载类的实现。功能性的类尽量使用动态加载，而不用静态加载。</p>
+<p>　　<code>Class c =  Class.forName(&quot;类的全名&quot;)</code>，不仅表示了类的类型，还表示了动态加载类，编译不会报错，在运行时才会加载，使用接口标准能更方便动态加载类的实现。功能性的类尽量使用动态加载，而不用静态加载。</p>
 <p>　　很多软件比如QQ,360的在线升级，并不需要重新编译文件，只是动态的加载新的东西。</p>
 <p>　　</p>
 <h2 id="三、获取方法信息"><a href="#三、获取方法信息" class="headerlink" title="三、获取方法信息"></a>三、获取方法信息</h2><p>　　1、基本的数据类型，void关键字都存在类类型<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Class c1 =<span class="keyword">int</span>.class;<span class="comment">//int的类类型</span></span><br><span class="line">Class c2 =String.class;<span class="comment">//String类的类类型，可以理解为编译生成的那个String.class字节码文件，</span></span><br><span class="line"><span class="comment">//当然，这并不是官方的说法</span></span><br><span class="line">Class c3 =<span class="keyword">double</span>.class;</span><br><span class="line">Class c4 =Double.class;</span><br><span class="line">Class c5 =<span class="keyword">void</span>.class;</span><br></pre></td></tr></table></figure></p>
 <p>2、Class类的基本API操作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 打印类的信息，包括类的成员函数，成员变量</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> obj 该对象所属类的信息</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">publicstaticvoid <span class="title">printClassMessage</span><span class="params">(Object obj)</span></span>&#123;</span><br><span class="line"><span class="comment">//要获取类的信息，首先要获取类的类类型</span></span><br><span class="line">Class c = obj.getClass();<span class="comment">//传递的是哪个子类的对象，c就是该子类的类类型</span></span><br><span class="line"><span class="comment">//获取类的名称</span></span><br><span class="line">System.out.println(<span class="string">"累的名称是："</span>+c.getName());</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   * Method类，方法的对象</span></span><br><span class="line"><span class="comment">   * 一个成员方法就是一个Method对象</span></span><br><span class="line"><span class="comment">   * getMethods()方法获取的是所有的public的函数，包括父类继承而来的</span></span><br><span class="line"><span class="comment">   * getDeclaredMethods()获取的是多有该类自己声明的方法，不问访问权限</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   Method[] ms = c.getMethods();<span class="comment">//c.getDeclaredMethods();</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i &lt; ms.length; i++)&#123;</span><br><span class="line">      <span class="comment">//得到方法的返回值类型的类类型</span></span><br><span class="line">      Class retrunType = ms[i].getReturnType();</span><br><span class="line">      System.out.print(retrunType.getName()+<span class="string">" "</span>);</span><br><span class="line">      <span class="comment">//得到方法的名称</span></span><br><span class="line">      System.out.print(ms[i].getName()+<span class="string">"("</span>);</span><br><span class="line">      <span class="comment">//获取的参数类型---&gt;得到的是参数列表的类型的类类型</span></span><br><span class="line">      Class[] paraTypes = ms[i].getParameterTypes();</span><br><span class="line">      <span class="keyword">for</span>(Class class1 : paraTypes)&#123;</span><br><span class="line">         System.out.print(class1.getName()+<span class="string">","</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(<span class="string">")"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>　　Class的API中还有很多其他的方法，可以得到interface、Package、Annotation等很多信息，具体使用请参考帮助手册，本文就不在详细讲解。特别注意的一点是，如果你想得到一个类的信息，首先就要获取该类的类类型。</p>
 <p>　　</p>
-<h3 id="四、获取成员变量构造函数信息"><a href="#四、获取成员变量构造函数信息" class="headerlink" title="四、获取成员变量构造函数信息"></a>四、获取成员变量构造函数信息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 成员变量也是对象，是java.lang.reflect.Field这个类的的对象</span></span><br><span class="line"><span class="comment">   * Field类封装了关于成员变量的操作</span></span><br><span class="line"><span class="comment">   * getFields()方法获取的是所有public的成员变量的信息</span></span><br><span class="line"><span class="comment">   * getDeclareFields()方法获取的是该类自己声明的成员变量的信息</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   Field[] fs = c.getDeclaredFields();</span><br><span class="line">   <span class="keyword">for</span>(Field field : fs)&#123;</span><br><span class="line">      <span class="comment">//得到成员变量的类型的类类型</span></span><br><span class="line">      Class fieldType = field.getType();</span><br><span class="line">      String typeName = fieldType.getName();</span><br><span class="line">      <span class="comment">//得到成员变量的名称</span></span><br><span class="line">      String fieldName = field.getName();</span><br><span class="line">      System.out.print(typeName+<span class="string">" "</span>+fieldName);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 构造函数也是对象</span></span><br><span class="line"><span class="comment">* java.lang.Constructor中封装了构造函数的信息</span></span><br><span class="line"><span class="comment">* getConstructor()方法获取所有的public的构造函数</span></span><br><span class="line"><span class="comment">* getDeclaredConstructors得到所有的构造函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">   Constructor[] cs = c.getDeclaredConstructors();</span><br><span class="line">   <span class="keyword">for</span>(Constructor constructor : cs)&#123;</span><br><span class="line">      System.out.print(constructor.getName()+<span class="string">"("</span>);</span><br><span class="line">      <span class="comment">//获取构造函数的参数列表---》得到的是参数雷彪的类类型</span></span><br><span class="line">      Class[] paramTypes = constructor.getParameterTypes();</span><br><span class="line">      <span class="keyword">for</span>(Class class1 : paramTypes)&#123;</span><br><span class="line">         System.out.print(class1.getName()+<span class="string">","</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(<span class="string">")"</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="四、获取成员变量构造函数信息"><a href="#四、获取成员变量构造函数信息" class="headerlink" title="四、获取成员变量构造函数信息"></a>四、获取成员变量构造函数信息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 成员变量也是对象，是java.lang.reflect.Field这个类的的对象</span></span><br><span class="line"><span class="comment"> * Field类封装了关于成员变量的操作</span></span><br><span class="line"><span class="comment"> * getFields()方法获取的是所有public的成员变量的信息</span></span><br><span class="line"><span class="comment"> * getDeclareFields()方法获取的是该类自己声明的成员变量的信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> Field[] fs = c.getDeclaredFields();</span><br><span class="line"> <span class="keyword">for</span>(Field field : fs)&#123;</span><br><span class="line">    <span class="comment">//得到成员变量的类型的类类型</span></span><br><span class="line">    Class fieldType = field.getType();</span><br><span class="line">    String typeName = fieldType.getName();</span><br><span class="line">    <span class="comment">//得到成员变量的名称</span></span><br><span class="line">    String fieldName = field.getName();</span><br><span class="line">    System.out.print(typeName+<span class="string">" "</span>+fieldName);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造函数也是对象</span></span><br><span class="line"><span class="comment"> * java.lang.Constructor中封装了构造函数的信息</span></span><br><span class="line"><span class="comment"> * getConstructor()方法获取所有的public的构造函数</span></span><br><span class="line"><span class="comment"> * getDeclaredConstructors得到所有的构造函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> Constructor[] cs = c.getDeclaredConstructors();</span><br><span class="line"> <span class="keyword">for</span>(Constructor constructor : cs)&#123;</span><br><span class="line">    System.out.print(constructor.getName()+<span class="string">"("</span>);</span><br><span class="line">    <span class="comment">//获取构造函数的参数列表---》得到的是参数雷彪的类类型</span></span><br><span class="line">    Class[] paramTypes = constructor.getParameterTypes();</span><br><span class="line">    <span class="keyword">for</span>(Class class1 : paramTypes)&#123;</span><br><span class="line">       System.out.print(class1.getName()+<span class="string">","</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">")"</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>　　</p>
 <h2 id="五、方法反射的基本操作"><a href="#五、方法反射的基本操作" class="headerlink" title="五、方法反射的基本操作"></a>五、方法反射的基本操作</h2><ol>
-<li>如何获取某个方法<br>　　方法的名称和方法的参数列表才能唯一决定某个方法<br>　　<code>Method m = c.getDeclaredMethod(&quot;方法名&quot;，可变参数列表（参数类型.class）)</code></li>
-</ol>
-<ol start="2">
-<li>方法的反射操作<br>　　<code>m.invoke(对象，参数列表)</code><br>　　方法如果没有返回值，返回null，如果有返回值返回Object类型，然后再强制类型转换为原函数的返回值类型</li>
+<li><p>如何获取某个方法<br>　　方法的名称和方法的参数列表才能唯一决定某个方法<br>　　<code>Method m = c.getDeclaredMethod(&quot;方法名&quot;，可变参数列表（参数类型.class）)</code></p>
+</li>
+<li><p>方法的反射操作<br>　　<code>m.invoke(对象，参数列表)</code><br>　　方法如果没有返回值，返回null，如果有返回值返回Object类型，然后再强制类型转换为原函数的返回值类型</p>
+</li>
 </ol>
 <p>　　</p>
 <h2 id="六、通过反射了解集合泛型的本质"><a href="#六、通过反射了解集合泛型的本质" class="headerlink" title="六、通过反射了解集合泛型的本质"></a>六、通过反射了解集合泛型的本质</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ArrayList list1 =newArrayList();</span><br><span class="line">ArrayList&lt;String&gt; list2 =newArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">Class c1 = list1.getClass();</span><br><span class="line">Class c2 = list2.getClass();</span><br><span class="line"></span><br><span class="line">System.out.println(c1==c2);<span class="comment">//结果为true，为什么？？</span></span><br></pre></td></tr></table></figure>
-<p>　　结果分析：因为反射的操作都是编译之后的操作，也就是运行时的操作，c1==c2返回true，说明编译之后集合的泛型是去泛型化的。</p>
-<p>　　那么我们就可以理解为，Java集合中的泛型，是用于防止错误类型元素输入的，比如在list2中我们add一个int，add(10)就会编译报错，那么这个泛型就可以只在编译阶段有效，通过了编译阶段，泛型就不存在了。可以验证，我们绕过编译，用反射动态的在list2中add一个int是可以成功的，只是这时因为list2中存储了多个不同类型的数据（String型，和int型），就不能用for-each来遍历了，会抛出类型转换错误异常<code>ClassCastException</code></p>
+<p>　　结果分析：因为反射的操作都是编译之后的操作，也就是运行时的操作，<code>c1==c2</code>返回true，说明编译之后集合的泛型是去泛型化的。</p>
+<p>　　那么我们就可以理解为，Java集合中的泛型，是用于防止错误类型元素输入的，比如在list2中我们add一个int，<code>add(10)</code>就会编译报错，那么这个泛型就可以只在编译阶段有效，通过了编译阶段，泛型就不存在了。可以验证，我们绕过编译，用反射动态的在list2中add一个int是可以成功的，只是这时因为list2中存储了多个不同类型的数据（String型，和int型），就不能用for-each来遍历了，会抛出类型转换错误异常<code>ClassCastException</code></p>
 <p>　　</p>
 <h2 id="补充资料："><a href="#补充资料：" class="headerlink" title="补充资料："></a>补充资料：</h2><h2 id="七、关于Java类加载器内容的详解"><a href="#七、关于Java类加载器内容的详解" class="headerlink" title="七、关于Java类加载器内容的详解"></a>七、关于Java类加载器内容的详解</h2><h3 id="1、类的加载"><a href="#1、类的加载" class="headerlink" title="1、类的加载"></a>1、类的加载</h3><p>　　当程序要使用某个类时，如果该类还未被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化</p>
 <ul>
@@ -180,11 +180,11 @@
 <p>　　虽然我们在开发过程中不需要关心类加载机制，但是了解这个机制我们就能更好的理解程序的运行</p>
 <p>　　</p>
 <h3 id="4、类加载器的组成"><a href="#4、类加载器的组成" class="headerlink" title="4、类加载器的组成"></a>4、类加载器的组成</h3><ol>
-<li><p>Bootstrap ClassLoader 根类加载器<br>　　也被称为引导类加载器，负责Java核心类的加载，比如System类，在JDK中JRE的lib目录下rt.jar文件中的类</p>
+<li><p><code>Bootstrap ClassLoader</code> 根类加载器<br>　　也被称为引导类加载器，负责Java核心类的加载，比如System类，在JDK中JRE的lib目录下rt.jar文件中的类</p>
 </li>
-<li><p>Extension ClassLoader 扩展类加载器<br>　　负责JRE的扩展目录中jar包的加载，在JDK中JRE的lib目录下ext目录</p>
+<li><p><code>Extension ClassLoader</code> 扩展类加载器<br>　　负责JRE的扩展目录中jar包的加载，在JDK中JRE的lib目录下ext目录</p>
 </li>
-<li><p>System ClassLoader 系统类加载器<br>　　负责在JVM启动时加载来自java命令的class文件，以及classpath环境变量所指定的jar包和类路径，主要是我们开发者自己写的类</p>
+<li><p><code>System ClassLoader</code> 系统类加载器<br>　　负责在JVM启动时加载来自java命令的class文件，以及classpath环境变量所指定的jar包和类路径，主要是我们开发者自己写的类</p>
 </li>
 </ol>
 
@@ -193,7 +193,7 @@
 	
 	<!-- 分享按钮和标签显示 -->
     <footer class="article-footer">
-      <a data-url="https://mlone.top/2019/09/28/反射—Java高级开发必须懂的/" data-id="ck13c8zf400c4sov9ivhq7xcn" title="反射—Java高级开发必须懂的" class="article-share-link">
+      <a data-url="https://mlone.top/2019/09/28/反射—Java高级开发必须懂的/" data-id="ck13smq3700c53kv98mwirx1d" title="反射—Java高级开发必须懂的" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -212,6 +212,11 @@
     </a>
   
   
+  
+    <a href="/2019/09/28/关于资源分享的想法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">关于资源分享的想法&nbsp;</span>
+      <i class="fa fa-angle-double-right pull-right"></i>
+    </a>
   
 </ul>
 
@@ -253,8 +258,8 @@
    
   <div class="aboutme-name">@Easygo</div>
   <ul class="aboutme-content">
-    <li><a href="/archives"><p class="num">162</p><p class="title">文章</p></a></li>
-    <li><p class="num">199.2k</p><p class="title">总字数</p></li>
+    <li><a href="/archives"><p class="num">163</p><p class="title">文章</p></a></li>
+    <li><p class="num">200.2k</p><p class="title">总字数</p></li>
     <li><p class="num" id="run-day"></p><p class="title">运行天数</p></li>
   </ul>
 </div>
@@ -278,7 +283,7 @@
   
 	<div class="sidebar-module">
 		<div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div>
-		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">54</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">12</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">23</span></li></ul>
+		<ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/FrameWorks/">FrameWorks</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Java/">Java</a><span class="sidebar-module-list-count">54</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Linux/">Linux</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Web/">Web</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/分布式/">分布式</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/剑指offer/">剑指offer</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/影视/">影视</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/操作系统/">操作系统</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/数据库/">数据库</a><span class="sidebar-module-list-count">12</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/算法/">算法</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/计算机网络/">计算机网络</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/设计模式/">设计模式</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/随笔/">随笔</a><span class="sidebar-module-list-count">24</span></li></ul>
 	</div>   
 
 
@@ -295,7 +300,7 @@
   
   <div class="sidebar-module">
     <div class="widget-title"><i class="fa fa-archive"> 归档</i></div>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">37</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/09/">九月 2019</a><span class="sidebar-module-list-count">38</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/08/">八月 2019</a><span class="sidebar-module-list-count">15</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2019/06/">六月 2019</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">九月 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">八月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">七月 2018</a><span class="sidebar-module-list-count">27</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/06/">六月 2018</a><span class="sidebar-module-list-count">17</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/05/">五月 2018</a><span class="sidebar-module-list-count">20</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/04/">四月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">三月 2018</a><span class="sidebar-module-list-count">9</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">二月 2018</a><span class="sidebar-module-list-count">14</span></li></ul>
   </div>
 
 
@@ -304,6 +309,10 @@
   <div class="sidebar-module">
     <div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div>
     <ul class="sidebar-module-list">
+      
+        <li class="recent-post">
+          <a href="/2019/09/28/关于资源分享的想法/">关于资源分享的想法</a>
+        </li>
       
         <li class="recent-post">
           <a href="/2019/09/28/反射—Java高级开发必须懂的/">反射—Java高级开发必须懂的</a>
@@ -319,10 +328,6 @@
       
         <li class="recent-post">
           <a href="/2019/09/23/使用Java-Faker生成随机数/">使用Java Faker生成随机数</a>
-        </li>
-      
-        <li class="recent-post">
-          <a href="/2019/09/23/Java-Optional实例介绍/">Java Optional实例介绍</a>
         </li>
       
     </ul>
